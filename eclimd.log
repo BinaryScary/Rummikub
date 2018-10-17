@@ -1,0 +1,25 @@
+2018-10-12 01:25:12,188 INFO  [org.eclim.eclipse.EclimDaemon] Workspace: /home/sam/Dropbox/School/Year_4/COMP3004A/GroupProject/Rummikub
+2018-10-12 01:25:12,189 INFO  [org.eclim.eclipse.EclimDaemon] Home: /home/sam/.eclipse/org.eclipse.platform_4.9.0_155965261_linux_gtk_x86_64/plugins/org.eclim_2.8.0/
+2018-10-12 01:25:12,189 INFO  [org.eclim.eclipse.EclimDaemon] Starting eclim...
+2018-10-12 01:25:12,219 INFO  [org.eclim.eclipse.EclimDaemon] Loading plugin org.eclim
+2018-10-12 01:25:12,224 INFO  [org.eclim.eclipse.EclimDaemon] Loading plugin org.eclim.core
+2018-10-12 01:25:12,358 INFO  [org.eclim.plugin.core.CorePlugin] Loading eclim plugins...
+2018-10-12 01:25:12,374 INFO  [org.eclim.plugin.core.CorePlugin] Loading plugin org.eclim.jdt
+2018-10-12 01:25:12,375 INFO  [org.eclim.plugin.core.CorePlugin] Plugins loaded.
+2018-10-12 01:25:12,375 INFO  [org.eclim.eclipse.EclimDaemon] Loaded plugin org.eclim.core
+2018-10-12 01:25:12,379 INFO  [org.eclim.eclipse.EclimDaemon] Waiting on running jobs before starting eclimd...
+2018-10-12 01:25:14,005 ERROR [org.eclim.plugin.jdt.PluginResources] 
+java.lang.NullPointerException
+	at org.eclim.plugin.jdt.PluginResources.initializeJreSrc(PluginResources.java:173)
+	at org.eclim.plugin.jdt.PluginResources.initialize(PluginResources.java:105)
+	at org.eclim.plugin.Plugin.activate(Plugin.java:120)
+	at org.eclim.plugin.Plugin.bundleChanged(Plugin.java:218)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.dispatchEvent(BundleContextImpl.java:911)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:233)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:343)
+2018-10-12 01:25:14,379 INFO  [org.eclim.eclipse.EclimDaemon] Jobs finished.
+2018-10-12 01:25:14,380 INFO  [org.eclim.eclipse.EclimDaemon] Eclim Server Started on: 127.0.0.1:9091
+2018-10-12 01:27:14,259 INFO  [org.eclim.eclipse.EclimDaemon] Shutting down eclim...
+2018-10-12 01:27:14,284 INFO  [org.eclim.eclipse.EclimDaemon] Stopping plugin org.eclim.core
+2018-10-12 01:27:14,295 INFO  [org.eclim.plugin.core.CorePlugin] Stopping plugin org.eclim.jdt
+2018-10-12 01:27:14,301 INFO  [org.eclim.eclipse.EclimDaemon] Eclim stopped.
