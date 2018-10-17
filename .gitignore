@@ -3,3 +3,4 @@
 workbench.xmi
 *.log
 .settings/
+target/
