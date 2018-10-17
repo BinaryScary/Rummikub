@@ -2,3 +2,4 @@
 *.class
 workbench.xmi
 *.log
+.settings/
