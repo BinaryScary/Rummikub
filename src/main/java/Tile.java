@@ -14,21 +14,47 @@ public class Tile {
         public int getVal(){
             return this.val;
         }
-
-        public int getCol(){
-            return this.val;
-        }
     }
-    private colour col;
-    private value val;
+    private colour tileColour;
+    private value tileValue;
 
     public Tile(colour c, value v){
-        col = c;
-        val = v;
+        tileColour = c;
+        tileValue = v;
     }
 
     public Tile(){
-        col = null;
-        val = null;
+        tileColour = null;
+        tileValue = null;
+    }
+
+    public void setValue(value v){
+        tileValue = v;
+    }
+
+    public void setColour(colour c){
+        tileColour = c;
+    }
+
+    public value getValue(){
+        return tileValue;
+    }
+
+    public colour getColour(){
+        return tileColour;
+    }
+
+    @Override
+    public String toString(){
+        return tileColour +" "+ tileValue;
+    }
+
+    @Override
+    public boolean equals(Object t){
+        if(this.getColour() == ((Tile)t).tileColour && this.tileValue == ((Tile)t).tileValue){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
