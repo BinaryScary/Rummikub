@@ -1,3 +1,4 @@
 .metadata/
 *.class
 workbench.xmi
+*.log
