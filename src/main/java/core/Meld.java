@@ -1,32 +1,108 @@
-<<<<<<< HEAD:src/main/java/core/Meld.java
 package core;
-=======
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
+
 public class Meld {	
 		
-		private ArrayList<Tile> melded_tiles = new ArrayList<Tile>(); 
-		
-		public Meld (ArrayList<Tile> c) {
-			addTiles(c);  
+	private ArrayList<Tile> arr;
+	
+	Meld(){
+		arr = null;
+	}
+	
+	Meld(Tile[] arr){
+		this.arr = new ArrayList<Tile>(Arrays.asList(arr));
+	}
+	
+	public Tile getAt(int i) {
+		Tile buf = null;
+		try {
+			buf = arr.get(i);
+		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
 		}
-		
-		public void addTiles(ArrayList<Tile> c) {
-			melded_tiles.addAll(c); 
-		}
-		
-		public void addTile(Tile c) {
-			melded_tiles.add(c); 
-		}
-		
-		public void removeTile(Tile c) {
-			melded_tiles.remove(c); 
-		}
->>>>>>> 15667b2bfca3aa7a67d2fa37a023e286c071cf54:src/main/java/Meld.java
 
-		public void removeTiles (ArrayList<Tile> c) {
-			melded_tiles.removeAll(c); 
+		return buf;
+	}
+	
+	public Tile remove(int i) {
+		Tile buf = null;
+		try {
+			buf = arr.remove(i);
+		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
 		}
+		
+		return buf;
+	}
+	
+	public boolean remove(Tile t) {
+		return arr.remove(t);
+	}
+	
+	public void add(Tile t) {
+		arr.add(t);
+	}
+	
+	public int totalMeld() {
+		int total = 0;
+		if(arr.size() == 0) {
+			return total;
+		}
+
+		for(Tile t : arr) {
+			total += t.getValue().getVal();
+		}
+		return total;
+	}
+
+    @Override
+    public String toString(){
+		String str = "";
+		if(arr.size() == 0) {
+			return str;
+		}
+
+		for(Tile t : arr) {
+			str += t.toString() + " ";
+		}
+
+		return str.trim();
+    }
+	
+    @Override
+    public boolean equals(Object t){
+    	if(((Meld)t).size() != arr.size()) {
+    		return false;
+    	}
+
+    	for(int i=0; i < arr.size(); i++) {
+
+    		if(!((Meld)t).getAt(i).equals(arr.get(i))) {
+    			return false;
+    		}
+
+    	}
+    	
+    	return true;
+    }
+	
+//	public Tile setAt(int i, Tile t) {
+//		Tile buf = null;
+//		try {
+//			buf = arr.set(i, t);
+//		} catch (IndexOutOfBoundsException e) {
+//			e.printStackTrace();
+//		}
+//
+//		return buf;
+//	}
+
+	public int size() {
+		return arr.size();
+	}
+	
+//TODO validMeld
 		
 }
 
