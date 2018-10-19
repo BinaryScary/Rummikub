@@ -103,6 +103,62 @@ public class Meld {
 	}
 	
 //TODO validMeld
+	
+	public boolean validMeld() {
+		if(typeMeld() == 's') {
+			Tile.value val = arr.get(0).getValue();
+			Tile.colour[] colArr = {arr.get(0).getColour(),null,null,null};
+			
+			if(arr.size() > 4) {
+				return false;
+			}
+			
+			for(int i = 1; i < arr.size(); i++) {
+				if(arr.get(1).getValue() != val) {
+					return false;
+				}
+				if(arr.contains(arr.get(i).getColour())) {
+					return false;
+				}
+				colArr[i] = arr.get(i).getColour();
+			}
+			return true;
+		}
+
+		if(typeMeld() == 'r') {
+			Tile buf = arr.get(0);
+			Tile.colour col = buf.getColour();
+			
+			for(int i = 1; i < arr.size(); i++) {
+				if(arr.get(i).getColour() != col) {
+					return false;
+				}
+				if(arr.get(i).getValue().getVal() -1 != buf.getValue().getVal()) {
+					return false;
+				}
+				buf = arr.get(i);
+			}
+			return true;
+		}
+		
+		return false;
+	}
+	
+	private char typeMeld() {
+		//{r : run | s : set | n : none}
+		if(arr.size() < 3) {
+			return 'n';
+		}
+		
+		if(arr.get(0).getValue().getVal() == arr.get(1).getValue().getVal() && arr.get(0).getColour() != arr.get(1).getColour() ) {
+			return 's';
+		}
+		if(arr.get(0).getValue().getVal() + 1 == arr.get(1).getValue().getVal() && arr.get(0).getColour() == arr.get(1).getColour() ) {
+			return 'r';
+		}
+		
+		return 'n';
+	}
 		
 }
 
