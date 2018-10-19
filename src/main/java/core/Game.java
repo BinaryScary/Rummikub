@@ -1,4 +1,4 @@
-
-public class Game {
+package core;
+public class Game { 
 
 }
