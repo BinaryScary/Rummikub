@@ -29,4 +29,23 @@ public class MeldTest extends TestCase {
 		
 		assertEquals(3, m1.totalMeld());
 	}
+	
+	public void testMeldValid() {
+		Tile[] tArr1 = {new Tile(Tile.colour.RED, Tile.value.ONE),new Tile(Tile.colour.RED, Tile.value.TWO),new Tile(Tile.colour.RED, Tile.value.THREE)};
+		Tile[] tArr2 = {new Tile(Tile.colour.RED, Tile.value.ONE),new Tile(Tile.colour.RED, Tile.value.TWO),new Tile(Tile.colour.RED, Tile.value.FOUR)};
+		Tile[] tArr3 = {new Tile(Tile.colour.RED, Tile.value.ONE),new Tile(Tile.colour.BLUE, Tile.value.ONE),new Tile(Tile.colour.GREEN, Tile.value.ONE)};
+		Tile[] tArr4 = {new Tile(Tile.colour.RED, Tile.value.ONE),new Tile(Tile.colour.RED, Tile.value.ONE),new Tile(Tile.colour.RED, Tile.value.ONE)};
+		Tile[] tArr5 = {new Tile(Tile.colour.RED, Tile.value.ONE),new Tile(Tile.colour.BLUE, Tile.value.ONE),new Tile(Tile.colour.GREEN, Tile.value.ONE),new Tile(Tile.colour.ORANGE, Tile.value.ONE)};
+		Meld m1 = new Meld(tArr1);
+		Meld m2 = new Meld(tArr2);
+		Meld m3 = new Meld(tArr3);
+		Meld m4 = new Meld(tArr4);
+		Meld m5 = new Meld(tArr5);
+
+		assertTrue(m1.validMeld());
+		assertFalse(m2.validMeld());
+		assertTrue(m3.validMeld());
+		assertFalse(m4.validMeld());
+		assertTrue(m5.validMeld());
+	}
 }
