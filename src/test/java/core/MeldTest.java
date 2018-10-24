@@ -13,7 +13,7 @@ public class MeldTest extends TestCase {
 	public void testMeldString() {
 		Tile[] tArr = {new Tile(Tile.colour.RED, Tile.value.ONE),new Tile(Tile.colour.BLUE, Tile.value.TWO)};
 		Meld m1 = new Meld(tArr);
-		assertEquals("RED ONE BLUE TWO",m1.toString());
+		assertEquals("{RED ONE BLUE TWO}",m1.toString());
 	}
 	public void testMeldEquals() {
 		Tile[] tArr1 = {new Tile(Tile.colour.RED, Tile.value.ONE),new Tile(Tile.colour.BLUE, Tile.value.TWO)};

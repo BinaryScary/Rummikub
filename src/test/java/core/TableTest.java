@@ -15,13 +15,13 @@ public class TableTest extends TestCase {
 		assertNotNull(t2);
 	}
 	public void testTableString() {
-		Tile[] tArr2 = {new Tile(Tile.colour.RED, Tile.value.ONE),new Tile(Tile.colour.BLUE, Tile.value.TWO)};
 		Tile[] tArr1 = {new Tile(Tile.colour.RED, Tile.value.EIGHT),new Tile(Tile.colour.BLUE, Tile.value.ELEVEN)};
+		Tile[] tArr2 = {new Tile(Tile.colour.RED, Tile.value.ONE),new Tile(Tile.colour.BLUE, Tile.value.TWO)};
 		Meld m1 = new Meld(tArr1);
 		Meld m2 = new Meld(tArr2);
 		Meld[] mArr = {m1,m2};
 		Table t1 = new Table(mArr);
-		assertEquals("RED EIGHT BLUE ELEVEN RED ONE BLUE TWO",t1.toString());
+		assertEquals("{RED EIGHT BLUE ELEVEN} {RED ONE BLUE TWO}",t1.toString());
 	}
 	public void testTableEquals() {
 		Tile[] tArr1 = {new Tile(Tile.colour.RED, Tile.value.ONE),new Tile(Tile.colour.BLUE, Tile.value.TWO)};

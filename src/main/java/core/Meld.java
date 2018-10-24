@@ -58,7 +58,7 @@ public class Meld {
 
     @Override
     public String toString(){
-		String str = "";
+		String str = "{";
 		if(arr.size() == 0) {
 			return str;
 		}
@@ -66,8 +66,9 @@ public class Meld {
 		for(Tile t : arr) {
 			str += t.toString() + " ";
 		}
+		str = str.trim() + "}";
 
-		return str.trim();
+		return str;
     }
 	
     @Override
