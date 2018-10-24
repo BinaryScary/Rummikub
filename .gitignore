@@ -4,3 +4,4 @@ workbench.xmi
 *.log
 .settings/
 target/
+.DS_Store
