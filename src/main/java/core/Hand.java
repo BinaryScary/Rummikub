@@ -41,6 +41,38 @@ public class Hand {
 
 		}
 		
-		
+		public void HandReader() {
+			
+			if (isEmpty()) {
+				System.out.println(name +  " has no tiles");
+				
+			} 
+			
+			else {
+				System.out.println(name + " 's tiles are: ");
+				
+				for (int i = 0; i < sizeOfp_hand(); i++) {
+					String Colour = "" ;
+					
+					if (p_hand.get(i).getColour().equals("BLUE")) {
+						Colour = "Blue";
+					}
+					
+					if (p_hand.get(i).getColour().equals("GREEN")) {
+						Colour = "Green";
+					}
+					
+					if (p_hand.get(i).getColour().equals("ORANGE")) {
+						Colour = "Orange";
+					}
+					
+					if (p_hand.get(i).getColour().equals("RED")) {
+						Colour = "Red";
+					}
+					
+					System.out.println(i + 1 + "- " + Colour + " " + p_hand.get(i).getValue());
+				}
+			}
+		}
 }
 
