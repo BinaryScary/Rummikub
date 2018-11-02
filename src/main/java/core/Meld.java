@@ -7,7 +7,7 @@ public class Meld {
 	private ArrayList<Tile> arr;
 	
 	Meld(){
-		arr = null;
+		arr = new ArrayList<Tile>();
 	}
 	
 	Meld(Tile[] arr){

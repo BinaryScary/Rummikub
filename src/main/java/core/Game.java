@@ -47,8 +47,17 @@ public class Game extends Observable{
 	
 	private void gameLogic() {
 		cli.message("Welcome To Rummikub!");
+		deal(h0);
 		
-		
+	}
+	
+	private void deal(Hand hand) {
+//		for(int i = 0; i<14; i++) {
+//		hand.addTileTop_hand(pile.deal());
+		Tile t1 = new Tile(Tile.colour.RED, Tile.value.ONE);
+		hand.addTileTop_hand(t1);
+
+//		}
 	}
 	
 	private void broadcast() {

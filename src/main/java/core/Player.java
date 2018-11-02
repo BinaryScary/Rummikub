@@ -13,7 +13,7 @@ public class Player implements Observer{
 	public Player (String k, int id){ //should have player strategy
 		
 		name = k;
-		hand = new Hand(name+"'s Hand"); 
+		hand = new Hand(); 
 		int playerID = id; 
     	//should contain player strategy
     	pile = new Pile();

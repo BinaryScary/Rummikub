@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 public class Hand {
 
+		private ArrayList<Tile> p_hand;
 
 		public Hand() {
+			p_hand = new ArrayList<Tile>();
 		}
-		
-		private ArrayList<Tile> p_hand = new ArrayList<Tile>();
 		
 		public ArrayList<Tile> getTiles() {
 			return this.p_hand;

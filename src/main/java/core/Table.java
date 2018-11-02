@@ -8,7 +8,7 @@ public class Table {
 	private ArrayList<Meld> arr;
 
 	Table(){
-		arr = null;
+		arr = new ArrayList<Meld>();
 	}
 	
 	Table(Meld[] arr){
