@@ -38,6 +38,20 @@ public class Hand {
 
 		}
 		
+		@Override
+		public String toString(){
+			String str = "{";
+			if(p_hand.size() == 0) {
+				return str;
+			}
+
+			for(Tile t : p_hand) {
+				str += t.toString() + " ";
+			}
+			str = str.trim() + "}";
+
+			return str;
+		}
 		
 }
 

@@ -12,11 +12,8 @@ public class Game extends Observable{
 	private Hand h1;
 	private Hand h2;
 	private Hand h3;
-	private Player human;
-	private Player p1;
-	private Player p2;
-	private Player p3;
-	
+	private Player playerArr[];
+
 	public void init() {
 		pile = new Pile();
 		table = new Table();
@@ -25,39 +22,49 @@ public class Game extends Observable{
 		h1 = new Hand();
 		h2 = new Hand();
 		h3 = new Hand();
+		playerArr = new Player[4];
 
-		Player human = new Player("human", 0);
-		Player p1 = new Player("p1", 1);
-		Player p2 = new Player("p2", 2);
-		Player p3 = new Player("p3", 3);
-
+		playerArr[0] = new Player("human", 0);
+		playerArr[1] = new Player("p1", 1);
+		playerArr[2] = new Player("p2", 2);
+		playerArr[3] = new Player("p3", 3);
 		pile.scramble();
 		
-		this.addObserver(human);
-		this.addObserver(p1);
-		this.addObserver(p2);
-		this.addObserver(p3);
+		this.addObserver(playerArr[0]);
+		this.addObserver(playerArr[1]);
+		this.addObserver(playerArr[2]);
+		this.addObserver(playerArr[3]);
 	}
 	
 	//init(file)
 	
 	public void start() {
-		gameLogic();
-	}
-	
-	private void gameLogic() {
 		cli.message("Welcome To Rummikub!");
 		deal(h0);
+		deal(h1);
+		deal(h2);
+		deal(h3);
+		turnLoop();
+	}
+	
+	private Player turnLoop() {
 		
+		for(int i = 0; i<4; i++) {
+			cli.message("Player " + playerArr[i].toString() + "'s turn.");
+			
+			
+			
+			if(i==3) i=-1;
+		}
+
+		return null;
 	}
 	
 	private void deal(Hand hand) {
-//		for(int i = 0; i<14; i++) {
-//		hand.addTileTop_hand(pile.deal());
-		Tile t1 = new Tile(Tile.colour.RED, Tile.value.ONE);
-		hand.addTileTop_hand(t1);
-
-//		}
+		for(int i = 0; i<14; i++) {
+			hand.addTileTop_hand(pile.deal());
+		}
+		broadcast();
 	}
 	
 	private void broadcast() {

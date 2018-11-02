@@ -23,4 +23,9 @@ public class Player implements Observer{
 	public void update(Observable obs, Object x) {
 		   
 	}
+	
+	@Override
+	public String toString(){
+		return name;
+	}
 }
