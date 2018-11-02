@@ -103,8 +103,7 @@ public class Meld {
 		return arr.size();
 	}
 	
-//TODO validMeld
-	
+	@SuppressWarnings("unlikely-arg-type")
 	public boolean validMeld() {
 		if(typeMeld() == 's') {
 			Tile.value val = arr.get(0).getValue();

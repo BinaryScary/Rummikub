@@ -5,11 +5,8 @@ import java.util.ArrayList;
 
 public class Hand {
 
-		String name = "";
 
-		Hand(String x) {
-			// super();
-			name = x;
+		public Hand() {
 		}
 		
 		private ArrayList<Tile> p_hand = new ArrayList<Tile>();
