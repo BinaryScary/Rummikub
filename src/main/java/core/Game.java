@@ -8,21 +8,19 @@ public class Game extends Observable{
 	private Pile pile;
 	private Table table;
 	private CLI cli;
-	private Hand h0;
-	private Hand h1;
-	private Hand h2;
-	private Hand h3;
+	private Hand handArr[];
 	private Player playerArr[];
 
 	public void init() {
 		pile = new Pile();
 		table = new Table();
 		cli = new CLI();
-		h0 = new Hand();
-		h1 = new Hand();
-		h2 = new Hand();
-		h3 = new Hand();
 		playerArr = new Player[4];
+		handArr = new Hand[4];
+		
+		for(int i = 0; i<4; i++) {
+			handArr[i] = new Hand();
+		}
 
 		playerArr[0] = new Player("human", 0);
 		playerArr[1] = new Player("p1", 1);
@@ -40,10 +38,10 @@ public class Game extends Observable{
 	
 	public void start() {
 		cli.message("Welcome To Rummikub!");
-		deal(h0);
-		deal(h1);
-		deal(h2);
-		deal(h3);
+		deal(handArr[0]);
+		deal(handArr[1]);
+		deal(handArr[2]);
+		deal(handArr[3]);
 		turnLoop();
 	}
 	
@@ -52,7 +50,14 @@ public class Game extends Observable{
 		for(int i = 0; i<4; i++) {
 			cli.message("Player " + playerArr[i].toString() + "'s turn.");
 			
+//			playerArr[i].strategy();
 			
+			
+			broadcast();
+
+			if(handArr[i].isEmpty()) {
+				return playerArr[i];
+			}
 			
 			if(i==3) i=-1;
 		}
@@ -81,44 +86,44 @@ public class Game extends Observable{
 
 	public ArrayList<Hand> gethands() {
 		ArrayList<Hand> hands  = new ArrayList<Hand>();
-		hands.add(h0);
-		hands.add(h1);
-		hands.add(h2);
-		hands.add(h3);
+		hands.add(handArr[0]);
+		hands.add(handArr[1]);
+		hands.add(handArr[2]);
+		hands.add(handArr[3]);
 		return hands;
 		
 	}
 
 	public Hand getH0() {
-		return h0;
+		return handArr[0];
 	}
 
 	public void setH0(Hand h0) {
-		this.h0 = h0;
+		this.handArr[0] = h0;
 	}
 
 	public Hand getH1() {
-		return h1;
+		return handArr[1];
 	}
 
 	public void setH1(Hand h1) {
-		this.h1 = h1;
+		this.handArr[1] = h1;
 	}
 
 	public Hand getH2() {
-		return h2;
+		return handArr[2];
 	}
 
 	public void setH2(Hand h2) {
-		this.h2 = h2;
+		this.handArr[2] = h2;
 	}
 
 	public Hand getH3() {
-		return h3;
+		return handArr[3];
 	}
 
 	public void setH3(Hand h3) {
-		this.h3 = h3;
+		this.handArr[3] = h3;
 	}
 	
 	
