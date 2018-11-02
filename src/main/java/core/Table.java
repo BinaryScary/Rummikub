@@ -7,11 +7,11 @@ public class Table {
 
 	private ArrayList<Meld> arr;
 
-	Table(){
+	public Table(){
 		arr = new ArrayList<Meld>();
 	}
 	
-	Table(Meld[] arr){
+	public Table(Meld[] arr){
 		this.arr = new ArrayList<Meld>(Arrays.asList(arr));
 	}
 	

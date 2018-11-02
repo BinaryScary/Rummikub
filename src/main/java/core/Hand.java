@@ -7,7 +7,7 @@ public class Hand {
 
 		private ArrayList<Tile> p_hand;
 
-		public Hand() {
+		Hand() {
 			p_hand = new ArrayList<Tile>();
 		}
 		

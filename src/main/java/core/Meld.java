@@ -6,11 +6,11 @@ public class Meld {
 		
 	private ArrayList<Tile> arr;
 	
-	Meld(){
+	public Meld(){
 		arr = new ArrayList<Tile>();
 	}
 	
-	Meld(Tile[] arr){
+	public Meld(Tile[] arr){
 		this.arr = new ArrayList<Tile>(Arrays.asList(arr));
 	}
 	

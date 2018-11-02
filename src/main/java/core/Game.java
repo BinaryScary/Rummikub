@@ -21,10 +21,10 @@ public class Game extends Observable{
 		pile = new Pile();
 		table = new Table();
 		cli = new CLI();
-		Hand h0 = new Hand();
-		Hand h1 = new Hand();
-		Hand h2 = new Hand();
-		Hand h3 = new Hand();
+		h0 = new Hand();
+		h1 = new Hand();
+		h2 = new Hand();
+		h3 = new Hand();
 
 		Player human = new Player("human", 0);
 		Player p1 = new Player("p1", 1);
