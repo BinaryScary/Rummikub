@@ -5,8 +5,10 @@ import java.util.ArrayList;
 
 public class Hand {
 
+		private String name = "";
 
-		public Hand() {
+		public Hand(String x) {
+			name = x;
 		}
 		
 		private ArrayList<Tile> p_hand = new ArrayList<Tile>();
