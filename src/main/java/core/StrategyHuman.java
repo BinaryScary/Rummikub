@@ -86,6 +86,7 @@ public class StrategyHuman extends Player {
 						removeFromHand(meld);
 						tempTable.add(meld);
 						table = tempTable;
+						game.setTable(table);
 						initialMeld = false;
 						return 0;
 					}
@@ -150,6 +151,7 @@ public class StrategyHuman extends Player {
 			//make changes permanent to table
 			removedTiles = null;
 			table = tempTable;
+			game.setTable(table);
 			return 0;
 		}else {
 			if(removedTiles != null) {
