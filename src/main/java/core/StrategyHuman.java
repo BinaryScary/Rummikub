@@ -44,6 +44,7 @@ public class StrategyHuman extends Player {
 		//does this need a deep copy?
 		Table tempTable = new Table(table.getTable()); 
 		Meld tempMeld;
+		Tile tempTile;
 		ArrayList<Tile> removedTiles = new ArrayList<Tile>();
 		int meldIndex = 0;
 
@@ -86,6 +87,7 @@ public class StrategyHuman extends Player {
 						removeFromHand(meld);
 						tempTable.add(meld);
 						table = tempTable;
+						game.setTable(table);
 						initialMeld = false;
 						return 0;
 					}
@@ -134,7 +136,31 @@ public class StrategyHuman extends Player {
 				
 				continue;
 			}else if(choice == 's') {
+				ui.message(tempTable.toString());
+				meldStr = ui.responseStr("Enter Table Meld (e.g \"R1 B1 G1\") or nothing to end: ");
+				if(meldStr == null) {
+					continue;
+				}
+
+				meld = assembleMeld(meldStr);
+				if(meld == null) {
+					continue;
+				}
 				
+				meldIndex = table.indexOf(meld);
+				if(meldIndex == -1) {
+					ui.message("*Error Meld not on table");
+					continue;
+				}
+				
+				meldStr = ui.responseStr("Enter Tile where split should end (e.g \"R1\"): ");
+				tempTile = stringToTile(meldStr);
+				if(tempTile == null) {
+					ui.message("*Error Invalid Tile");
+					continue;
+				}
+				
+				//check for tile in meld
 				continue;
 			}else if(choice == 'e') {
 				
@@ -150,6 +176,7 @@ public class StrategyHuman extends Player {
 			//make changes permanent to table
 			removedTiles = null;
 			table = tempTable;
+			game.setTable(table);
 			return 0;
 		}else {
 			if(removedTiles != null) {
