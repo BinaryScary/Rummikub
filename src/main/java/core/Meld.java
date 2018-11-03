@@ -133,7 +133,7 @@ public class Meld {
 			}
 			
 			for(int i = 1; i < arr.size(); i++) {
-				if(arr.get(1).getValue() != val) {
+				if(arr.get(i).getValue() != val) {
 					return false;
 				}
 				if(arr.contains(arr.get(i).getColour())) {
