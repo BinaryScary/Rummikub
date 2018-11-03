@@ -44,11 +44,11 @@ public class MeldTest extends TestCase {
 		Meld m5 = new Meld(tArr5);
 		Meld m6 = new Meld(tArr6);
 
-//		assertTrue(m1.validMeld());
-//		assertFalse(m2.validMeld());
-//		assertTrue(m3.validMeld());
-//		assertFalse(m4.validMeld());
-//		assertTrue(m5.validMeld());
+		assertTrue(m1.validMeld());
+		assertFalse(m2.validMeld());
+		assertTrue(m3.validMeld());
+		assertFalse(m4.validMeld());
+		assertTrue(m5.validMeld());
 		assertFalse(m6.validMeld());
 	}
 }
