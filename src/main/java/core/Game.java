@@ -3,18 +3,17 @@ package core;
 import java.util.ArrayList;
 import java.util.Observable;
 
-@SuppressWarnings("deprecation")
 public class Game extends Observable{ 
 	private Pile pile;
 	private Table table;
-	private CLI cli;
+	private CLI ui;
 	private Hand handArr[];
 	private Player playerArr[];
 
 	public void init() {
 		pile = new Pile();
 		table = new Table();
-		cli = new CLI();
+		ui = new CLI();
 		playerArr = new Player[4];
 		handArr = new Hand[4];
 		
@@ -37,18 +36,20 @@ public class Game extends Observable{
 	//init(file)
 	
 	public void start() {
-		cli.message("Welcome To Rummikub!");
+		ui.message("Welcome To Rummikub!");
 		deal(handArr[0]);
 		deal(handArr[1]);
 		deal(handArr[2]);
 		deal(handArr[3]);
+		broadcast();
+
 		turnLoop();
 	}
 	
 	private Player turnLoop() {
 		
 		for(int i = 0; i<4; i++) {
-			cli.message("Player " + playerArr[i].toString() + "'s turn.");
+			ui.message("Player " + playerArr[i].toString() + "'s turn.");
 			
 			playerArr[i].play();
 			
@@ -68,10 +69,10 @@ public class Game extends Observable{
 		for(int i = 0; i<14; i++) {
 			hand.addTileTop_hand(pile.deal());
 		}
-		broadcast();
 	}
 	
 	private void broadcast() {
+		setChanged();
 		notifyObservers();
 	}
 

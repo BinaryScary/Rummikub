@@ -13,17 +13,16 @@ public abstract class Player implements Observer{
 		
 		hand = new Hand(); 
     	//should contain player strategy
-    	pile = new Pile();
     	table = new Table();
 
 	}
 	public void update(Observable obs, Object x) {
 		Game update = (Game) obs;
 		table = update.getTable();
-		updateHand();
+		updateHand(update);
 	}
 	
-	protected abstract void updateHand();
+	protected abstract void updateHand(Game update);
 	
 	protected abstract void play();
 	

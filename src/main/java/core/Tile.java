@@ -2,7 +2,16 @@ package core;
 
 public class Tile {
     public static enum colour{
-        RED,GREEN,BLUE,ORANGE;
+        RED('R'),GREEN('G'),BLUE('B'),ORANGE('O');
+    	private final char col;
+    	
+    	colour(char col){
+    		this.col = col;
+    	}
+    	
+    	public char getCol() {
+    		return this.col;
+    	}
     }
     public static enum value{
         ONE(1),TWO(2),THREE(3),FOUR(4),FIVE(5),SIX(6),SEVEN(7),EIGHT(8),NINE(9),TEN(10),ELEVEN(11),TWELVE(12),THIRTEEN(13);
@@ -47,7 +56,8 @@ public class Tile {
 
     @Override
     public String toString(){
-        return tileColour +" "+ tileValue;
+        return "" + tileColour.getCol() + tileValue.getVal();
+        //TODO fix test error associated with toString change
     }
 
     @Override
