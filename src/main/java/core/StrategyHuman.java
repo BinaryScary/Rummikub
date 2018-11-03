@@ -12,4 +12,9 @@ public class StrategyHuman extends Player {
 		
 	}
 
+	@Override
+	protected void updateHand() {
+		
+	}
+
 }

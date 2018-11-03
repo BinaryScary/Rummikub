@@ -50,8 +50,7 @@ public class Game extends Observable{
 		for(int i = 0; i<4; i++) {
 			cli.message("Player " + playerArr[i].toString() + "'s turn.");
 			
-//			playerArr[i].strategy();
-			
+			playerArr[i].play();
 			
 			broadcast();
 

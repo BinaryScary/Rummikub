@@ -7,7 +7,6 @@ public abstract class Player implements Observer{
 	protected String name;
 	protected Hand hand; 
 	protected Table table; // player can see table itself
-	protected Pile pile; // player can see deck itself
 	
 	
 	public Player (){ //should have player strategy
@@ -19,8 +18,12 @@ public abstract class Player implements Observer{
 
 	}
 	public void update(Observable obs, Object x) {
-		   
+		Game update = (Game) obs;
+		table = update.getTable();
+		updateHand();
 	}
+	
+	protected abstract void updateHand();
 	
 	protected abstract void play();
 	
