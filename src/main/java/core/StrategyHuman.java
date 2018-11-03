@@ -18,7 +18,7 @@ public class StrategyHuman extends Player {
 		Tile temp;
 		
 		ui.message(hand.toString());
-		while(!hasChar(choice = ui.response("Create meld, Split meld, or Draw Tile?(c,s,d): "), new char[]{'c','s','d'})) {
+		while(!hasChar(choice = ui.response("Play Table, or Draw Tile?(p,d): "), new char[]{'p','d'})) {
 			ui.message("*ERROR choice invalid");
 		}
 		
@@ -26,28 +26,36 @@ public class StrategyHuman extends Player {
 			temp = pile.deal();
 			hand.addTileTop_hand(temp);
 			ui.message("You drew a " + temp + ".");
-		}else if(choice == 'c') {
-			while(true) {
-				meldStr = ui.responseStr("Enter your meld (e.g \"R1 B1 G1\") or skip to Draw: ");
-				if(meldStr == null) {
-					temp = pile.deal();
-					hand.addTileTop_hand(temp);
-					ui.message("You drew a " + temp + ".");
+		}else if(choice == 'p') {
+
+			while(!hasChar(choice = ui.response("Create Meld, Add to Meld, or Split Meld?(c,a,s): "), new char[]{'c','a','s'})) {
+				ui.message("*ERROR choice invalid");
+			}
+			
+			if(choice == 'c') {
+				while(true) {
+					meldStr = ui.responseStr("Enter your meld (e.g \"R1 B1 G1\") or skip to Draw: ");
+					if(meldStr == null) {
+						temp = pile.deal();
+						hand.addTileTop_hand(temp);
+						ui.message("You drew a " + temp + ".");
+					}
+					meld = parseMeld(meldStr);
+					if(meld == null) {
+						continue;
+					}
+					System.out.println(meld);
+					if(!meld.validMeld()) {
+						ui.message("Invalid Meld");
+						continue;
+					}
+					if(meld.totalMeld() < 30) {
+						ui.message("Meld need to total 30+");
+						continue;
+					}
+					
+					table.add(meld);
 				}
-				meld = parseMeld(meldStr);
-				if(meld == null) {
-					continue;
-				}
-				System.out.println(meld);
-				if(!meld.validMeld()) {
-					ui.message("Invalid Meld");
-					continue;
-				}
-				if(meld.totalMeld() < 30) {
-					ui.message("Meld need to total 30+");
-					continue;
-				}
-				ui.response("test");
 			}
 		}
 
