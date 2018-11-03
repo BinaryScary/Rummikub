@@ -13,9 +13,6 @@ public class StrategyHuman extends Player {
 	protected void play() {
 		ui = new CLI();
 		char choice;
-		String meldStr;
-		Meld meld;
-		Tile temp;
 		
 		ui.message(hand.toString());
 		while(!hasChar(choice = ui.response("Play Table, or Draw Tile?(p,d): "), new char[]{'p','d'})) {
@@ -27,9 +24,23 @@ public class StrategyHuman extends Player {
 			hand.addTileTop_hand(temp);
 			ui.message("You drew a " + temp + ".");
 		}else if(choice == 'p') {
+			if(playTable() == -1) {
+				temp = pile.deal();
+				hand.addTileTop_hand(temp);
+				ui.message("You drew a " + temp + ".");
+			}
+		}
 
-			while(!hasChar(choice = ui.response("Create Meld, Add to Meld, or Split Meld?(c,a,s): "), new char[]{'c','a','s'})) {
-				ui.message("*ERROR choice invalid");
+	}
+	
+	private int playTable() {
+		char choice;
+		String meldStr;
+		Meld meld;
+		Tile temp;
+
+		while(true) {
+			while(!hasChar(choice = ui.response("Create Meld, Add to Meld, Split Meld, or End?(c,a,s,e): "), new char[]{'c','a','s'})) { ui.message("*ERROR choice invalid");
 			}
 			
 			if(choice == 'c') {
@@ -55,10 +66,13 @@ public class StrategyHuman extends Player {
 					}
 					
 					table.add(meld);
+					break;
 				}
 			}
+			
+			break;
 		}
-
+		return -1;
 	}
 	
 	private Meld parseMeld(String melds) {
