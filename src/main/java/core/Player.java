@@ -6,6 +6,7 @@ public abstract class Player implements Observer{
 	
 	protected String name;
 	protected Hand hand; 
+	protected Pile pile;
 	protected Table table; // player can see table itself
 	
 	
@@ -19,6 +20,7 @@ public abstract class Player implements Observer{
 	public void update(Observable obs, Object x) {
 		Game update = (Game) obs;
 		table = update.getTable();
+		pile = update.getPile();
 		updateHand(update);
 	}
 	

@@ -54,6 +54,8 @@ public class Game extends Observable{
 			playerArr[i].play();
 			
 			broadcast();
+			
+			System.out.println(table);
 
 			if(handArr[i].isEmpty()) {
 				return playerArr[i];
@@ -71,6 +73,14 @@ public class Game extends Observable{
 		}
 	}
 	
+	public Pile getPile() {
+		return pile;
+	}
+
+	public void setPile(Pile pile) {
+		this.pile = pile;
+	}
+
 	private void broadcast() {
 		setChanged();
 		notifyObservers();

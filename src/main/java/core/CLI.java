@@ -10,6 +10,16 @@ public class CLI implements UserInterface {
 		System.out.println(mes);
 	}
 
+	public String responseStr(String mes) {
+
+		System.out.print(mes);
+		
+		String s = "";
+		s += userInput.nextLine();
+
+		return s;
+	}
+
 	@Override
 	public char response(String mes) {
 		System.out.print(mes);
