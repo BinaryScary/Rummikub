@@ -28,12 +28,25 @@ public class StrategyHuman extends Player {
 			ui.message("You drew a " + temp + ".");
 		}else if(choice == 'c') {
 			while(true) {
-				meldStr = ui.responseStr("Enter your meld (e.g \"R1 B1 G1\"): ");
-				meld = parseMeld(meldStr);
+				meldStr = ui.responseStr("Enter your meld (e.g \"R1 B1 G1\") or skip to Draw: ");
 				if(meldStr == null) {
+					temp = pile.deal();
+					hand.addTileTop_hand(temp);
+					ui.message("You drew a " + temp + ".");
+				}
+				meld = parseMeld(meldStr);
+				if(meld == null) {
 					continue;
 				}
 				System.out.println(meld);
+				if(!meld.validMeld()) {
+					ui.message("Invalid Meld");
+					continue;
+				}
+				if(meld.totalMeld() < 30) {
+					ui.message("Meld need to total 30+");
+					continue;
+				}
 				ui.response("test");
 			}
 		}
@@ -85,7 +98,7 @@ public class StrategyHuman extends Player {
 		if(tile.length() == 2) {
 			tempVal = Character.getNumericValue(tile.charAt(1));
 		}else if(tile.length() == 3) {
-			tempVal = Integer.parseInt(tile.substring(1,2));
+			tempVal = Integer.parseInt(tile.substring(1,3));
 		}
 		if(tempVal < 1) {
 			return null;

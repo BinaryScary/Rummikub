@@ -8,6 +8,7 @@ public abstract class Player implements Observer{
 	protected Hand hand; 
 	protected Pile pile;
 	protected Table table; // player can see table itself
+	protected boolean initialMeld = true;
 	
 	
 	public Player (){ //should have player strategy
