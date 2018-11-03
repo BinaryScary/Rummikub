@@ -10,8 +10,23 @@ public class Meld {
 		arr = new ArrayList<Tile>();
 	}
 	
+	public Meld(Meld m){
+		arr = new ArrayList<Tile>();
+		for(Tile t: m.getMeld()) {
+			arr.add(t);
+		}
+	}
+
 	public Meld(Tile[] arr){
 		this.arr = new ArrayList<Tile>(Arrays.asList(arr));
+	}
+
+	public Meld(ArrayList<Tile> arr){
+		this.arr = new ArrayList<Tile>(arr);
+	}
+	
+	public ArrayList<Tile> getMeld(){
+		return arr;
 	}
 	
 	public Tile getAt(int i) {
@@ -42,6 +57,10 @@ public class Meld {
 	
 	public void add(Tile t) {
 		arr.add(t);
+	}
+
+	public void add(Meld m) {
+		arr.addAll(m.getMeld());
 	}
 	
 	public int totalMeld() {

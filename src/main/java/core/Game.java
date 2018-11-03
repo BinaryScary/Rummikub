@@ -3,6 +3,7 @@ package core;
 import java.util.ArrayList;
 import java.util.Observable;
 
+@SuppressWarnings("deprecation")
 public class Game extends Observable{ 
 	private Pile pile;
 	private Table table;
@@ -27,6 +28,7 @@ public class Game extends Observable{
 		playerArr[3] = new StrategyHuman();
 		pile.scramble();
 		
+		
 		this.addObserver(playerArr[0]);
 		this.addObserver(playerArr[1]);
 		this.addObserver(playerArr[2]);
@@ -37,10 +39,16 @@ public class Game extends Observable{
 	
 	public void start() {
 		ui.message("Welcome To Rummikub!");
+		//Each Player is assigned a hand 0 for human and so on
 		deal(handArr[0]);
 		deal(handArr[1]);
 		deal(handArr[2]);
 		deal(handArr[3]);
+		
+		//testing
+		Tile[] tArr = {new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.BLUE, Tile.value.TEN),new Tile(Tile.colour.GREEN, Tile.value.TEN),new Tile(Tile.colour.ORANGE, Tile.value.TEN),new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.BLUE, Tile.value.TEN),new Tile(Tile.colour.GREEN, Tile.value.TEN),new Tile(Tile.colour.ORANGE, Tile.value.TEN)};
+		handArr[0] = new Hand(tArr);
+
 		broadcast();
 
 		turnLoop();
@@ -55,8 +63,11 @@ public class Game extends Observable{
 			
 			broadcast();
 			
-			System.out.println(table);
-
+			ui.message("Player " + playerArr[i].toString() + "'s hand.");
+			ui.message(handArr[i].toString());
+			ui.message("Table: ");
+			ui.message(table.toString());
+			
 			if(handArr[i].isEmpty()) {
 				return playerArr[i];
 			}

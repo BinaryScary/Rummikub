@@ -2,13 +2,18 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Hand {
 
 		private ArrayList<Tile> p_hand;
 
-		Hand() {
+		public Hand() {
 			p_hand = new ArrayList<Tile>();
+		}
+
+		public Hand(Tile[] arr){
+			this.p_hand = new ArrayList<Tile>(Arrays.asList(arr));
 		}
 		
 		public ArrayList<Tile> getTiles() {
@@ -17,6 +22,10 @@ public class Hand {
 
 		public Tile getTile(int index) {
 			return this.p_hand.get(index);
+		}
+
+		public int indexOf(Tile t) {
+			return this.p_hand.indexOf(t);
 		}
 
 		public void addTileTop_hand(Tile newTile) {

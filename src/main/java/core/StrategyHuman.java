@@ -1,5 +1,7 @@
 package core;
 
+import java.util.ArrayList;
+
 public class StrategyHuman extends Player {
 
 	private CLI ui;
@@ -13,6 +15,7 @@ public class StrategyHuman extends Player {
 	protected void play() {
 		ui = new CLI();
 		char choice;
+		Tile temp;
 		
 		ui.message(hand.toString());
 		while(!hasChar(choice = ui.response("Play Table, or Draw Tile?(p,d): "), new char[]{'p','d'})) {
@@ -37,45 +40,148 @@ public class StrategyHuman extends Player {
 		char choice;
 		String meldStr;
 		Meld meld;
-		Tile temp;
+		ArrayList<Meld> invalidMelds;
+		//does this need a deep copy?
+		Table tempTable = new Table(table.getTable()); 
+		Meld tempMeld;
+		ArrayList<Tile> removedTiles = new ArrayList<Tile>();
+		int meldIndex = 0;
 
 		while(true) {
-			while(!hasChar(choice = ui.response("Create Meld, Add to Meld, Split Meld, or End?(c,a,s,e): "), new char[]{'c','a','s'})) { ui.message("*ERROR choice invalid");
+			ui.message("Current Table: ");
+			ui.message(tempTable.toString());
+			ui.message("Current Hand: ");
+			ui.message(hand.toString());
+
+			while(!hasChar(choice = ui.response("Create Meld, Add to Meld, Split Meld, or End?(c,a,s,e): "), new char[]{'c','a','s','e'})) { 
+				ui.message("*ERROR choice invalid");
 			}
-			
+			//initialMeld check
+			if(initialMeld == true && hasChar(choice, new char[]{'a','s'})){
+				ui.message("*ERROR cannot add, or split meld on initial run");
+				continue;
+			}
+
 			if(choice == 'c') {
 				while(true) {
-					meldStr = ui.responseStr("Enter your meld (e.g \"R1 B1 G1\") or skip to Draw: ");
+					meldStr = ui.responseStr("Enter your meld (e.g \"R1 B1 G1\") or nothing to end: ");
 					if(meldStr == null) {
-						temp = pile.deal();
-						hand.addTileTop_hand(temp);
-						ui.message("You drew a " + temp + ".");
-					}
-					meld = parseMeld(meldStr);
-					if(meld == null) {
-						continue;
-					}
-					System.out.println(meld);
-					if(!meld.validMeld()) {
-						ui.message("Invalid Meld");
-						continue;
-					}
-					if(meld.totalMeld() < 30) {
-						ui.message("Meld need to total 30+");
 						continue;
 					}
 					
-					table.add(meld);
-					break;
+					meld = assembleMeld(meldStr);
+					if(meld == null) {
+						continue;
+					}
+					if(checkFromHand(meld) == -1) {
+						continue;
+					}
+					ui.message(meld.toString());
+
+					//initialMeld check
+					if(initialMeld == true && meld.totalMeld() < 30) {
+						ui.message("Meld need to total 30+");
+						continue;
+					}else if(initialMeld == true && meld.totalMeld() >= 30) {
+						removeFromHand(meld);
+						tempTable.add(meld);
+						table = tempTable;
+						initialMeld = false;
+						return 0;
+					}
+					
+					removeFromHand(meld);
+					tempTable.add(meld);
+					continue;
 				}
+			}else if(choice == 'a') {
+				ui.message(tempTable.toString());
+				meldStr = ui.responseStr("Enter Table Meld (e.g \"R1 B1 G1\") or nothing to end: ");
+				if(meldStr == null) {
+					continue;
+				}
+
+				meld = assembleMeld(meldStr);
+				if(meld == null) {
+					continue;
+				}
+				
+				meldIndex = table.indexOf(meld);
+				if(meldIndex == -1) {
+					ui.message("*Error Meld not on table");
+					continue;
+				}
+
+				meldStr = ui.responseStr("Enter Tile('s) to add: ");
+				meld = assembleMeld(meldStr);
+				if(meld == null) {
+					continue;
+				}
+				if(checkFromHand(meld) == -1) {
+					continue;
+				}else {
+					removeFromHand(meld);
+				}
+
+				tempMeld = new Meld(tempTable.getAt(meldIndex));
+				tempMeld.add(meld);
+				if(!tempMeld.validMeld()) {
+					ui.message("*Error Invalid meld addition");
+					continue;
+				}else {
+					tempTable.getAt(meldIndex).add(meld);
+				}
+				
+				continue;
+			}else if(choice == 's') {
+				
+				continue;
+			}else if(choice == 'e') {
+				
+				break;
 			}
-			
 			break;
 		}
-		return -1;
+
+		//check for invalid melds in players modified table
+		invalidMelds = validTable(tempTable);
+		if(invalidMelds == null) {
+
+			//make changes permanent to table
+			removedTiles = null;
+			table = tempTable;
+			return 0;
+		}else {
+			if(removedTiles != null) {
+				for(Tile t: removedTiles) {
+					hand.addTileTop_hand(t);
+				}
+				removedTiles = null;
+			}
+			ui.message("~Reseting Table~");
+
+			//return soft error for draw
+			return -1;
+		}
+	}
+
+	
+	private ArrayList<Meld> validTable(Table t) {
+		ArrayList<Meld> mArr = new ArrayList<Meld>();
+		for(Meld m: t.getTable()) {
+			if(!m.validMeld()) {
+				mArr.add(m);
+			}
+		}
+		
+		if(!mArr.isEmpty()) {
+			return mArr;
+		}
+
+		return null;
 	}
 	
-	private Meld parseMeld(String melds) {
+	private Meld assembleMeld(String melds) {
 		String[] meldArr;
 		Meld meld = new Meld();
 		Tile tile;
@@ -93,6 +199,7 @@ public class StrategyHuman extends Player {
 					ui.message("Invalid tile " + s);
 					return null;
 				}
+				
 				meld.add(tile);
 
 			}else {
@@ -102,6 +209,28 @@ public class StrategyHuman extends Player {
 		}
 		
 		return meld;
+	}
+	
+	private int checkFromHand(Meld m) {
+		for(Tile t: m.getMeld()) {
+			if(hand.indexOf(t) == -1) {
+				ui.message(t + " Tile not in hand");
+				return -1;
+			}
+		}
+		return 0;
+	}
+	
+	private int removeFromHand(Meld m){
+		for(Tile t: m.getMeld()) {
+			if(hand.indexOf(t) == -1) {
+				ui.message(t + " Tile not in hand");
+				return -1;
+			}else {
+				hand.playTileFromp_hand(t);
+			}
+		}
+		return 0;
 	}
 	
 	private Tile stringToTile(String tile) {

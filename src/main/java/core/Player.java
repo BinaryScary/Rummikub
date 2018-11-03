@@ -2,6 +2,7 @@ package core;
 import java.util.Observable;
 import java.util.Observer;
 
+@SuppressWarnings("deprecation")
 public abstract class Player implements Observer{
 	
 	protected String name;

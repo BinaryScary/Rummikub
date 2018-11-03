@@ -14,6 +14,18 @@ public class Table {
 	public Table(Meld[] arr){
 		this.arr = new ArrayList<Meld>(Arrays.asList(arr));
 	}
+
+	public Table(ArrayList<Meld> arr){
+		this.arr = new ArrayList<Meld>();
+
+		for(Meld m: arr) {
+			this.arr.add(m);
+		}
+	}
+	
+	public int indexOf(Meld m) {
+		return arr.indexOf(m);
+	}
 	
 	public Meld getAt(int i) {
 		Meld buf = null;
@@ -24,6 +36,10 @@ public class Table {
 		}
 
 		return buf;
+	}
+	
+	public ArrayList<Meld> getTable(){
+		return arr;
 	}
 	
 	public Meld remove(int i) {
