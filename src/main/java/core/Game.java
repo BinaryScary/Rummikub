@@ -22,10 +22,10 @@ public class Game extends Observable{
 			handArr[i] = new Hand();
 		}
 
-		playerArr[0] = new Player("human", 0);
-		playerArr[1] = new Player("p1", 1);
-		playerArr[2] = new Player("p2", 2);
-		playerArr[3] = new Player("p3", 3);
+		playerArr[0] = new StrategyHuman();
+		playerArr[1] = new StrategyHuman();
+		playerArr[2] = new StrategyHuman();
+		playerArr[3] = new StrategyHuman();
 		pile.scramble();
 		
 		this.addObserver(playerArr[0]);
