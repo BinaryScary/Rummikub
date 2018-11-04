@@ -3,6 +3,8 @@ package core;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Hand {
 
@@ -14,6 +16,12 @@ public class Hand {
 
 		public Hand(Tile[] arr){
 			this.hand = new ArrayList<Tile>(Arrays.asList(arr));
+		}
+		
+		public class ValueSort implements Comparator<Tile> {
+			public int compare(Tile x, Tile y) {
+				return x.getValue().getVal() - y.getValue().getVal();
+			}
 		}
 
 		public ArrayList<Tile> getTiles() {
@@ -45,19 +53,20 @@ public class Hand {
 			hand.remove(tileToPlay);
 			hand.trimToSize();
 		}
+		
+		public ArrayList<Tile> sortByValue() {
+			ArrayList<Tile> handDuplicate;
+			handDuplicate = hand;
+			Collections.sort(handDuplicate, new ValueSort());
+			return handDuplicate;
+		}
 
 		@Override
 		public String toString(){
-			String str = "{";
-			if(hand.size() == 0) {
-				return str;
-			}
-
-			for(Tile t : hand) {
-				str += t.toString() + " ";
-			}
-			str = str.trim() + "}";
-
+			String str = "[";
+			if(sortByValue().size() == 0) { return str; }
+			for(Tile t : sortByValue()) { str += t.toString() + " "; }
+			str = str.trim() + "]";
 			return str;
 		}
 }

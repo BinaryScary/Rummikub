@@ -22,6 +22,14 @@ public class HandTest extends TestCase {
 		assertEquals(h1.getTile(0), t1);
 	}
 	
+	public void testSortByValue() {
+		Hand h1 = new Hand();
+		h1.addTileToHand(t2); 
+		h1.addTileToHand(t1); 
+		assertEquals(h1.getTile(0), t2);
+		assertEquals(h1.toString(), "[R1 B2]");
+	}
+	
 	public void testGetSize() {
 		Hand h1 = new Hand();
 		h1.addTileToHand(t1); 
