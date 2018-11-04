@@ -29,6 +29,10 @@ public class Meld {
 		return arr;
 	}
 	
+	public int indexOf(Tile t) {
+		return arr.indexOf(t);
+	}
+	
 	public Tile getAt(int i) {
 		Tile buf = null;
 		try {

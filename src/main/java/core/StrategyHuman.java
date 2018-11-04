@@ -134,7 +134,7 @@ public class StrategyHuman extends Player {
 					tempTable.getAt(meldIndex).add(meld);
 				}
 				
-				continue;
+		continue;
 			}else if(choice == 's') {
 				ui.message(tempTable.toString());
 				meldStr = ui.responseStr("Enter Table Meld (e.g \"R1 B1 G1\") or nothing to end: ");
@@ -160,7 +160,15 @@ public class StrategyHuman extends Player {
 					continue;
 				}
 				
-				//check for tile in meld
+				if(meld.indexOf(tempTile) == -1) {
+					ui.message("*Error Tile not a member of meld");
+					continue;
+				}
+				
+				tempTable.remove(meldIndex);
+				tempTable.add(new Meld(new ArrayList<Tile>(meld.getMeld().subList(0, meld.indexOf(tempTile) + 1))));
+				tempTable.add(new Meld(new ArrayList<Tile>(meld.getMeld().subList(meld.indexOf(tempTile) + 1,meld.size()))));
+				
 				continue;
 			}else if(choice == 'e') {
 				
