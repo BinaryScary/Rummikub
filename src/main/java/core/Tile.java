@@ -57,7 +57,6 @@ public class Tile {
     @Override
     public String toString(){
         return "" + tileColour.getCol() + tileValue.getVal();
-        //TODO fix test error associated with toString change
     }
 
     @Override

@@ -6,54 +6,54 @@ import java.util.Arrays;
 
 public class Hand {
 
-		private ArrayList<Tile> p_hand;
+		private ArrayList<Tile> hand;
 
 		public Hand() {
-			p_hand = new ArrayList<Tile>();
+			hand = new ArrayList<Tile>();
 		}
 
 		public Hand(Tile[] arr){
-			this.p_hand = new ArrayList<Tile>(Arrays.asList(arr));
+			this.hand = new ArrayList<Tile>(Arrays.asList(arr));
 		}
-		
+
 		public ArrayList<Tile> getTiles() {
-			return this.p_hand;
+			return this.hand;
 		}
 
 		public Tile getTile(int index) {
-			return this.p_hand.get(index);
+			return this.hand.get(index);
 		}
 
 		public int indexOf(Tile t) {
-			return this.p_hand.indexOf(t);
+			return this.hand.indexOf(t);
 		}
 
-		public void addTileTop_hand(Tile newTile) {
-			p_hand.add(newTile);
+		public void addTileToHand(Tile newTile) {
+			hand.add(newTile);
 		}
 
-		public int sizeOfp_hand() {
-			return p_hand.size();
+		public int sizeOfHand() {
+			return hand.size();
 		}
-		
+
 		public boolean isEmpty() {
-			return p_hand.isEmpty();
+			return hand.isEmpty();
 		}
 
-		public void playTileFromp_hand(Tile tileToPlay) {
-			
-			p_hand.remove(tileToPlay);
-			p_hand.trimToSize();
+		public void playTileFromHand(Tile tileToPlay) {
+
+			hand.remove(tileToPlay);
+			hand.trimToSize();
 		}
-		
+
 		@Override
 		public String toString(){
 			String str = "{";
-			if(p_hand.size() == 0) {
+			if(hand.size() == 0) {
 				return str;
 			}
 
-			for(Tile t : p_hand) {
+			for(Tile t : hand) {
 				str += t.toString() + " ";
 			}
 			str = str.trim() + "}";
@@ -61,4 +61,3 @@ public class Hand {
 			return str;
 		}
 }
-

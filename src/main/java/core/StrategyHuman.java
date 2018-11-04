@@ -24,12 +24,12 @@ public class StrategyHuman extends Player {
 		
 		if(choice == 'd') {
 			temp = pile.deal();
-			hand.addTileTop_hand(temp);
+			hand.addTileToHand(temp);
 			ui.message("You drew a " + temp + ".");
 		}else if(choice == 'p') {
 			if(playTable() == -1) {
 				temp = pile.deal();
-				hand.addTileTop_hand(temp);
+				hand.addTileToHand(temp);
 				ui.message("You drew a " + temp + ".");
 			}
 		}
@@ -220,7 +220,7 @@ public class StrategyHuman extends Player {
 		}else {
 			if(removedTiles != null) {
 				for(Tile t: removedTiles) {
-					hand.addTileTop_hand(t);
+					hand.addTileToHand(t);
 				}
 				removedTiles = null;
 			}
@@ -233,7 +233,7 @@ public class StrategyHuman extends Player {
 	
 	private void addMeldToHand(Meld m) {
 		for(Tile t: m.getMeld()) {
-			hand.addTileTop_hand(t);
+			hand.addTileToHand(t);
 		}
 	}
 
@@ -299,7 +299,7 @@ public class StrategyHuman extends Player {
 				ui.message(t + " Tile not in hand");
 				return -1;
 			}else {
-				hand.playTileFromp_hand(t);
+				hand.playTileFromHand(t);
 			}
 		}
 		return 0;
