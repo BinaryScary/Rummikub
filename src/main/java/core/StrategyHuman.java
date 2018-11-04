@@ -119,19 +119,50 @@ public class StrategyHuman extends Player {
 				if(meld == null) {
 					continue;
 				}
-				if(checkFromHand(meld) == -1) {
-					continue;
-				}else {
-					removeFromHand(meld);
+
+				while(!hasChar(choice = ui.response("Tile From Table or Hand?(h,t): "), new char[]{'h','t'})) { 
+					ui.message("*ERROR choice invalid");
 				}
 
-				tempMeld = new Meld(tempTable.getAt(meldIndex));
-				tempMeld.add(meld);
-				if(!tempMeld.validMeld()) {
-					ui.message("*Error Invalid meld addition");
-					continue;
+				if(choice == 'h') {
+					if(checkFromHand(meld) == -1) {
+						continue;
+					}else {
+						removeFromHand(meld);
+					}
+
+					tempMeld = new Meld(tempTable.getAt(meldIndex));
+					if(tempMeld.checkFrontAdd(meld)) {
+						tempMeld.addFront(meld);
+					}else {
+						tempMeld.add(meld);
+					}
+					if(!tempMeld.validMeld()) {
+						ui.message("*Error Invalid meld addition");
+						addMeldToHand(meld);
+						continue;
+					}else {
+						tempTable.getAt(meldIndex).add(meld);
+					}
 				}else {
-					tempTable.getAt(meldIndex).add(meld);
+					if(tempTable.indexOf(meld) == -1) {
+						ui.message("*Error Tile not on Table");
+						continue;
+					}
+
+					tempTable.remove(meld);
+					tempMeld = new Meld(tempTable.getAt(meldIndex));
+					if(tempMeld.checkFrontAdd(meld)) {
+						tempMeld.addFront(meld);
+					}else {
+						tempMeld.add(meld);
+					}
+					if(!tempMeld.validMeld()) {
+						ui.message("*Error Invalid meld addition");
+						continue;
+					}else {
+						tempTable.getAt(meldIndex).add(meld);
+					}
 				}
 				
 		continue;
@@ -197,6 +228,12 @@ public class StrategyHuman extends Player {
 
 			//return soft error for draw
 			return -1;
+		}
+	}
+	
+	private void addMeldToHand(Meld m) {
+		for(Tile t: m.getMeld()) {
+			hand.addTileTop_hand(t);
 		}
 	}
 

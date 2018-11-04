@@ -66,6 +66,16 @@ public class Meld {
 	public void add(Meld m) {
 		arr.addAll(m.getMeld());
 	}
+	public void addFront(Meld m) {
+		arr.addAll(0,m.getMeld());
+	}
+	
+	public boolean checkFrontAdd(Meld m) {
+		if(m.getAt(0).getValue().getVal() < getAt(0).getValue().getVal()) {
+			return true;
+		}
+		return false;
+	}
 	
 	public int totalMeld() {
 		int total = 0;

@@ -10,7 +10,8 @@ public abstract class Player implements Observer{
 	protected Pile pile;
 	protected Table table; // player can see table itself
 	protected Game game;
-	protected boolean initialMeld = true;
+	//TODO change back to true after testing
+	protected boolean initialMeld = false;
 	
 	
 	public Player (){ //should have player strategy
