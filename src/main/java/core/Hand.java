@@ -17,7 +17,7 @@ public class Hand {
 		public Hand(Tile[] arr){
 			this.hand = new ArrayList<Tile>(Arrays.asList(arr));
 		}
-		
+
 		public class ValueSort implements Comparator<Tile> {
 			public int compare(Tile x, Tile y) {
 				return x.getValue().getVal() - y.getValue().getVal();
@@ -53,19 +53,43 @@ public class Hand {
 			hand.remove(tileToPlay);
 			hand.trimToSize();
 		}
-		
-		public ArrayList<Tile> sortByValue() {
+
+		public ArrayList<Tile> sortByValueColor() {
 			ArrayList<Tile> handDuplicate;
+			ArrayList<Tile> handR = new ArrayList<Tile>();
+			ArrayList<Tile> handB = new ArrayList<Tile>();
+			ArrayList<Tile> handG = new ArrayList<Tile>();
+			ArrayList<Tile> handO = new ArrayList<Tile>();
 			handDuplicate = hand;
-			Collections.sort(handDuplicate, new ValueSort());
-			return handDuplicate;
+
+			for(Tile t : handDuplicate) {
+				if (t.getColour().getCol() == 'R') {
+					handR.add(t);
+				} else if (t.getColour().getCol() == 'B') {
+					handB.add(t);
+				} else if (t.getColour().getCol() == 'G') {
+					handG.add(t);
+				} else if (t.getColour().getCol() == 'O') {
+					handO.add(t);
+				}
+			}
+			
+			Collections.sort(handR, new ValueSort());
+			Collections.sort(handB, new ValueSort());
+			Collections.sort(handG, new ValueSort());
+			Collections.sort(handO, new ValueSort());
+			
+			handR.addAll(handB);
+			handR.addAll(handG);
+			handR.addAll(handO);
+			return handR;
 		}
 
 		@Override
 		public String toString(){
 			String str = "[";
-			if(sortByValue().size() == 0) { return str; }
-			for(Tile t : sortByValue()) { str += t.toString() + " "; }
+			if(sortByValueColor().size() == 0) { return str; }
+			for(Tile t : sortByValueColor()) { str += t.toString() + " "; }
 			str = str.trim() + "]";
 			return str;
 		}

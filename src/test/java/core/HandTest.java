@@ -6,6 +6,7 @@ public class HandTest extends TestCase {
 	
 	Tile t1 = new Tile(Tile.colour.RED, Tile.value.ONE);
 	Tile t2 = new Tile(Tile.colour.BLUE, Tile.value.TWO);
+	Tile t3 = new Tile(Tile.colour.RED, Tile.value.TWO);
 	Tile[] tArr = {t1,t2};
 	
 	public void testisEmpty() {
@@ -24,10 +25,10 @@ public class HandTest extends TestCase {
 	
 	public void testSortByValue() {
 		Hand h1 = new Hand();
-		h1.addTileToHand(t2); 
+		h1.addTileToHand(t3); 
 		h1.addTileToHand(t1); 
-		assertEquals(h1.getTile(0), t2);
-		assertEquals(h1.toString(), "[R1 B2]");
+		assertEquals(h1.getTile(0), t3);
+		assertEquals(h1.toString(), "[R1 R2]");
 	}
 	
 	public void testGetSize() {
