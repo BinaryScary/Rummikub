@@ -44,7 +44,6 @@ public class Hand {
 			
 			p_hand.remove(tileToPlay);
 			p_hand.trimToSize();
-
 		}
 		
 		@Override
@@ -61,6 +60,5 @@ public class Hand {
 
 			return str;
 		}
-		
 }
 
