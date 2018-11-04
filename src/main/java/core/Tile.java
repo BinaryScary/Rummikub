@@ -1,69 +1,69 @@
 package core;
 
 public class Tile {
-    public static enum colour{
+    public static enum colour {
         RED('R'),GREEN('G'),BLUE('B'),ORANGE('O');
     	private final char col;
-    	
-    	colour(char col){
+
+    	colour(char col) {
     		this.col = col;
     	}
-    	
+
     	public char getCol() {
     		return this.col;
     	}
     }
-    public static enum value{
+    public static enum value {
         ONE(1),TWO(2),THREE(3),FOUR(4),FIVE(5),SIX(6),SEVEN(7),EIGHT(8),NINE(9),TEN(10),ELEVEN(11),TWELVE(12),THIRTEEN(13);
         private final int val;
 
-        value(int val){
+        value(int val) {
             this.val = val;
         }
 
-        public int getVal(){
+        public int getVal() {
             return this.val;
         }
     }
     private colour tileColour;
     private value tileValue;
 
-    public Tile(colour c, value v){
+    public Tile(colour c, value v) {
         tileColour = c;
         tileValue = v;
     }
 
-    public Tile(){
+    public Tile() {
         tileColour = null;
         tileValue = null;
     }
 
-    public void setValue(value v){
+    public void setValue(value v) {
         tileValue = v;
     }
 
-    public void setColour(colour c){
+    public void setColour(colour c) {
         tileColour = c;
     }
 
-    public value getValue(){
+    public value getValue() {
         return tileValue;
     }
 
-    public colour getColour(){
+    public colour getColour() {
         return tileColour;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "" + tileColour.getCol() + tileValue.getVal();
     }
 
     @Override
-    public boolean equals(Object t){
+    public boolean equals(Object t) {
         if(this.getColour() == ((Tile)t).tileColour && this.tileValue == ((Tile)t).tileValue){
             return true;
-        }else{
+        } else {
             return false;
         }
     }
