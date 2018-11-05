@@ -95,7 +95,7 @@ public class Hand {
 
 			tiles = this.hand;
 		}
-		//checks for runss 
+		//checks for runs 
 		public boolean runFound(Hand x) { 
 
 			if (x.hand.isEmpty()) {
