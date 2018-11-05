@@ -15,12 +15,16 @@ public abstract class Player implements Observer{
 	protected boolean initialMeld = false;
 	
 	
-	public Player (){ //should have player strategy
+	public Player (){
 		
 		hand = new Hand(); 
-    	//should contain player strategy
     	table = new Table();
 
+	}
+	
+	public Player(Hand h) {
+		hand = h;
+		table = new Table();
 	}
 	public void update(Observable obs, Object x) {
 		Game update = (Game) obs;
