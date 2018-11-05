@@ -13,6 +13,7 @@ public class StrategyHuman extends Player {
 
 	@Override
 	protected void play() {
+		//TODO add gui indicators
 		ui = new CLI();
 		char choice;
 		Tile temp;

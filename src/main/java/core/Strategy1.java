@@ -28,7 +28,7 @@ public class Strategy1 extends Player {
 
 	@Override
 	protected void play() {
-		//initial run check
+		//TODO add gui indicators
 		ArrayList<Meld> arrMeld = playableRuns();
 		for(Meld m: arrMeld) {
 			playMeld(m);
@@ -46,7 +46,7 @@ public class Strategy1 extends Player {
 		if(played == false) {
 			hand.addTileToHand(pile.deal());	
 		}
-
+		System.out.println(hand);
 	}
 	
 	public void playTile(){
@@ -120,12 +120,14 @@ public class Strategy1 extends Player {
 			if (m.totalMeld() >= 30) {
 				played = true;
 				initialMeld = false;
+				table.add(m);
 				for(Tile t: m.getMeld()) {
 					hand.playTileFromHand(t);
 				}
 			}
 		}else {
 			played = true;
+			table.add(m);
 			for(Tile t: m.getMeld()) {
 				hand.playTileFromHand(t);
 			}

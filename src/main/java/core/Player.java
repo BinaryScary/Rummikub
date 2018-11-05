@@ -11,10 +11,17 @@ public abstract class Player implements Observer{
 	protected Pile pile;
 	protected Table table; // player can see table itself
 	protected Game game;
-	//TODO change back to true after testing
 	protected boolean initialMeld = false;
 	
 	
+	public boolean isInitialMeld() {
+		return initialMeld;
+	}
+
+	public void setInitialMeld(boolean initialMeld) {
+		this.initialMeld = initialMeld;
+	}
+
 	public Player (){
 		
 		hand = new Hand(); 

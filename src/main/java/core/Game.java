@@ -15,27 +15,29 @@ public class Game extends Observable{
 		pile = new Pile();
 		table = new Table();
 		ui = new CLI();
-		playerArr = new Player[4];
-		handArr = new Hand[4];
+//		playerArr = new Player[4];
+		playerArr = new Player[3];
+		handArr = new Hand[3];
+//		handArr = new Hand[4];
 
-		for(int i = 0; i<4; i++) {
+		for(int i = 0; i<3; i++) {
 			handArr[i] = new Hand();
 		}
 
 		playerArr[0] = new StrategyHuman();
-		playerArr[1] = new StrategyHuman();
+		playerArr[1] = new Strategy1();
 		playerArr[2] = new StrategyHuman();
-		playerArr[3] = new StrategyHuman();
+//		playerArr[3] = new StrategyHuman();
 		pile.scramble();
 
 
 		this.addObserver(playerArr[0]);
 		this.addObserver(playerArr[1]);
 		this.addObserver(playerArr[2]);
-		this.addObserver(playerArr[3]);
+//		this.addObserver(playerArr[3]);
 	}
 
-	//init(file)
+	//TODO init(file)
 
 	public void start() {
 		ui.message("Welcome To Rummikub!");
@@ -43,13 +45,13 @@ public class Game extends Observable{
 		deal(handArr[0]);
 		deal(handArr[1]);
 		deal(handArr[2]);
-		deal(handArr[3]);
+//		deal(handArr[3]);
 
-		//testing
-		Tile[] tArr = {new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.BLUE, Tile.value.TEN),new Tile(Tile.colour.GREEN, Tile.value.TEN),new Tile(Tile.colour.ORANGE, Tile.value.TEN),new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.BLUE, Tile.value.TEN),new Tile(Tile.colour.GREEN, Tile.value.TEN),new Tile(Tile.colour.ORANGE, Tile.value.TEN)};
-		handArr[0] = new Hand(tArr);
-		Meld tMeld = new Meld(new Tile[] {new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.BLUE, Tile.value.TEN),new Tile(Tile.colour.GREEN, Tile.value.TEN)});
-		table.add(tMeld);
+//		//testing
+//		Tile[] tArr = {new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.BLUE, Tile.value.TEN),new Tile(Tile.colour.GREEN, Tile.value.TEN),new Tile(Tile.colour.ORANGE, Tile.value.TEN),new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.BLUE, Tile.value.TEN),new Tile(Tile.colour.GREEN, Tile.value.TEN),new Tile(Tile.colour.ORANGE, Tile.value.TEN)};
+//		handArr[0] = new Hand(tArr);
+//		Meld tMeld = new Meld(new Tile[] {new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.BLUE, Tile.value.TEN),new Tile(Tile.colour.GREEN, Tile.value.TEN)});
+//		table.add(tMeld);
 
 
 		broadcast();
@@ -59,7 +61,7 @@ public class Game extends Observable{
 
 	private Player turnLoop() {
 
-		for(int i = 0; i<4; i++) {
+		for(int i = 0; i<3; i++) {
 			ui.message("Player " + playerArr[i].toString() + "'s turn.");
 
 			playerArr[i].play();
@@ -75,7 +77,7 @@ public class Game extends Observable{
 				return playerArr[i];
 			}
 
-			if(i==3) i=-1;
+			if(i==2) i=-1;
 		}
 
 		return null;

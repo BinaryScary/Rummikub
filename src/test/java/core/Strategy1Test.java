@@ -21,6 +21,7 @@ public class Strategy1Test extends TestCase {
 		Tile[] tArr = {new Tile(Tile.colour.GREEN, Tile.value.TEN), new Tile(Tile.colour.RED, Tile.value.EIGHT),new Tile(Tile.colour.RED, Tile.value.TWELVE),new Tile(Tile.colour.RED, Tile.value.SEVEN)};
 		Hand h = new Hand(tArr);
 		Strategy1 p = new Strategy1(h,t1);
+		p.setInitialMeld(false);
 		
 		p.play();
 		System.out.println(p.getTable());
