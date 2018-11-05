@@ -15,16 +15,6 @@ public class Strategy1 extends Player {
 
 	private CLI ui;
 
-	public Strategy1() {
-		super();
-		name = "A1";
-	}
-
-	public Strategy1(Hand h) {
-		super(h);
-		name = "A1";
-	}
-
 	@Override
 	protected void updateHand(Game update) {
 		hand = update.getH1();
@@ -32,6 +22,15 @@ public class Strategy1 extends Player {
 
 	@Override
 	protected void play() {
+		ArrayList<Meld> arrMeld = playableRuns();
+		for(Meld m: arrMeld) {
+			playMeld(m);
+		}
+		
+		arrMeld = playableSets();
+		for(Meld m: arrMeld) {
+			playMeld(m);
+		}
 
 	}
 
