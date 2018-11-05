@@ -11,7 +11,7 @@ public class Strategy1Test extends TestCase {
 		System.out.println(p.playableSets());
 		assertNotNull(p.playableSets());
 	}
-	
+
 	public void testHasRuns() {
 		Tile[] tArr = {new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.RED, Tile.value.ELEVEN),new Tile(Tile.colour.RED, Tile.value.TWELVE),new Tile(Tile.colour.RED, Tile.value.THIRTEEN),new Tile(Tile.colour.BLUE, Tile.value.TEN),new Tile(Tile.colour.BLUE, Tile.value.TEN),new Tile(Tile.colour.BLUE, Tile.value.TWELVE),new Tile(Tile.colour.ORANGE, Tile.value.ONE),new Tile(Tile.colour.ORANGE, Tile.value.TWO),new Tile(Tile.colour.ORANGE, Tile.value.THREE)};
 		Hand h = new Hand(tArr);

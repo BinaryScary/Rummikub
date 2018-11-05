@@ -4,6 +4,15 @@ import java.util.ArrayList;
 
 public class Strategy1 extends Player {
 
+	public Strategy1() {
+		super();
+		name = "A1";
+	}
+	public Strategy1(Hand h) {
+		super(h);
+		name = "A1";
+	}
+
 	private CLI ui;
 
 	public Strategy1() {
@@ -23,14 +32,14 @@ public class Strategy1 extends Player {
 
 	@Override
 	protected void play() {
-		
+
 	}
-	
+
 	@SuppressWarnings("unlikely-arg-type")
 	public ArrayList<Meld> playableSets() {
 		ArrayList<Meld> arr = new ArrayList<Meld>();
 		Meld tempMeld;
-		
+
 		for(Tile t : hand.getTiles()) {
 			tempMeld = new Meld();
 			for(Tile.colour c : Tile.colour.values()) {
@@ -42,14 +51,14 @@ public class Strategy1 extends Player {
 				arr.add(tempMeld);
 			}
 		}
-		
+
 		return arr;
 	}
 
 	public ArrayList<Meld> playableRuns() {
 		ArrayList<Meld> winners = new ArrayList<Meld>();
 		ArrayList<Meld> winnersFinal = new ArrayList<Meld>();
-		
+
 		ArrayList<Meld> winnersR = new ArrayList<Meld>();
 		for(Tile t : hand.sortByValueColorArrays().get(0)) {
 			if (findRunTilesByInt(hand.sortByValueColorArrays().get(0), t.getValue().getVal()) == null) {
@@ -145,6 +154,8 @@ public class Strategy1 extends Player {
 			return handF;
 		}
 	}
+//	private Meld[] playableRuns() {
+//	}
 
 	private void playMeld(Meld m) {
 
