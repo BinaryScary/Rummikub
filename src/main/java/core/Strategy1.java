@@ -38,7 +38,9 @@ public class Strategy1 extends Player {
 			playMeld(m);
 		}
 		
-		playTile();
+		if(initialMeld == false) {
+			playTile();
+		}
 
 	}
 	
@@ -106,15 +108,12 @@ public class Strategy1 extends Player {
 	}
 
 	public void playMeld(Meld m) {
-		if (initialMeld == false) {
+		if (initialMeld == true) {
 			if (m.totalMeld() >= 30) {
+				initialMeld = false;
 				for(Tile t: m.getMeld()) {
 					hand.playTileFromHand(t);
 				}
-			}
-		} else {
-			for(Tile t: m.getMeld()) {
-				hand.playTileFromHand(t);
 			}
 		}
 	}
