@@ -3,6 +3,7 @@ package core;
 import java.util.ArrayList;
 
 public class Strategy1 extends Player {
+	boolean played = false;
 
 	public Strategy1() {
 		super();
@@ -41,6 +42,10 @@ public class Strategy1 extends Player {
 		if(initialMeld == false) {
 			playTile();
 		}
+		
+		if(played == false) {
+			hand.addTileToHand(pile.deal());	
+		}
 
 	}
 	
@@ -55,6 +60,7 @@ public class Strategy1 extends Player {
 						if(hand.getTiles().contains(tempTile)){
 							m.add(tempTile);
 							hand.playTileFromHand(tempTile);
+							played = true;
 						}
 					}
 				}
@@ -66,6 +72,7 @@ public class Strategy1 extends Player {
 					if(hand.getTiles().contains(tempTile)) {
 						m.addFront(tempTile);
 						hand.playTileFromHand(tempTile);
+						played = true;
 					}else {
 						break;
 					}
@@ -77,6 +84,7 @@ public class Strategy1 extends Player {
 					if(hand.getTiles().contains(tempTile)) {
 						m.add(tempTile);
 						hand.playTileFromHand(tempTile);
+						played = true;
 					}else {
 						break;
 					}
@@ -110,10 +118,16 @@ public class Strategy1 extends Player {
 	public void playMeld(Meld m) {
 		if (initialMeld == true) {
 			if (m.totalMeld() >= 30) {
+				played = true;
 				initialMeld = false;
 				for(Tile t: m.getMeld()) {
 					hand.playTileFromHand(t);
 				}
+			}
+		}else {
+			played = true;
+			for(Tile t: m.getMeld()) {
+				hand.playTileFromHand(t);
 			}
 		}
 	}
