@@ -118,66 +118,6 @@ public class Hand {
 			return arr;
 		}
 
-		private void removeDoubles() {
-			// TODO Auto-generated method stub
-			ArrayList<Tile> tiles = new ArrayList<Tile>();
-			ArrayList<Tile> x = new ArrayList<Tile>();
-			x.addAll(this.hand);
-			this.hand.clear();
-			this.hand.addAll(x);
-
-			tiles = this.hand;
-		}
-		//checks for runs
-		public boolean runFound(Hand j) {
-
-			if (j.hand.isEmpty()) {
-				return false;
-			}
-
-			j.removeDoubles();
-			ArrayList<Tile> k = new ArrayList<Tile>();
-
-			k.add(j.getTile(0));
-
-			int count = 1;
-
-			for (int i = 1; i < j.sizeOfHand(); i++) {
-
-				if ((j.getTile(i).getValue().getVal()) - (k.get(count - 1).getValue().getVal()) == 1) {
-
-					k.add(j.getTile(i));
-
-					count++;
-
-					if ((count == 3) && (j.sizeOfHand() - 1 == i)) {
-						return true;
-					}
-				}
-
-				else if (k.size() > 2) {
-					return true;
-				}
-
-				else if ((i == j.sizeOfHand() - 1) && (k.size() > 2)) {
-					return true;
-				}
-
-				else if ((i == j.sizeOfHand() - 1) && (k.size() < 3)) {
-					return false;
-				}
-
-				else if (i < j.sizeOfHand() - 1) {
-					k.clear();
-					count = 1;
-
-					k.add(j.getTile(i));
-
-				}
-			}
-
-			return false;
-		}
 		@Override
 		public String toString(){
 			String str = "[";
