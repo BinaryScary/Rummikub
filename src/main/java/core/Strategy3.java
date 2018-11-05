@@ -24,7 +24,7 @@ public class Strategy3 extends Player {
 
 	@Override
 	protected void updateHand(Game update) {
-		hand = update.getH1();
+		hand = update.getH2();
 	}
 
 	@Override
@@ -51,6 +51,7 @@ public class Strategy3 extends Player {
 			hand.addTileToHand(pile.deal());	
 		}
 		System.out.println(hand);
+		played = false;
 	}
 	
 	private boolean isPlayMeld() {

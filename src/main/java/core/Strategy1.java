@@ -47,6 +47,7 @@ public class Strategy1 extends Player {
 			hand.addTileToHand(pile.deal());	
 		}
 		System.out.println(hand);
+		played = false;
 	}
 	
 	public void playTile(){
@@ -125,6 +126,7 @@ public class Strategy1 extends Player {
 				}
 			}
 		}else {
+			System.out.println("test");
 			played = true;
 			table.add(m);
 			for(Tile t: m.getMeld()) {

@@ -26,8 +26,7 @@ public class Game extends Observable{
 
 		playerArr[0] = new StrategyHuman();
 		playerArr[1] = new Strategy1();
-		playerArr[2] = new StrategyHuman();
-		//TODO Strategy3
+		playerArr[2] = new Strategy3();
 //		playerArr[3] = new StrategyHuman();
 		pile.scramble();
 
@@ -116,7 +115,7 @@ public class Game extends Observable{
 		hands.add(handArr[0]);
 		hands.add(handArr[1]);
 		hands.add(handArr[2]);
-		hands.add(handArr[3]);
+//		hands.add(handArr[3]);
 		return hands;
 
 	}

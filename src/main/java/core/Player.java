@@ -11,7 +11,7 @@ public abstract class Player implements Observer{
 	protected Pile pile;
 	protected Table table; // player can see table itself
 	protected Game game;
-	protected boolean initialMeld = false;
+	protected boolean initialMeld = true;
 	
 	
 	public boolean isInitialMeld() {
