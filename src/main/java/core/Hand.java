@@ -120,10 +120,10 @@ public class Hand {
 
 		@Override
 		public String toString(){
-			String str = "[";
+			String str = "{";
 			if(sortByValueColor().size() == 0) { return str; }
 			for(Tile t : sortByValueColor()) { str += t.toString() + " "; }
-			str = str.trim() + "]";
+			str = str.trim() + "}";
 			return str;
 		}
 }

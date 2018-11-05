@@ -23,6 +23,7 @@ public class StrategyHuman extends Player {
 			ui.message("*ERROR choice invalid");
 		}
 		
+		//TODO fix draw after no tiles
 		if(choice == 'd') {
 			temp = pile.deal();
 			hand.addTileToHand(temp);
