@@ -89,14 +89,20 @@ public class Strategy1 extends Player {
 				arr.add(tempMeld);
 			}
 		}
-
 		return arr;
 	}
 
 	public void playMeld(Meld m) {
-		table.add(m);
-		for(Tile t: m.getMeld()) {
-			hand.playTileFromHand(t);
+		if (initialMeld == false) {
+			if (m.totalMeld() >= 30) {
+				for(Tile t: m.getMeld()) {
+					hand.playTileFromHand(t);
+				}
+			}
+		} else {
+			for(Tile t: m.getMeld()) {
+				hand.playTileFromHand(t);
+			}
 		}
 	}
 
