@@ -96,39 +96,55 @@ public class Hand {
 			tiles = this.hand;
 		}
 		//checks for runs 
-		public boolean runFound(Hand x) { 
+		public boolean runFound(Hand j) { 
 
-			if (x.hand.isEmpty()) {
+			if (j.hand.isEmpty()) {
 				return false;
 			}
-			x.removeDoubles();
-			ArrayList<Tile> y = new ArrayList<Tile>();
-			y.add(x.getTile(0));
+			
+			j.removeDoubles();
+			ArrayList<Tile> k = new ArrayList<Tile>();
+			
+			k.add(j.getTile(0));
+			
 			int count = 1;
-			for (int i = 1; i < x.sizeOfHand(); i++) {
-				if ((x.getTile(i).getValue().getVal()) - (y.get(count - 1).getValue().getVal()) == 1) {
-					y.add(x.getTile(i));
+			
+			for (int i = 1; i < j.sizeOfHand(); i++) {
+			
+				if ((j.getTile(i).getValue().getVal()) - (k.get(count - 1).getValue().getVal()) == 1) {
+				
+					k.add(j.getTile(i));
+					
 					count++;
-					if ((count == 3) && (x.sizeOfHand() - 1 == i)) {
+					
+					if ((count == 3) && (j.sizeOfHand() - 1 == i)) {
 						return true;
 					}
-				} else if (y.size() > 2) {
+				} 
+				
+				else if (k.size() > 2) {
 					return true;
-				} else if ((i == x.sizeOfHand() - 1) && (y.size() > 2)) {
+				}
+				
+				else if ((i == j.sizeOfHand() - 1) && (k.size() > 2)) {
 					return true;
-				} else if ((i == x.sizeOfHand() - 1) && (y.size() < 3)) {
+				} 
+				
+				else if ((i == j.sizeOfHand() - 1) && (k.size() < 3)) {
 					return false;
-				} else if (i < x.sizeOfHand() - 1) {
-					y.clear();
+				} 
+				
+				else if (i < j.sizeOfHand() - 1) {
+					k.clear();
 					count = 1;
 
-					y.add(x.getTile(i));
+					k.add(j.getTile(i));
 
 				}
 			}
+			
 			return false;
 		}
-
 		@Override
 		public String toString(){
 			String str = "[";
