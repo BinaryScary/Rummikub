@@ -13,8 +13,8 @@ public class Strategy1Test extends TestCase {
 	}
 	
 	public void testPlayMeld() {
-		Tile[] tArr = {new Tile(Tile.colour.BLUE, Tile.value.NINE), new Tile(Tile.colour.GREEN, Tile.value.NINE), new Tile(Tile.colour.RED, Tile.value.NINE)};
-		Meld m = new Meld(new Tile[]{new Tile(Tile.colour.BLUE, Tile.value.NINE), new Tile(Tile.colour.GREEN, Tile.value.NINE), new Tile(Tile.colour.RED, Tile.value.NINE)});
+		Tile[] tArr = {new Tile(Tile.colour.BLUE, Tile.value.TEN), new Tile(Tile.colour.GREEN, Tile.value.TEN), new Tile(Tile.colour.RED, Tile.value.TEN)};
+		Meld m = new Meld(new Tile[]{new Tile(Tile.colour.BLUE, Tile.value.TEN), new Tile(Tile.colour.GREEN, Tile.value.TEN), new Tile(Tile.colour.RED, Tile.value.TEN)});
 		Hand h = new Hand(tArr);
 		Strategy1 p = new Strategy1(h);
 		p.playMeld(m);
