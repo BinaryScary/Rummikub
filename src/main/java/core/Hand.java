@@ -17,7 +17,7 @@ public class Hand {
 		public Hand(Tile[] arr){
 			this.hand = new ArrayList<Tile>(Arrays.asList(arr));
 		}
-		
+
 		public class ValueSort implements Comparator<Tile> {
 			public int compare(Tile x, Tile y) {
 				return x.getValue().getVal() - y.getValue().getVal();
@@ -53,19 +53,103 @@ public class Hand {
 			hand.remove(tileToPlay);
 			hand.trimToSize();
 		}
-		
-		public ArrayList<Tile> sortByValue() {
-			ArrayList<Tile> handDuplicate;
-			handDuplicate = hand;
-			Collections.sort(handDuplicate, new ValueSort());
-			return handDuplicate;
-		}
 
+		public ArrayList<Tile> sortByValueColor() {
+			ArrayList<Tile> handDuplicate;
+			ArrayList<Tile> handR = new ArrayList<Tile>();
+			ArrayList<Tile> handB = new ArrayList<Tile>();
+			ArrayList<Tile> handG = new ArrayList<Tile>();
+			ArrayList<Tile> handO = new ArrayList<Tile>();
+			handDuplicate = hand;
+
+			for(Tile t : handDuplicate) {
+				if (t.getColour().getCol() == 'R') {
+					handR.add(t);
+				} else if (t.getColour().getCol() == 'B') {
+					handB.add(t);
+				} else if (t.getColour().getCol() == 'G') {
+					handG.add(t);
+				} else if (t.getColour().getCol() == 'O') {
+					handO.add(t);
+				}
+			}
+			
+			Collections.sort(handR, new ValueSort());
+			Collections.sort(handB, new ValueSort());
+			Collections.sort(handG, new ValueSort());
+			Collections.sort(handO, new ValueSort());
+			
+			handR.addAll(handB);
+			handR.addAll(handG);
+			handR.addAll(handO);
+			return handR;
+		}
+		
+		private void removeDoubles() {
+			// TODO Auto-generated method stub
+			ArrayList<Tile> tiles = new ArrayList<Tile>();
+			ArrayList<Tile> x = new ArrayList<Tile>();
+			x.addAll(this.hand);
+			this.hand.clear();
+			this.hand.addAll(x);
+
+			tiles = this.hand;
+		}
+		//checks for runs 
+		public boolean runFound(Hand j) { 
+
+			if (j.hand.isEmpty()) {
+				return false;
+			}
+			
+			j.removeDoubles();
+			ArrayList<Tile> k = new ArrayList<Tile>();
+			
+			k.add(j.getTile(0));
+			
+			int count = 1;
+			
+			for (int i = 1; i < j.sizeOfHand(); i++) {
+			
+				if ((j.getTile(i).getValue().getVal()) - (k.get(count - 1).getValue().getVal()) == 1) {
+				
+					k.add(j.getTile(i));
+					
+					count++;
+					
+					if ((count == 3) && (j.sizeOfHand() - 1 == i)) {
+						return true;
+					}
+				} 
+				
+				else if (k.size() > 2) {
+					return true;
+				}
+				
+				else if ((i == j.sizeOfHand() - 1) && (k.size() > 2)) {
+					return true;
+				} 
+				
+				else if ((i == j.sizeOfHand() - 1) && (k.size() < 3)) {
+					return false;
+				} 
+				
+				else if (i < j.sizeOfHand() - 1) {
+					k.clear();
+					count = 1;
+
+					k.add(j.getTile(i));
+
+				}
+			}
+			
+			return false;
+		}
 		@Override
 		public String toString(){
 			String str = "[";
-			if(sortByValue().size() == 0) { return str; }
-			for(Tile t : sortByValue()) { str += t.toString() + " "; }
+			if(sortByValueColor().size() == 0) { return str; }
+			for(Tile t : sortByValueColor()) { str += t.toString() + " "; }
 			str = str.trim() + "]";
 			return str;
 		}
