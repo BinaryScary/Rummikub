@@ -2,21 +2,22 @@ package core;
 
 import java.util.ArrayList;
 
-public class Strategy1 extends Player {
+public class Strategy3 extends Player {
+
 	boolean played = false;
 
-	public Strategy1() {
+	public Strategy3() {
 		super();
-		name = "A1";
+		name = "A3";
 	}
-	public Strategy1(Hand h) {
+	public Strategy3(Hand h) {
 		super(h);
-		name = "A1";
+		name = "A3";
 	}
-	public Strategy1(Hand h, Table t) {
+	public Strategy3(Hand h, Table t) {
 		super(h);
 		table = t;
-		name = "A1";
+		name = "A3";
 	}
 
 	private CLI ui;
@@ -29,14 +30,17 @@ public class Strategy1 extends Player {
 	@Override
 	protected void play() {
 		//TODO add gui indicators
-		ArrayList<Meld> arrMeld = playableRuns();
-		for(Meld m: arrMeld) {
-			playMeld(m);
-		}
-		
-		arrMeld = playableSets();
-		for(Meld m: arrMeld) {
-			playMeld(m);
+
+		if(isPlayMeld()) {
+			ArrayList<Meld> arrMeld = playableRuns();
+			for(Meld m: arrMeld) {
+				playMeld(m);
+			}
+			
+			arrMeld = playableSets();
+			for(Meld m: arrMeld) {
+				playMeld(m);
+			}
 		}
 		
 		if(initialMeld == false) {
@@ -47,6 +51,15 @@ public class Strategy1 extends Player {
 			hand.addTileToHand(pile.deal());	
 		}
 		System.out.println(hand);
+	}
+	
+	private boolean isPlayMeld() {
+		for(Hand h: game.gethands()) {
+			if(h.sizeOfHand() <= hand.sizeOfHand() -3) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void playTile(){
@@ -96,6 +109,7 @@ public class Strategy1 extends Player {
 		
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	public ArrayList<Meld> playableSets() {
 		ArrayList<Meld> arr = new ArrayList<Meld>();
 		Meld tempMeld;
@@ -232,6 +246,5 @@ public class Strategy1 extends Player {
 			return handF;
 		}
 	}
-
 
 }

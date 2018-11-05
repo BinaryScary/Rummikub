@@ -56,19 +56,4 @@ public class HandTest extends TestCase {
 		assertEquals(h1.sizeOfHand(), 1);
 	}
 	
-	public void testRunFound(){
-		Hand h1 = new Hand();
-		h1.addTileToHand(t1);
-		h1.addTileToHand(t2);
-		h1.addTileToHand(t6);
-		
-		Hand h2 = new Hand();
-		h2.addTileToHand(t1);
-		h2.addTileToHand(t2);
-		h2.addTileToHand(t3);
-		h2.addTileToHand(t6);
-
-		assertEquals(h1.runFound(h1), true);
-		assertFalse(h1.runFound(h2));
-	}
 }
