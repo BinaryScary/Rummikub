@@ -84,6 +84,50 @@ public class Hand {
 			handR.addAll(handO);
 			return handR;
 		}
+		
+		private void removeDoubles() {
+			// TODO Auto-generated method stub
+			ArrayList<Tile> tiles = new ArrayList<Tile>();
+			ArrayList<Tile> x = new ArrayList<Tile>();
+			x.addAll(this.hand);
+			this.hand.clear();
+			this.hand.addAll(x);
+
+			tiles = this.hand;
+		}
+		//checks for runss 
+		public boolean runFound(Hand x) { 
+
+			if (x.hand.isEmpty()) {
+				return false;
+			}
+			x.removeDoubles();
+			ArrayList<Tile> y = new ArrayList<Tile>();
+			y.add(x.getTile(0));
+			int count = 1;
+			for (int i = 1; i < x.sizeOfHand(); i++) {
+				if ((x.getTile(i).getValue().getVal()) - (y.get(count - 1).getValue().getVal()) == 1) {
+					y.add(x.getTile(i));
+					count++;
+					if ((count == 3) && (x.sizeOfHand() - 1 == i)) {
+						return true;
+					}
+				} else if (y.size() > 2) {
+					return true;
+				} else if ((i == x.sizeOfHand() - 1) && (y.size() > 2)) {
+					return true;
+				} else if ((i == x.sizeOfHand() - 1) && (y.size() < 3)) {
+					return false;
+				} else if (i < x.sizeOfHand() - 1) {
+					y.clear();
+					count = 1;
+
+					y.add(x.getTile(i));
+
+				}
+			}
+			return false;
+		}
 
 		@Override
 		public String toString(){

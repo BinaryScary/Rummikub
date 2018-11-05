@@ -9,6 +9,7 @@ public class HandTest extends TestCase {
 	Tile t3 = new Tile(Tile.colour.RED, Tile.value.TWO);
 	Tile t4 = new Tile(Tile.colour.GREEN, Tile.value.TWO);
 	Tile t5 = new Tile(Tile.colour.ORANGE, Tile.value.FOUR);
+	Tile t6 = new Tile(Tile.colour.ORANGE, Tile.value.THREE);
 
 	Tile[] tArr = {t1,t2};
 
@@ -53,5 +54,15 @@ public class HandTest extends TestCase {
 
 		h1.playTileFromHand(t1);
 		assertEquals(h1.sizeOfHand(), 1);
+	}
+	
+	public void testRunFound(){
+		Hand h1 = new Hand();
+		h1.addTileToHand(t1);
+		h1.addTileToHand(t2);
+		h1.addTileToHand(t6);
+		//h1.addTileToHand(t5);
+		//assertFalse(h1.runFound(h1));
+		assertEquals(h1.runFound(h1), true);
 	}
 }
