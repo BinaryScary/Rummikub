@@ -73,18 +73,51 @@ public class Hand {
 					handO.add(t);
 				}
 			}
-			
+
 			Collections.sort(handR, new ValueSort());
 			Collections.sort(handB, new ValueSort());
 			Collections.sort(handG, new ValueSort());
 			Collections.sort(handO, new ValueSort());
-			
+
 			handR.addAll(handB);
 			handR.addAll(handG);
 			handR.addAll(handO);
 			return handR;
 		}
-		
+
+		public ArrayList<ArrayList<Tile>> sortByValueColorArrays() {
+			ArrayList<Tile> handDuplicate;
+			ArrayList<Tile> handR = new ArrayList<Tile>();
+			ArrayList<Tile> handB = new ArrayList<Tile>();
+			ArrayList<Tile> handG = new ArrayList<Tile>();
+			ArrayList<Tile> handO = new ArrayList<Tile>();
+			handDuplicate = hand;
+
+			for(Tile t : handDuplicate) {
+				if (t.getColour().getCol() == 'R') {
+					handR.add(t);
+				} else if (t.getColour().getCol() == 'B') {
+					handB.add(t);
+				} else if (t.getColour().getCol() == 'G') {
+					handG.add(t);
+				} else if (t.getColour().getCol() == 'O') {
+					handO.add(t);
+				}
+			}
+
+			Collections.sort(handR, new ValueSort());
+			Collections.sort(handB, new ValueSort());
+			Collections.sort(handG, new ValueSort());
+			Collections.sort(handO, new ValueSort());
+
+			ArrayList<ArrayList<Tile>> arr = new ArrayList<ArrayList<Tile>>();
+			arr.add(handR);
+			arr.add(handB);
+			arr.add(handG);
+			arr.add(handO);
+			return arr;
+		}
+
 		private void removeDoubles() {
 			// TODO Auto-generated method stub
 			ArrayList<Tile> tiles = new ArrayList<Tile>();
@@ -95,45 +128,45 @@ public class Hand {
 
 			tiles = this.hand;
 		}
-		//checks for runs 
-		public boolean runFound(Hand j) { 
+		//checks for runs
+		public boolean runFound(Hand j) {
 
 			if (j.hand.isEmpty()) {
 				return false;
 			}
-			
+
 			j.removeDoubles();
 			ArrayList<Tile> k = new ArrayList<Tile>();
-			
+
 			k.add(j.getTile(0));
-			
+
 			int count = 1;
-			
+
 			for (int i = 1; i < j.sizeOfHand(); i++) {
-			
+
 				if ((j.getTile(i).getValue().getVal()) - (k.get(count - 1).getValue().getVal()) == 1) {
-				
+
 					k.add(j.getTile(i));
-					
+
 					count++;
-					
+
 					if ((count == 3) && (j.sizeOfHand() - 1 == i)) {
 						return true;
 					}
-				} 
-				
+				}
+
 				else if (k.size() > 2) {
 					return true;
 				}
-				
+
 				else if ((i == j.sizeOfHand() - 1) && (k.size() > 2)) {
 					return true;
-				} 
-				
+				}
+
 				else if ((i == j.sizeOfHand() - 1) && (k.size() < 3)) {
 					return false;
-				} 
-				
+				}
+
 				else if (i < j.sizeOfHand() - 1) {
 					k.clear();
 					count = 1;
@@ -142,7 +175,7 @@ public class Hand {
 
 				}
 			}
-			
+
 			return false;
 		}
 		@Override
