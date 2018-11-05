@@ -24,6 +24,16 @@ public class Tile {
         public int getVal() {
             return this.val;
         }
+
+        private static value[] vals = values();
+        public value next()
+        {
+            return vals[(this.ordinal()+1) % vals.length];
+        }
+        public value previous()
+        {
+            return vals[(this.ordinal()-1) % vals.length];
+        }
     }
     private colour tileColour;
     private value tileValue;

@@ -12,6 +12,11 @@ public class Strategy1 extends Player {
 		super(h);
 		name = "A1";
 	}
+	public Strategy1(Hand h, Table t) {
+		super(h);
+		table = t;
+		name = "A1";
+	}
 
 	private CLI ui;
 
@@ -22,6 +27,7 @@ public class Strategy1 extends Player {
 
 	@Override
 	protected void play() {
+		//initial run check
 		ArrayList<Meld> arrMeld = playableRuns();
 		for(Meld m: arrMeld) {
 			playMeld(m);
@@ -31,7 +37,40 @@ public class Strategy1 extends Player {
 		for(Meld m: arrMeld) {
 			playMeld(m);
 		}
+		
+		playTile();
 
+	}
+	
+	public void playTile(){
+		Tile tempTile;
+		for(Meld m: table.getTable()) {
+			if(m.typeMeld() == 's') {
+				for(Tile.colour c: Tile.colour.values()) {
+						tempTile = new Tile( c, m.getAt(0).getValue());
+					if(!m.getMeld().contains(tempTile)) {
+						if(hand.getTiles().contains(tempTile)){
+							m.add(tempTile);
+							hand.playTileFromHand(tempTile);
+						}
+					}
+				}
+				
+			}else if(m.typeMeld() == 'r') {
+				tempTile = new Tile( m.getAt(0).getColour(), m.getAt(0).getValue().previous());
+				if(hand.getTiles().contains(tempTile)) {
+					m.add(tempTile);
+					hand.playTileFromHand(tempTile);
+				}
+				tempTile = new Tile( m.getAt(m.size()-1).getColour(), m.getAt(m.size()-1).getValue().next());
+				if(hand.getTiles().contains(tempTile)) {
+					m.add(tempTile);
+					hand.playTileFromHand(tempTile);
+				}
+			}
+			
+		}
+		
 	}
 
 	@SuppressWarnings("unlikely-arg-type")
@@ -55,6 +94,7 @@ public class Strategy1 extends Player {
 	}
 
 	public void playMeld(Meld m) {
+		table.add(m);
 		for(Tile t: m.getMeld()) {
 			hand.playTileFromHand(t);
 		}

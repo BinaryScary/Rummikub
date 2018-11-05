@@ -30,6 +30,11 @@ public abstract class Player implements Observer{
 	public Hand getHand() {
 		return hand;
 	}
+
+	public Table getTable() {
+		return table;
+	}
+
 	public void update(Observable obs, Object x) {
 		Game update = (Game) obs;
 		game = update;

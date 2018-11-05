@@ -177,7 +177,7 @@ public class Meld {
 		return false;
 	}
 
-	private char typeMeld() {
+	public char typeMeld() {
 		//{r : run | s : set | n : none}
 		if(arr.size() < 3) {
 			return 'n';
