@@ -44,11 +44,11 @@ public class Strategy1 extends Player {
 		
 		return arr;
 	}
-//	private Meld[] playableRuns() {
-//	}
 
-	private void playMeld(Meld m) {
-		
+	public void playMeld(Meld m) {
+		for(Tile t: m.getMeld()) {
+			hand.playTileFromHand(t);
+		}
 	}
 		
 }
