@@ -2,14 +2,14 @@ package core;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Meld {	
-		
+public class Meld {
+
 	private ArrayList<Tile> arr;
-	
+
 	public Meld(){
 		arr = new ArrayList<Tile>();
 	}
-	
+
 	public Meld(Meld m){
 		arr = new ArrayList<Tile>();
 		for(Tile t: m.getMeld()) {
@@ -24,15 +24,15 @@ public class Meld {
 	public Meld(ArrayList<Tile> arr){
 		this.arr = new ArrayList<Tile>(arr);
 	}
-	
+
 	public ArrayList<Tile> getMeld(){
 		return arr;
 	}
-	
+
 	public int indexOf(Tile t) {
 		return arr.indexOf(t);
 	}
-	
+
 	public Tile getAt(int i) {
 		Tile buf = null;
 		try {
@@ -43,7 +43,7 @@ public class Meld {
 
 		return buf;
 	}
-	
+
 	public Tile remove(int i) {
 		Tile buf = null;
 		try {
@@ -51,14 +51,14 @@ public class Meld {
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
-		
+
 		return buf;
 	}
-	
+
 	public boolean remove(Tile t) {
 		return arr.remove(t);
 	}
-	
+
 	public void add(Tile t) {
 		arr.add(t);
 	}
@@ -69,14 +69,14 @@ public class Meld {
 	public void addFront(Meld m) {
 		arr.addAll(0,m.getMeld());
 	}
-	
+
 	public boolean checkFrontAdd(Meld m) {
 		if(m.getAt(0).getValue().getVal() < getAt(0).getValue().getVal()) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	public int totalMeld() {
 		int total = 0;
 		if(arr.size() == 0) {
@@ -103,7 +103,7 @@ public class Meld {
 
 		return str;
     }
-	
+
     @Override
     public boolean equals(Object t){
     	if(((Meld)t).size() != arr.size()) {
@@ -117,10 +117,10 @@ public class Meld {
     		}
 
     	}
-    	
+
     	return true;
     }
-	
+
 //	public Tile setAt(int i, Tile t) {
 //		Tile buf = null;
 //		try {
@@ -135,17 +135,17 @@ public class Meld {
 	public int size() {
 		return arr.size();
 	}
-	
+
 	@SuppressWarnings("unlikely-arg-type")
 	public boolean validMeld() {
 		if(typeMeld() == 's') {
 			Tile.value val = arr.get(0).getValue();
 			Tile.colour[] colArr = {arr.get(0).getColour(),null,null,null};
-			
+
 			if(arr.size() > 4) {
 				return false;
 			}
-			
+
 			for(int i = 1; i < arr.size(); i++) {
 				if(arr.get(i).getValue() != val) {
 					return false;
@@ -161,7 +161,7 @@ public class Meld {
 		if(typeMeld() == 'r') {
 			Tile buf = arr.get(0);
 			Tile.colour col = buf.getColour();
-			
+
 			for(int i = 1; i < arr.size(); i++) {
 				if(arr.get(i).getColour() != col) {
 					return false;
@@ -173,25 +173,24 @@ public class Meld {
 			}
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	private char typeMeld() {
 		//{r : run | s : set | n : none}
 		if(arr.size() < 3) {
 			return 'n';
 		}
-		
+
 		if(arr.get(0).getValue().getVal() == arr.get(1).getValue().getVal() && arr.get(0).getColour() != arr.get(1).getColour() ) {
 			return 's';
 		}
 		if(arr.get(0).getValue().getVal() + 1 == arr.get(1).getValue().getVal() && arr.get(0).getColour() == arr.get(1).getColour() ) {
 			return 'r';
 		}
-		
+
 		return 'n';
 	}
-		
-}
 
+}
