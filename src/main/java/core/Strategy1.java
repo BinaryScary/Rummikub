@@ -44,6 +44,7 @@ public class Strategy1 extends Player {
 	
 	public void playTile(){
 		Tile tempTile;
+		Tile.value tempVal;
 		for(Meld m: table.getTable()) {
 			if(m.typeMeld() == 's') {
 				for(Tile.colour c: Tile.colour.values()) {
@@ -57,15 +58,27 @@ public class Strategy1 extends Player {
 				}
 				
 			}else if(m.typeMeld() == 'r') {
-				tempTile = new Tile( m.getAt(0).getColour(), m.getAt(0).getValue().previous());
-				if(hand.getTiles().contains(tempTile)) {
-					m.add(tempTile);
-					hand.playTileFromHand(tempTile);
+				tempVal = m.getAt(0).getValue().previous();
+				while(true) {
+					tempTile = new Tile( m.getAt(0).getColour(),tempVal);
+					if(hand.getTiles().contains(tempTile)) {
+						m.addFront(tempTile);
+						hand.playTileFromHand(tempTile);
+					}else {
+						break;
+					}
+					tempVal = tempVal.previous();
 				}
-				tempTile = new Tile( m.getAt(m.size()-1).getColour(), m.getAt(m.size()-1).getValue().next());
-				if(hand.getTiles().contains(tempTile)) {
-					m.add(tempTile);
-					hand.playTileFromHand(tempTile);
+				tempVal = m.getAt(m.size()-1).getValue().next();
+				while(true) {
+					tempTile = new Tile( m.getAt(m.size()-1).getColour(),tempVal);
+					if(hand.getTiles().contains(tempTile)) {
+						m.add(tempTile);
+						hand.playTileFromHand(tempTile);
+					}else {
+						break;
+					}
+					tempVal = tempVal.next();
 				}
 			}
 			

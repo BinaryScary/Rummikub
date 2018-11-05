@@ -13,14 +13,17 @@ public class Strategy1Test extends TestCase {
 	
 	public void testPlayTile() {
 		Tile[] tArr1 = {new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.BLUE, Tile.value.TEN),new Tile(Tile.colour.ORANGE, Tile.value.TEN)};
+		Tile[] tArr2 = {new Tile(Tile.colour.RED, Tile.value.NINE),new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.RED, Tile.value.ELEVEN)};
 		Meld m1 = new Meld(tArr1);
-		Meld[] mArr = {m1};
+		Meld m2 = new Meld(tArr2);
+		Meld[] mArr = {m1,m2};
 		Table t1 = new Table(mArr);
-		Tile[] tArr = {new Tile(Tile.colour.GREEN, Tile.value.TEN)};
+		Tile[] tArr = {new Tile(Tile.colour.GREEN, Tile.value.TEN), new Tile(Tile.colour.RED, Tile.value.EIGHT),new Tile(Tile.colour.RED, Tile.value.TWELVE),new Tile(Tile.colour.RED, Tile.value.SEVEN)};
 		Hand h = new Hand(tArr);
 		Strategy1 p = new Strategy1(h,t1);
 		
 		p.play();
+		System.out.println(p.getTable());
 		assertTrue(p.getHand().isEmpty());
 	}
 

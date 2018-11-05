@@ -69,6 +69,9 @@ public class Meld {
 	public void addFront(Meld m) {
 		arr.addAll(0,m.getMeld());
 	}
+	public void addFront(Tile t) {
+		arr.add(0,t);
+	}
 
 	public boolean checkFrontAdd(Meld m) {
 		if(m.getAt(0).getValue().getVal() < getAt(0).getValue().getVal()) {
