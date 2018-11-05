@@ -11,5 +11,13 @@ public class Strategy1 extends Player {
 	protected void play() {
 		
 	}
+	private Meld[] playableSets() {
+	}
+	private Meld[] playableRuns() {
+	}
+
+	private void playMeld(Meld m) {
+		
+	}
 
 }
