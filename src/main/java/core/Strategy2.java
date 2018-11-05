@@ -48,7 +48,6 @@ public class Strategy2 extends Player {
 					if(played == false) {
 						hand.addTileToHand(pile.deal());	
 					}
-
 				}
 		
 		public void playTile(){
