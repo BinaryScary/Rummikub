@@ -12,6 +12,8 @@ public abstract class Player implements Observer{
 	protected Table table; // player can see table itself
 	protected Game game;
 	protected boolean initialMeld = true;
+	protected ArrayList<Meld> newMelds;
+	protected ArrayList<Meld> modMelds;
 	
 	
 	public boolean isInitialMeld() {
@@ -23,13 +25,16 @@ public abstract class Player implements Observer{
 	}
 
 	public Player (){
-		
+		newMelds = new ArrayList<Meld>();
+		modMelds = new ArrayList<Meld>();
 		hand = new Hand(); 
     	table = new Table();
 
 	}
 	
 	public Player(Hand h) {
+		newMelds = new ArrayList<Meld>();
+		modMelds = new ArrayList<Meld>();
 		hand = h;
 		table = new Table();
 	}
@@ -57,5 +62,35 @@ public abstract class Player implements Observer{
 	@Override
 	public String toString(){
 		return name;
+	}
+	public Tile draw() {
+		Tile temp;
+		if(!pile.isEmpty()) {
+			temp = pile.deal();
+			hand.addTileToHand(temp);
+		}else{
+			return null;
+		}
+		return temp;
+	}
+	
+	protected String displayPlay() {
+		String str = "";
+		for(Meld m: newMelds) {
+			str += "*" + m + " ";
+		}
+		for(Meld m: modMelds) {
+			str += "!" + m + " ";
+		}
+		for(Meld m: table.getTable()) {
+			if(!newMelds.contains(m) && !modMelds.contains(m)) {
+				str += m + " ";
+			}
+		}
+		
+		newMelds = new ArrayList<Meld>();
+		modMelds = new ArrayList<Meld>();
+		str = str.trim();
+		return str;
 	}
 }

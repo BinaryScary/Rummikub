@@ -13,7 +13,8 @@ public class StrategyHuman extends Player {
 
 	@Override
 	protected void play() {
-		//TODO add gui indicators
+		newMelds = new ArrayList<Meld>();
+		modMelds = new ArrayList<Meld>();
 		ui = new CLI();
 		char choice;
 		Tile temp;
@@ -23,11 +24,13 @@ public class StrategyHuman extends Player {
 			ui.message("*ERROR choice invalid");
 		}
 		
-		//TODO fix draw after no tiles
 		if(choice == 'd') {
-			temp = pile.deal();
-			hand.addTileToHand(temp);
-			ui.message("You drew a " + temp + ".");
+			temp = draw();
+			if(temp != null) {
+				ui.message("You drew a " + temp + ".");
+			}else {
+				ui.message("No more cards in deck!");
+			}
 		}else if(choice == 'p') {
 			if(playTable() == -1) {
 				temp = pile.deal();
@@ -35,7 +38,6 @@ public class StrategyHuman extends Player {
 				ui.message("You drew a " + temp + ".");
 			}
 		}
-
 	}
 	
 	private int playTable() {
@@ -52,7 +54,7 @@ public class StrategyHuman extends Player {
 
 		while(true) {
 			ui.message("Current Table: ");
-			ui.message(tempTable.toString());
+			ui.message(displayPlay());
 			ui.message("Current Hand: ");
 			ui.message(hand.toString());
 
@@ -79,7 +81,6 @@ public class StrategyHuman extends Player {
 					if(checkFromHand(meld) == -1) {
 						continue;
 					}
-					ui.message(meld.toString());
 
 					//initialMeld check
 					if(initialMeld == true && meld.totalMeld() < 30) {
@@ -87,6 +88,7 @@ public class StrategyHuman extends Player {
 						continue;
 					}else if(initialMeld == true && meld.totalMeld() >= 30) {
 						removeFromHand(meld);
+						newMelds.add(meld);
 						tempTable.add(meld);
 						table = tempTable;
 						game.setTable(table);
@@ -95,6 +97,7 @@ public class StrategyHuman extends Player {
 					}
 					
 					removeFromHand(meld);
+					newMelds.add(meld);
 					tempTable.add(meld);
 					continue;
 				}
@@ -144,6 +147,7 @@ public class StrategyHuman extends Player {
 						addMeldToHand(meld);
 						continue;
 					}else {
+						modMelds.add(meld);
 						tempTable.getAt(meldIndex).add(meld);
 					}
 				}else {
@@ -163,6 +167,7 @@ public class StrategyHuman extends Player {
 						ui.message("*Error Invalid meld addition");
 						continue;
 					}else {
+						modMelds.add(meld);
 						tempTable.getAt(meldIndex).add(meld);
 					}
 				}
@@ -200,7 +205,9 @@ public class StrategyHuman extends Player {
 				
 				tempTable.remove(meldIndex);
 				tempTable.add(new Meld(new ArrayList<Tile>(meld.getMeld().subList(0, meld.indexOf(tempTile) + 1))));
+				modMelds.add(tempTable.getAt(tempTable.size()));
 				tempTable.add(new Meld(new ArrayList<Tile>(meld.getMeld().subList(meld.indexOf(tempTile) + 1,meld.size()))));
+				modMelds.add(tempTable.getAt(tempTable.size()));
 				
 				continue;
 			}else if(choice == 'e') {
@@ -226,6 +233,8 @@ public class StrategyHuman extends Player {
 				}
 				removedTiles = null;
 			}
+			newMelds = new ArrayList<Meld>();
+			modMelds = new ArrayList<Meld>();
 			ui.message("~Reseting Table~");
 
 			//return soft error for draw

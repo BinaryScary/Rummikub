@@ -12,6 +12,10 @@ public class Pile {
 		formPile(); formPile();
 	}
 	
+	public boolean isEmpty() {
+		return pile.isEmpty();
+	}
+	
 	private void formPile() {
 		for(int c = 0; c < 4; c++) {
 			for(int v = 0; v < 13; v++) {

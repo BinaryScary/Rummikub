@@ -20,8 +20,6 @@ public class Strategy3 extends Player {
 		name = "A3";
 	}
 
-	private CLI ui;
-
 	@Override
 	protected void updateHand(Game update) {
 		hand = update.getH2();
@@ -29,7 +27,9 @@ public class Strategy3 extends Player {
 
 	@Override
 	protected void play() {
-		//TODO add gui indicators
+		newMelds = new ArrayList<Meld>();
+		modMelds = new ArrayList<Meld>();
+		Tile tempTile;
 
 		if(isPlayMeld()) {
 			ArrayList<Meld> arrMeld = playableRuns();
@@ -48,9 +48,11 @@ public class Strategy3 extends Player {
 		}
 		
 		if(played == false) {
-			hand.addTileToHand(pile.deal());	
+			tempTile = draw();
+			if(tempTile == null) {
+				System.out.println("Tried to draw but no more tiles in pile");
+			}
 		}
-		System.out.println(hand);
 		played = false;
 	}
 	
@@ -73,6 +75,7 @@ public class Strategy3 extends Player {
 					if(!m.getMeld().contains(tempTile)) {
 						if(hand.getTiles().contains(tempTile)){
 							m.add(tempTile);
+							modMelds.add(m);
 							hand.playTileFromHand(tempTile);
 							played = true;
 						}
@@ -81,35 +84,40 @@ public class Strategy3 extends Player {
 				
 			}else if(m.typeMeld() == 'r') {
 				tempVal = m.getAt(0).getValue().previous();
-				while(true) {
-					tempTile = new Tile( m.getAt(0).getColour(),tempVal);
-					if(hand.getTiles().contains(tempTile)) {
-						m.addFront(tempTile);
-						hand.playTileFromHand(tempTile);
-						played = true;
-					}else {
-						break;
+				if(tempVal != null) {
+					while(true) {
+						tempTile = new Tile( m.getAt(0).getColour(),tempVal);
+						if(hand.getTiles().contains(tempTile)) {
+							m.addFront(tempTile);
+							modMelds.add(m);
+							hand.playTileFromHand(tempTile);
+							played = true;
+						}else {
+							break;
+						}
+						tempVal = tempVal.previous();
 					}
-					tempVal = tempVal.previous();
 				}
 				tempVal = m.getAt(m.size()-1).getValue().next();
-				while(true) {
-					tempTile = new Tile( m.getAt(m.size()-1).getColour(),tempVal);
-					if(hand.getTiles().contains(tempTile)) {
-						m.add(tempTile);
-						hand.playTileFromHand(tempTile);
-						played = true;
-					}else {
-						break;
+				if(tempVal != null) {
+					while(true) {
+						tempTile = new Tile( m.getAt(m.size()-1).getColour(),tempVal);
+						if(hand.getTiles().contains(tempTile)) {
+							m.add(tempTile);
+							modMelds.add(m);
+							hand.playTileFromHand(tempTile);
+							played = true;
+						}else {
+							break;
+						}
+						tempVal = tempVal.next();
 					}
-					tempVal = tempVal.next();
 				}
 			}
 			
 		}
 		
 	}
-
 	@SuppressWarnings("unlikely-arg-type")
 	public ArrayList<Meld> playableSets() {
 		ArrayList<Meld> arr = new ArrayList<Meld>();
@@ -134,6 +142,7 @@ public class Strategy3 extends Player {
 			if (m.totalMeld() >= 30) {
 				played = true;
 				initialMeld = false;
+				newMelds.add(m);
 				table.add(m);
 				for(Tile t: m.getMeld()) {
 					hand.playTileFromHand(t);
@@ -141,13 +150,13 @@ public class Strategy3 extends Player {
 			}
 		}else {
 			played = true;
+			newMelds.add(m);
 			table.add(m);
 			for(Tile t: m.getMeld()) {
 				hand.playTileFromHand(t);
 			}
 		}
 	}
-
 	public ArrayList<Meld> playableRuns() {
 		ArrayList<Meld> winners = new ArrayList<Meld>();
 		ArrayList<Meld> winnersFinal = new ArrayList<Meld>();

@@ -71,7 +71,7 @@ public class Game extends Observable{
 			ui.message("Player " + playerArr[i].toString() + "'s hand.");
 			ui.message(handArr[i].toString());
 			ui.message("Table: ");
-			ui.message(table.toString());
+			ui.message(playerArr[i].displayPlay());
 
 			if(handArr[i].isEmpty()) {
 				return playerArr[i];

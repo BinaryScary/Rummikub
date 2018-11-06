@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Meld {
+	//for future java projects when a data structure is needed should use composition
+	//public class Meld<Tile> extends ArrayList<Tile>
 
 	private ArrayList<Tile> arr;
 

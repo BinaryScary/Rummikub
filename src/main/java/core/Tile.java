@@ -28,11 +28,19 @@ public class Tile {
         private static value[] vals = values();
         public value next()
         {
-            return vals[(this.ordinal()+1) % vals.length];
+        	if(this.val == 13) {
+        		return null;
+        	}else {
+				return vals[(this.ordinal()+1) % vals.length];
+        	}
         }
         public value previous()
         {
-            return vals[(this.ordinal()-1) % vals.length];
+        	if(this.val == 1) {
+        		return null;
+        	}else {
+				return vals[(this.ordinal()-1) % vals.length];
+        	}
         }
     }
     private colour tileColour;
