@@ -56,7 +56,7 @@ public class Strategy3 extends Player {
 		played = false;
 	}
 	
-	private boolean isPlayMeld() {
+	public boolean isPlayMeld() {
 		for(Hand h: game.gethands()) {
 			if(h.sizeOfHand() <= hand.sizeOfHand() -3) {
 				return true;
@@ -82,7 +82,7 @@ public class Strategy3 extends Player {
 					}
 				}
 				
-			}else if(m.typeMeld() == 'r') {
+			} else if(m.typeMeld() == 'r') {
 				tempVal = m.getAt(0).getValue().previous();
 				if(tempVal != null) {
 					while(true) {
