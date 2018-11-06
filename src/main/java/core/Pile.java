@@ -16,6 +16,10 @@ public class Pile {
 		return pile.isEmpty();
 	}
 	
+	public void add(Tile t) {
+		pile.add(t);
+	}
+	
 	private void formPile() {
 		for(int c = 0; c < 4; c++) {
 			for(int v = 0; v < 13; v++) {
