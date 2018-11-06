@@ -14,10 +14,10 @@ public class Strategy1Test extends TestCase {
 	public void testPlayTile() {
 		Tile[] tArr1 = {new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.BLUE, Tile.value.TEN),new Tile(Tile.colour.ORANGE, Tile.value.TEN)};
 		Tile[] tArr2 = {new Tile(Tile.colour.RED, Tile.value.NINE),new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.RED, Tile.value.ELEVEN)};
-		Tile[] tArr3 = {new Tile(Tile.colour.RED, Tile.value.THREE),new Tile(Tile.colour.GREEN, Tile.value.THREE),new Tile(Tile.colour.BLUE, Tile.value.THREE)};
+//		Tile[] tArr3 = {new Tile(Tile.colour.RED, Tile.value.THREE),new Tile(Tile.colour.GREEN, Tile.value.THREE),new Tile(Tile.colour.BLUE, Tile.value.THREE)};
 		Meld m1 = new Meld(tArr1);
 		Meld m2 = new Meld(tArr2);
-		Meld m3 = new Meld(tArr2);
+//		Meld m3 = new Meld(tArr2);
 		Meld[] mArr = {m1,m2};
 		Table t1 = new Table(mArr);
 		Tile[] tArr = {new Tile(Tile.colour.GREEN, Tile.value.TEN), new Tile(Tile.colour.RED, Tile.value.EIGHT),new Tile(Tile.colour.RED, Tile.value.TWELVE),new Tile(Tile.colour.RED, Tile.value.SEVEN)};

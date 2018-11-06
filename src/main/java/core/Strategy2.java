@@ -21,8 +21,6 @@ public class Strategy2 extends Player {
 			name = "A2";
 		}
 		
-		private CLI ui;
-
 		@Override
 		protected void updateHand(Game update) {
 			hand = update.getH2();
@@ -52,7 +50,6 @@ public class Strategy2 extends Player {
 		
 		public void playTile(){
 			Tile tempTile;
-			Tile.value tempVal;
 			for(Meld m: table.getTable()) {
 				if(m.typeMeld() == 's') {
 					for(Tile.colour c: Tile.colour.values()) {
@@ -188,7 +185,6 @@ public class Strategy2 extends Player {
 			}
 		}
 		
-		@SuppressWarnings("unlikely-arg-type")
 		public ArrayList<Meld> playableSets() {
 			ArrayList<Meld> arr = new ArrayList<Meld>();
 			Meld tempMeld;

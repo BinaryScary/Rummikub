@@ -44,7 +44,7 @@ public class Game extends Observable{
 	
 	public void init(File file) {
 		//pile;table;hand0;hand1;hand2;hand3
-		pile = new Pile();
+		pile = new Pile(false);
 		table = new Table();
 		ui = new CLI();
 //		playerArr = new Player[4];
@@ -60,7 +60,6 @@ public class Game extends Observable{
 		playerArr[1] = new Strategy1();
 		playerArr[2] = new Strategy3();
 //		playerArr[3] = new StrategyHuman();
-		pile.scramble();
 
 
 		this.addObserver(playerArr[0]);
@@ -72,7 +71,7 @@ public class Game extends Observable{
 		BufferedReader br;
 		String[] tileStr;
 		int arrCache = 0;
-		Meld tempMeld == null;
+		Meld tempMeld = null;
 		Tile tempTile;
 
 		try {
@@ -101,21 +100,25 @@ public class Game extends Observable{
 
 		tileStr = str.split("\\s+");
 		
+		char test;
 		for(String s: tileStr) {
-		//pile;table { R1 };hand0;hand1;hand2;hand3
-			if(s == ";") {
+		//pile : table { R1 } : hand0 : hand1 : hand2 : hand3 : E
+			test = s.charAt(0);
+			if((int)test == 58) {
 				arrCache++;
 				continue;
 			}
-			if(s == "{") {
+			if((int)test == 123) {
 				tempMeld = new Meld();
+				continue;
 			}
-			if(s == "}") {
+			if((int)test == 125) {
 				if(tempMeld == null) {
 					ui.message("*Error Unable to init, bad meld in table");
 					return;
 				}
 				table.add(tempMeld);
+				continue;
 			}
 			
 			tempTile = stringToTile(s);
@@ -125,6 +128,10 @@ public class Game extends Observable{
 				pile.add(tempTile);
 				break;
 			case 1:
+				if(tempMeld == null) {
+					ui.message("*Error Meld is null");
+					return;
+				}
 				tempMeld.add(tempTile);
 				break;
 			case 2:
@@ -137,12 +144,28 @@ public class Game extends Observable{
 				handArr[2].addTileToHand(tempTile);
 				break;
 			case 5:
+				System.out.println(pile);
+				System.out.println(table);
+				System.out.println(handArr[0]);
+				System.out.println(handArr[1]);
+				System.out.println(handArr[2]);
 				return;
 			default:
+				System.out.println(pile);
+				System.out.println(table);
+				System.out.println(handArr[0]);
+				System.out.println(handArr[1]);
+				System.out.println(handArr[2]);
 				return;
 				
 			}
 		}
+		ui.message("*Error not enough Tile info given");
+		System.out.println(pile);
+		System.out.println(table);
+		System.out.println(handArr[0]);
+		System.out.println(handArr[1]);
+		System.out.println(handArr[2]);
 
 	}
 

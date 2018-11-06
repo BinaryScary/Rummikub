@@ -19,8 +19,6 @@ public class Strategy1 extends Player {
 		name = "A1";
 	}
 
-	private CLI ui;
-
 	@Override
 	protected void updateHand(Game update) {
 		hand = update.getH1();

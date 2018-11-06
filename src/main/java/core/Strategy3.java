@@ -118,7 +118,7 @@ public class Strategy3 extends Player {
 		}
 		
 	}
-	@SuppressWarnings("unlikely-arg-type")
+
 	public ArrayList<Meld> playableSets() {
 		ArrayList<Meld> arr = new ArrayList<Meld>();
 		Meld tempMeld;
