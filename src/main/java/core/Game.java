@@ -7,8 +7,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
-
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -16,27 +14,25 @@ import javafx.stage.Stage;
 public class Game extends Observable{
 	private Pile pile;
 	private Table table;
-	private CLI ui;
+//	private CLI ui;
 	private Hand handArr[];
 	private Player playerArr[];
 	
 	private Pane pane;
-	private PaneController cont;
+	private GUI ui;
 	
 	public void init(Stage primaryStage) {
 		pile = new Pile();
 		table = new Table();
-		ui = new CLI();
+//		ui = new CLI();
 //		playerArr = new Player[4];
 		playerArr = new Player[3];
 		handArr = new Hand[3];
 //		handArr = new Hand[4];
+        ui = new GUI(pane);
 
-        primaryStage.setTitle("Hello World!");
-        pane = new Pane();
-        primaryStage.setScene(new Scene(pane, 300, 250));
-        primaryStage.show();	
-        cont = new PaneController(pane);
+        ui.boardInit(primaryStage);
+        primaryStage.show();
         
 		for(int i = 0; i<3; i++) {
 			handArr[i] = new Hand();
@@ -55,11 +51,14 @@ public class Game extends Observable{
 //		this.addObserver(playerArr[3]);
 	}
 	
+	
 	public void init(File file) {
+		//TODO update init(File) for gui
+
 		//pile;table;hand0;hand1;hand2;hand3
 		pile = new Pile(false);
 		table = new Table();
-		ui = new CLI();
+//		ui = new CLI();
 //		playerArr = new Player[4];
 		playerArr = new Player[3];
 		handArr = new Hand[3];
@@ -240,7 +239,9 @@ public class Game extends Observable{
 //		Meld tMeld = new Meld(new Tile[] {new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.BLUE, Tile.value.TEN),new Tile(Tile.colour.GREEN, Tile.value.TEN)});
 //		table.add(tMeld);
 
-
+		if(1==1) {
+			return;
+		}
 		broadcast();
 
 		turnLoop();
@@ -248,25 +249,25 @@ public class Game extends Observable{
 	}
 
 	private Player turnLoop() {
-//		for(int i = 0; i<3; i++) {
-//			ui.message("Player " + playerArr[i].toString() + "'s turn.");
-//
-//			playerArr[i].play();
-//
-//			broadcast();
-//
-//			ui.message("Player " + playerArr[i].toString() + "'s hand.");
-//			ui.message(handArr[i].toString());
-//			ui.message("Table: ");
-//			ui.message(playerArr[i].displayPlay());
-//
-//			if(handArr[i].isEmpty()) {
-//				return playerArr[i];
-//			}
-//
-//			if(i==2) i=-1;
-//		}
-//
+		for(int i = 0; i<3; i++) {
+			ui.message("Player " + playerArr[i].toString() + "'s turn.");
+
+			playerArr[i].play();
+
+			broadcast();
+
+			ui.message("Player " + playerArr[i].toString() + "'s hand.");
+			ui.message(handArr[i].toString());
+			ui.message("Table: ");
+			ui.message(playerArr[i].displayPlay());
+
+			if(handArr[i].isEmpty()) {
+				return playerArr[i];
+			}
+
+			if(i==2) i=-1;
+		}
+
 		return null;
 	}
 
