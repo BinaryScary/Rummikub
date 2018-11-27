@@ -8,6 +8,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
 @SuppressWarnings("deprecation")
 public class Game extends Observable{
 	private Pile pile;
@@ -15,8 +19,11 @@ public class Game extends Observable{
 	private CLI ui;
 	private Hand handArr[];
 	private Player playerArr[];
-
-	public void init() {
+	
+	private Pane pane;
+	private PaneController cont;
+	
+	public void init(Stage primaryStage) {
 		pile = new Pile();
 		table = new Table();
 		ui = new CLI();
@@ -25,6 +32,12 @@ public class Game extends Observable{
 		handArr = new Hand[3];
 //		handArr = new Hand[4];
 
+        primaryStage.setTitle("Hello World!");
+        pane = new Pane();
+        primaryStage.setScene(new Scene(pane, 300, 250));
+        primaryStage.show();	
+        cont = new PaneController(pane);
+        
 		for(int i = 0; i<3; i++) {
 			handArr[i] = new Hand();
 		}
@@ -231,29 +244,29 @@ public class Game extends Observable{
 		broadcast();
 
 		turnLoop();
+		
 	}
 
 	private Player turnLoop() {
-
-		for(int i = 0; i<3; i++) {
-			ui.message("Player " + playerArr[i].toString() + "'s turn.");
-
-			playerArr[i].play();
-
-			broadcast();
-
-			ui.message("Player " + playerArr[i].toString() + "'s hand.");
-			ui.message(handArr[i].toString());
-			ui.message("Table: ");
-			ui.message(playerArr[i].displayPlay());
-
-			if(handArr[i].isEmpty()) {
-				return playerArr[i];
-			}
-
-			if(i==2) i=-1;
-		}
-
+//		for(int i = 0; i<3; i++) {
+//			ui.message("Player " + playerArr[i].toString() + "'s turn.");
+//
+//			playerArr[i].play();
+//
+//			broadcast();
+//
+//			ui.message("Player " + playerArr[i].toString() + "'s hand.");
+//			ui.message(handArr[i].toString());
+//			ui.message("Table: ");
+//			ui.message(playerArr[i].displayPlay());
+//
+//			if(handArr[i].isEmpty()) {
+//				return playerArr[i];
+//			}
+//
+//			if(i==2) i=-1;
+//		}
+//
 		return null;
 	}
 
