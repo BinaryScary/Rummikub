@@ -53,6 +53,10 @@ public class Hand {
 			hand.remove(tileToPlay);
 			hand.trimToSize();
 		}
+		
+		public void setSort() {
+			hand = sortByValueColor();
+		}
 
 		public ArrayList<Tile> sortByValueColor() {
 			ArrayList<Tile> handDuplicate;

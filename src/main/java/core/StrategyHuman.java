@@ -4,22 +4,34 @@ import java.util.ArrayList;
 
 public class StrategyHuman extends Player {
 
-	private CLI ui;
+//	private CLI ui;
+	private GUI ui;
 
 	public StrategyHuman() {
 		super();
 		name = "human";
 	}
 
+	public StrategyHuman(GUI ui) {
+		super();
+		name = "human";
+		this.ui = ui;
+	}
+
 	@Override
 	protected void play() {
 		newMelds = new ArrayList<Meld>();
 		modMelds = new ArrayList<Meld>();
-		ui = new CLI();
 		char choice;
 		Tile temp;
 		
-		ui.message(hand.toString());
+		hand.setSort();
+		System.out.println(hand.toString());
+		ui.displayHand(hand);
+
+		//TODO paused
+		if(1==1)return;
+
 		while(!hasChar(choice = ui.response("Play Table, or Draw Tile?(p,d): "), new char[]{'p','d'})) {
 			ui.message("*ERROR choice invalid");
 		}

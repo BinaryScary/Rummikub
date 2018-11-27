@@ -38,7 +38,7 @@ public class Game extends Observable{
 			handArr[i] = new Hand();
 		}
 
-		playerArr[0] = new StrategyHuman();
+		playerArr[0] = new StrategyHuman(ui);
 		playerArr[1] = new Strategy1();
 		playerArr[2] = new Strategy3();
 //		playerArr[3] = new StrategyHuman();
@@ -239,9 +239,6 @@ public class Game extends Observable{
 //		Meld tMeld = new Meld(new Tile[] {new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.BLUE, Tile.value.TEN),new Tile(Tile.colour.GREEN, Tile.value.TEN)});
 //		table.add(tMeld);
 
-		if(1==1) {
-			return;
-		}
 		broadcast();
 
 		turnLoop();
@@ -253,6 +250,9 @@ public class Game extends Observable{
 			ui.message("Player " + playerArr[i].toString() + "'s turn.");
 
 			playerArr[i].play();
+			//TODO paused
+			if(1==1)return null;
+
 
 			broadcast();
 
