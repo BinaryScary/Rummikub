@@ -250,7 +250,8 @@ public class Game extends Observable{
 			ui.message("Player " + playerArr[i].toString() + "'s turn.");
 
 			playerArr[i].play();
-			//TODO paused
+
+			//TODO skipped
 			if(1==1)return null;
 
 

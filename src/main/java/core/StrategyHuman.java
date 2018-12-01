@@ -29,12 +29,13 @@ public class StrategyHuman extends Player {
 		System.out.println(hand.toString());
 		ui.displayHand(hand);
 
-		//TODO paused
+		ui.query("test message this is a question", new String[]{"hey", "test button2", "one more"});
+		//TODO skipped
 		if(1==1)return;
 
-		while(!hasChar(choice = ui.response("Play Table, or Draw Tile?(p,d): "), new char[]{'p','d'})) {
-			ui.message("*ERROR choice invalid");
-		}
+//		while(!hasChar(choice = ui.response("Play Table, or Draw Tile?(p,d): "), new char[]{'p','d'})) {
+//			ui.message("*ERROR choice invalid");
+//		}
 		
 		if(choice == 'd') {
 			temp = draw();
