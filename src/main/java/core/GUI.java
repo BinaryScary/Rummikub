@@ -84,6 +84,7 @@ public class GUI implements UserInterface {
 	}
 	
 	private Pane tileGraphic(Tile tile) {
+		//TODO possibly add event handler here for card choosing
 		StackPane gTile = new StackPane();
 		Rectangle r = new Rectangle(width * 0.045, height * 0.09);
 		r.setFill(Color.CORNSILK);
