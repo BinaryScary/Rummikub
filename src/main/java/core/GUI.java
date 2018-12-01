@@ -1,10 +1,11 @@
 package core;
 
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -12,6 +13,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
 
 public class GUI implements UserInterface {
@@ -29,6 +36,9 @@ public class GUI implements UserInterface {
 
 	public void boardInit(Stage primaryStage) {
         pane = new Pane();
+        Button nextButton = new Button("Done");
+        ObservableList<String> options = FXCollections.observableArrayList("StrategyHuman", "Strategy1", "Strategy2");
+        ComboBox stratBox = new ComboBox(options);
         pane.setStyle("-fx-background-color: grey;");
         Rectangle boardBg = new Rectangle(width * 0.25,height * 0.08,width * 0.73, height * 0.65);
         boardBg.setFill(Color.SADDLEBROWN);
@@ -54,6 +64,19 @@ public class GUI implements UserInterface {
         control = new Pane();
         control.setPrefSize(width * 0.22, height * 0.65);
         
+        TextField nameField = new TextField();
+		Label enterName = new Label("ENTER NAME:");
+		enterName.relocate(400, 10);
+		enterName.setPrefSize(150, 25);
+
+		nameField.relocate(500, 10);
+		nameField.setPrefSize(150, 25);
+		nameField.setText("Player #");
+		
+		stratBox.setPromptText("Choose Player's Strategy:");
+		stratBox.relocate(260, 10);
+		stratBox.setPrefSize(200, 25);
+        
         pane.getChildren().add(title);
         pane.getChildren().add(scoreBg);
         pane.getChildren().add(controlBg);
@@ -63,9 +86,27 @@ public class GUI implements UserInterface {
         pane.getChildren().add(message);
         pane.getChildren().add(hand);
         pane.getChildren().add(control);
+        pane.getChildren().add(enterName);
+        pane.getChildren().add(nameField);
         primaryStage.setTitle("Rummikub");
         primaryStage.setScene(new Scene(pane, width, height));
+        
+        nextButton.setOnMousePressed(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent me) {
+				if (stratBox.getSelectionModel().getSelectedItem() != null) {
+					String name = nameField.getText();
+					String strat = stratBox.getSelectionModel().getSelectedItem().toString();
+					// TODO CREATE NEW PLAYER
+					nameField.setEditable(false);
+					nextButton.setDisable(true);
+				}
+
+			}
+		});
+        
 	}
+	
+	
 
 	@Override
 	public void message(String mes) {
@@ -141,6 +182,7 @@ public class GUI implements UserInterface {
         	button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
+					
 				}
 			});
         	
