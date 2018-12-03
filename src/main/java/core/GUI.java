@@ -1,6 +1,7 @@
 package core;
 
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -22,6 +23,7 @@ public class GUI implements UserInterface {
 	Pane pane;
 	Pane hand;
 	Pane control;
+	private final Object PAUSE_KEY = new Object();
 	
 	public GUI(Pane p){
         pane = p;
@@ -141,18 +143,32 @@ public class GUI implements UserInterface {
         	button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
+					System.out.println("test");
+					resume();
 				}
 			});
+        	
         	
 			control.getChildren().add(button);
 			location++;
         }
+        pause();
+
+	
 //        Rectangle controlBg = new Rectangle(width * 0.02,height * 0.08,width * 0.22, height * 0.65);
 //        controlBg.setFill(Color.TAN);
 
 		return 0;
 	}
 
+	private void pause() {
+	    Platform.enterNestedEventLoop(PAUSE_KEY);
+	}
+
+	private void resume() {
+	    Platform.exitNestedEventLoop(PAUSE_KEY, null);
+	}
+	
 	@Override
 	public char response(String mes) {
 		// TODO Auto-generated method stub
