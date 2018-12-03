@@ -23,7 +23,15 @@ public class Game extends Observable{
 	
 	public void init(Stage primaryStage) {
 		pile = new Pile();
-		table = new Table();
+//		table = new Table();
+		//TODO remove set table
+		Tile[] tArr1 = {new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.BLUE, Tile.value.TEN),new Tile(Tile.colour.ORANGE, Tile.value.TEN)};
+		Tile[] tArr2 = {new Tile(Tile.colour.RED, Tile.value.NINE),new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.RED, Tile.value.ELEVEN)};
+		Meld m1 = new Meld(tArr1);
+		Meld m2 = new Meld(tArr2);
+		Meld[] mArr = {m1,m2};
+		table = new Table(mArr);
+
 //		ui = new CLI();
 //		playerArr = new Player[4];
 		playerArr = new Player[3];
@@ -59,6 +67,7 @@ public class Game extends Observable{
 		//pile;table;hand0;hand1;hand2;hand3
 		pile = new Pile(false);
 		table = new Table();
+
 //		ui = new CLI();
 //		playerArr = new Player[4];
 		playerArr = new Player[3];
@@ -233,7 +242,8 @@ public class Game extends Observable{
 		deal(handArr[1]);
 		deal(handArr[2]);
 //		deal(handArr[3]);
-		Tile[] tArr = {new Tile(Tile.colour.BLUE, Tile.value.TEN), new Tile(Tile.colour.GREEN, Tile.value.TEN), new Tile(Tile.colour.RED, Tile.value.TEN)};
+		//TODO remove set hand
+		Tile[] tArr = {new Tile(Tile.colour.BLUE, Tile.value.TEN), new Tile(Tile.colour.GREEN, Tile.value.TEN), new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.ORANGE, Tile.value.TEN)};
 		handArr[0] = new Hand(tArr);
 
 //		//testing

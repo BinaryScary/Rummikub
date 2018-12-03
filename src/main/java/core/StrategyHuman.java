@@ -27,8 +27,8 @@ public class StrategyHuman extends Player {
 		Tile temp;
 		
 		hand.setSort();
-		System.out.println(hand.toString());
 		ui.displayHand(hand);
+		ui.displayTable(table);
 
 //		System.out.println(ui.query("test message this is a question", new String[]{"hey", "test button2", "one more"}));
 		//TODO skipped
@@ -79,7 +79,6 @@ public class StrategyHuman extends Player {
 //			ui.message(hand.toString());
 //			System.out.println(tempTable);
 			ui.displayTable(tempTable);
-			System.out.println(tempTable);
 			ui.displayHand(hand);
 
 //			while(!hasChar(choice = ui.response("Create Meld, Add to Meld, Split Meld, or End?(c,a,s,e): "), new char[]{'c','a','s','e'})) { 
@@ -136,16 +135,17 @@ public class StrategyHuman extends Player {
 					continue;
 //				}
 //				//add
-//			}else 
-//			if(choice == 1) {
+			}else 
+			if(choice == 1) {
 //				ui.message(tempTable.toString());
 				//TODO exit option
-//				ui.message("Click on meld");
+				ui.message("Select meld");
 //				meldStr = ui.responseStr("Enter Table Meld (e.g \"R1 B1 G1\") or nothing to end: ");
-//				tempMeld = ui.getMeld();
-//				if(tempMeld == null) {
-//					continue;
-//				}
+				tempMeld = ui.getMeld();
+				System.out.println(tempMeld);
+				if(tempMeld == null) {
+					continue;
+				}
 //
 //				meld = assembleMeld(meldStr);
 //				if(meld == null) {
@@ -158,6 +158,13 @@ public class StrategyHuman extends Player {
 //				}
 //
 //				meldStr = ui.responseStr("Enter Tile('s) to add: ");
+				ui.message("Selected Tiles to add");
+//				Object[] selection = ui.getSelection();
+//				choice = (int) selection[0];
+				//to be implemented
+
+				//ui.getSelection
+
 //				meld = assembleMeld(meldStr);
 //				if(meld == null) {
 //					continue;
@@ -167,7 +174,8 @@ public class StrategyHuman extends Player {
 //					ui.message("*ERROR choice invalid");
 //				}
 //
-//				if(choice == 'h') {
+
+//				if(choice == '0') {
 //					if(checkFromHand(meld) == -1) {
 //						continue;
 //					}else {
@@ -209,6 +217,7 @@ public class StrategyHuman extends Player {
 //						tempTable.getAt(meldIndex).add(meld);
 //					}
 //				}
+
 				
 //		continue;
 		//split

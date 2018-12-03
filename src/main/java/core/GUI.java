@@ -1,13 +1,20 @@
 package core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -15,12 +22,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 
 
 public class GUI implements UserInterface {
@@ -33,8 +34,9 @@ public class GUI implements UserInterface {
 	Pane control;
 	Pane board;
 	private final Object PAUSE_KEY = new Object();
-	private String bResult;
-	private Tile hTile;
+	private String eventResult;
+	private Tile eventTile;
+	private Meld eventMeld;
 	
 	public GUI(Pane p){
         pane = p;
@@ -65,13 +67,13 @@ public class GUI implements UserInterface {
         message.setWrappingWidth(width * 0.72);
         
         hand = new Pane();
-        hand.setPrefSize(width * 0.73, height * 0.24);
+//        hand.setPrefSize(width * 0.73, height * 0.24);
 
         board = new Pane();
-        board.setPrefSize(width * 0.73, height * 0.65);
+//        board.setPrefSize(width * 0.73, height * 0.65);
 
         control = new Pane();
-        control.setPrefSize(width * 0.22, height * 0.65);
+//        control.setPrefSize(width * 0.22, height * 0.65);
         
         TextField nameField = new TextField();
 		Label enterName = new Label("ENTER NAME:");
@@ -86,16 +88,17 @@ public class GUI implements UserInterface {
 		stratBox.relocate(260, 10);
 		stratBox.setPrefSize(200, 25);
         
+		//CRITICAL BE VERY CAREFUL the order of adds affects z scale
         pane.getChildren().add(title);
         pane.getChildren().add(scoreBg);
         pane.getChildren().add(controlBg);
         pane.getChildren().add(handBg);
         pane.getChildren().add(boardBg);
-        pane.getChildren().add(board);
         pane.getChildren().add(messageBg);
         pane.getChildren().add(message);
         pane.getChildren().add(hand);
         pane.getChildren().add(control);
+        pane.getChildren().add(board);
         pane.getChildren().add(enterName);
         pane.getChildren().add(nameField);
         primaryStage.setTitle("Rummikub");
@@ -152,13 +155,18 @@ public class GUI implements UserInterface {
 		Pane tempPane;
 		for(Meld m : tiles.getTable()) {
 			for(Tile t : m.getMeld()) {
-				tempPane = tileGraphic(t);
+				tempPane = meldGraphic(t,m);
 				tempPane.setTranslateY(height*0.10 + (posY * height * 0.10));
 				tempPane.setTranslateX((width*0.265) + (posX * width * 0.050) + gap);
 	//			System.out.println(tempPane.getTranslateX());
 
 //				Rectangle(width * 0.25,height * 0.08,width * 0.73, height * 0.65);
 
+				tempPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+					public void handle(MouseEvent arg0) {
+						System.out.println("test");
+					}
+				});
 				board.getChildren().add(tempPane);
 				posX++;
 				if(posX == 12) {
@@ -170,6 +178,37 @@ public class GUI implements UserInterface {
 		}
 	}
 	
+	private Pane meldGraphic(Tile tile, Meld m) {
+		StackPane gTile = new StackPane();
+		Rectangle r = new Rectangle(width * 0.045, height * 0.09);
+		r.setFill(Color.CORNSILK);
+		gTile.getChildren().add(r);
+		
+		Text t = new Text(0, 0, Integer.toString(tile.getValue().getVal()));
+        t.setFont(new Font(width * height * 0.00003));
+        switch (tile.getColour().getCol()) {
+        case 'R': 
+        	t.setFill(Color.RED);
+			break;
+        case 'G': 
+        	t.setFill(Color.GREEN);
+			break;
+        case 'B': 
+        	t.setFill(Color.BLUE);
+			break;
+        case 'O': 
+        	t.setFill(Color.ORANGE);
+			break;
+        }
+		gTile.getChildren().add(t);
+		ArrayList<Object> temp = new ArrayList<Object>();
+		temp.add(m);
+		temp.add(tile);
+		gTile.setUserData(temp);
+		
+		return gTile;
+	}
+
 	private Pane tileGraphic(Tile tile) {
 		StackPane gTile = new StackPane();
 		Rectangle r = new Rectangle(width * 0.045, height * 0.09);
@@ -197,15 +236,35 @@ public class GUI implements UserInterface {
 		
 		return gTile;
 	}
+	
+	public Object[] getSelection() {
+		return null;
+	}
 
-	@SuppressWarnings("unused")
+	public Meld getMeld() {
+		for(Node n: board.getChildren()) {
+			n.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				public void handle(MouseEvent arg0) {
+					eventMeld = (Meld) ((ArrayList<Object>) n.getUserData()).get(0);
+					//TODO possibly highlight node
+					resume();
+				}
+			});
+		}
+
+		confirmButton();
+		pause();
+		if(eventResult == "Confirm") return null;
+		return eventMeld;
+	}
+
 	public Meld getTiles() {
 		Meld res = new Meld();
 		for(Node n: hand.getChildren()) {
 			n.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent arg0) {
 					System.out.println(n.getUserData());
-					hTile = (Tile) n.getUserData();
+					eventTile = (Tile) n.getUserData();
 					//TODO possibly highlight node
 					resume();
 				}
@@ -215,11 +274,11 @@ public class GUI implements UserInterface {
 		confirmButton();
 		while(true) {
 			pause();
-			if(bResult == "Confirm") break;
+			if(eventResult == "Confirm") break;
 
 			//watch out for unitentional null adds
-			if(res.indexOf(hTile) == -1) {
-				res.add(hTile);
+			if(res.indexOf(eventTile) == -1) {
+				res.add(eventTile);
 			}
 		}
 
@@ -237,7 +296,7 @@ public class GUI implements UserInterface {
         	button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
-					GUI.this.bResult = button.getText();
+					GUI.this.eventResult = button.getText();
 					resume();
 				}
 			});
@@ -263,7 +322,7 @@ public class GUI implements UserInterface {
         	button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
-					GUI.this.bResult = button.getText();
+					GUI.this.eventResult = button.getText();
 					resume();
 				}
 			});
@@ -281,7 +340,7 @@ public class GUI implements UserInterface {
         
         counter = 0;
         for(String str: choices) {
-        	if(str == bResult) {
+        	if(str == eventResult) {
         		return counter;
         	}
         	counter++;
@@ -321,4 +380,5 @@ public class GUI implements UserInterface {
 		// TODO Auto-generated method stub
 		
 	}
+
 }
