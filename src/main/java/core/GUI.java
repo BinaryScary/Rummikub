@@ -1,10 +1,6 @@
 package core;
 
-<<<<<<< HEAD
-
 import javafx.application.Platform;
-=======
->>>>>>> 4c35bc7566ccb0483fd37abc223da94ac579a246
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -188,12 +184,8 @@ public class GUI implements UserInterface {
         	button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
-<<<<<<< HEAD
 					System.out.println("test");
 					resume();
-=======
-					
->>>>>>> 4c35bc7566ccb0483fd37abc223da94ac579a246
 				}
 			});
         	
