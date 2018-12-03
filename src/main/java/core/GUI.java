@@ -3,6 +3,7 @@ package core;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -191,10 +192,25 @@ public class GUI implements UserInterface {
 			break;
         }
 		gTile.getChildren().add(t);
+		gTile.setUserData(tile);
 		
 		return gTile;
 	}
 
+	public Meld getTiles() {
+		for(Node n: hand.getChildren()) {
+			n.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				public void handle(MouseEvent arg0) {
+					System.out.println(n.getUserData());
+					resume();
+				}
+			});
+		}
+		
+		pause();
+		return null;
+	}
+	
 	public int query(String mes, String[] choices) {
 		int counter = 0;
 		control.getChildren().clear();

@@ -249,16 +249,9 @@ public class Game extends Observable{
 		for(int i = 0; i<3; i++) {
 			ui.message("Player " + playerArr[i].toString() + "'s turn.");
 
-//			playerArr[i].play();
+			playerArr[i].play();
 
 			//TODO skipped
-		Tile[] tArr2 = {new Tile(Tile.colour.RED, Tile.value.ONE),new Tile(Tile.colour.BLUE, Tile.value.TWO)};
-		Tile[] tArr1 = {new Tile(Tile.colour.RED, Tile.value.EIGHT),new Tile(Tile.colour.BLUE, Tile.value.ELEVEN)};
-		Meld m1 = new Meld(tArr1);
-		Meld m2 = new Meld(tArr2);
-		Meld[] mArr = {m1,m2};
-		Table t2 = new Table(mArr);
-		ui.displayTable(t2);
 			if(1==1)return null;
 
 

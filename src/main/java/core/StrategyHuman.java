@@ -50,16 +50,17 @@ public class StrategyHuman extends Player {
 			}
 		}else if(choice == 0) {
 			if(playTable() == -1) {
-				if(1==1)return; //Play logic
 				temp = pile.deal();
 				hand.addTileToHand(temp);
 				ui.message("You drew a " + temp + ".");
+				hand.setSort();
+				ui.displayHand(hand);
 			}
 		}
 	}
 	
 	private int playTable() {
-		char choice;
+		int choice;
 		String meldStr;
 		Meld meld;
 		ArrayList<Meld> invalidMelds;
@@ -72,164 +73,176 @@ public class StrategyHuman extends Player {
 
 
 		while(true) {
-			ui.message("Current Table: ");
-			ui.message(displayPlay());
-			ui.message("Current Hand: ");
-			ui.message(hand.toString());
+//			ui.message("Current Table: ");
+//			ui.message(displayPlay());
+//			ui.message("Current Hand: ");
+//			ui.message(hand.toString());
+			ui.displayTable(table);
 
-			while(!hasChar(choice = ui.response("Create Meld, Add to Meld, Split Meld, or End?(c,a,s,e): "), new char[]{'c','a','s','e'})) { 
-				ui.message("*ERROR choice invalid");
-			}
+//			while(!hasChar(choice = ui.response("Create Meld, Add to Meld, Split Meld, or End?(c,a,s,e): "), new char[]{'c','a','s','e'})) { 
+//				ui.message("*ERROR choice invalid");
+//			}
+			choice = ui.query("Create Meld, Add to Meld, Split Meld, or End?", new String[] {"Create","Add","Split","End"});
+//			System.out.println("test");
 			//initialMeld check
-			if(initialMeld == true && hasChar(choice, new char[]{'a','s'})){
+//			if(initialMeld == true && hasChar(choice, new char[]{'a','s'})){
+			if(initialMeld == true && (choice == 1 || choice == 2)){
 				ui.message("*ERROR cannot add, or split meld on initial run");
 				continue;
 			}
 
-			if(choice == 'c') {
-				while(true) {
-					meldStr = ui.responseStr("Enter your meld (e.g \"R1 B1 G1\") or nothing to end: ");
-					if(meldStr == null) {
-						continue;
-					}
-					
-					meld = assembleMeld(meldStr);
-					if(meld == null) {
-						continue;
-					}
-					if(checkFromHand(meld) == -1) {
-						continue;
-					}
-
-					//initialMeld check
-					if(initialMeld == true && meld.totalMeld() < 30) {
-						ui.message("Meld need to total 30+");
-						continue;
-					}else if(initialMeld == true && meld.totalMeld() >= 30) {
-						removeFromHand(meld);
-						newMelds.add(meld);
-						tempTable.add(meld);
-						table = tempTable;
-						game.setTable(table);
-						initialMeld = false;
-						return 0;
-					}
-					
-					removeFromHand(meld);
-					newMelds.add(meld);
-					tempTable.add(meld);
-					continue;
-				}
-			}else if(choice == 'a') {
-				ui.message(tempTable.toString());
-				meldStr = ui.responseStr("Enter Table Meld (e.g \"R1 B1 G1\") or nothing to end: ");
-				if(meldStr == null) {
-					continue;
-				}
-
-				meld = assembleMeld(meldStr);
-				if(meld == null) {
-					continue;
-				}
+			//create
+			if(choice == 0) {
+//				while(true) {
+					ui.message("Click on tiles in hand to create meld");
+					ui.getTiles();
+//					meldStr = ui.responseStr("Enter your meld (e.g \"R1 B1 G1\") or nothing to end: ");
+//					if(meldStr == null) {
+//						continue;
+//					}
+//					
+//					meld = assembleMeld(meldStr);
+//					if(meld == null) {
+//						continue;
+//					}
+//					if(checkFromHand(meld) == -1) {
+//						continue;
+//					}
+//
+//					//initialMeld check
+//					if(initialMeld == true && meld.totalMeld() < 30) {
+//						ui.message("Meld need to total 30+");
+//						continue;
+//					}else if(initialMeld == true && meld.totalMeld() >= 30) {
+//						removeFromHand(meld);
+//						newMelds.add(meld);
+//						tempTable.add(meld);
+//						table = tempTable;
+//						game.setTable(table);
+//						initialMeld = false;
+//						return 0;
+//					}
+//					
+//					removeFromHand(meld);
+//					newMelds.add(meld);
+//					tempTable.add(meld);
+//					continue;
+//				}
+//				//add
+//			}else 
+//			if(choice == 1) {
+//				ui.message(tempTable.toString());
+				//TODO exit option
+//				ui.message("Click on meld");
+//				meldStr = ui.responseStr("Enter Table Meld (e.g \"R1 B1 G1\") or nothing to end: ");
+//				tempMeld = ui.getMeld();
+//				if(tempMeld == null) {
+//					continue;
+//				}
+//
+//				meld = assembleMeld(meldStr);
+//				if(meld == null) {
+//					continue;
+//				}
+//				meldIndex = table.indexOf(meld);
+//				if(meldIndex == -1) {
+//					ui.message("*Error Meld not on table");
+//					continue;
+//				}
+//
+//				meldStr = ui.responseStr("Enter Tile('s) to add: ");
+//				meld = assembleMeld(meldStr);
+//				if(meld == null) {
+//					continue;
+//				}
+//
+//				while(!hasChar(choice = ui.response("Tile From Table or Hand?(h,t): "), new char[]{'h','t'})) { 
+//					ui.message("*ERROR choice invalid");
+//				}
+//
+//				if(choice == 'h') {
+//					if(checkFromHand(meld) == -1) {
+//						continue;
+//					}else {
+//						removeFromHand(meld);
+//					}
+//
+//					tempMeld = new Meld(tempTable.getAt(meldIndex));
+//					if(tempMeld.checkFrontAdd(meld)) {
+//						tempMeld.addFront(meld);
+//					}else {
+//						tempMeld.add(meld);
+//					}
+//					if(!tempMeld.validMeld()) {
+//						ui.message("*Error Invalid meld addition");
+//						addMeldToHand(meld);
+//						continue;
+//					}else {
+//						modMelds.add(meld);
+//						tempTable.getAt(meldIndex).add(meld);
+//					}
+//				}else {
+//					if(tempTable.indexOf(meld) == -1) {
+//						ui.message("*Error Tile not on Table");
+//						continue;
+//					}
+//
+//					tempTable.remove(meld);
+//					tempMeld = new Meld(tempTable.getAt(meldIndex));
+//					if(tempMeld.checkFrontAdd(meld)) {
+//						tempMeld.addFront(meld);
+//					}else {
+//						tempMeld.add(meld);
+//					}
+//					if(!tempMeld.validMeld()) {
+//						ui.message("*Error Invalid meld addition");
+//						continue;
+//					}else {
+//						modMelds.add(meld);
+//						tempTable.getAt(meldIndex).add(meld);
+//					}
+//				}
 				
-				meldIndex = table.indexOf(meld);
-				if(meldIndex == -1) {
-					ui.message("*Error Meld not on table");
-					continue;
-				}
-
-				meldStr = ui.responseStr("Enter Tile('s) to add: ");
-				meld = assembleMeld(meldStr);
-				if(meld == null) {
-					continue;
-				}
-
-				while(!hasChar(choice = ui.response("Tile From Table or Hand?(h,t): "), new char[]{'h','t'})) { 
-					ui.message("*ERROR choice invalid");
-				}
-
-				if(choice == 'h') {
-					if(checkFromHand(meld) == -1) {
-						continue;
-					}else {
-						removeFromHand(meld);
-					}
-
-					tempMeld = new Meld(tempTable.getAt(meldIndex));
-					if(tempMeld.checkFrontAdd(meld)) {
-						tempMeld.addFront(meld);
-					}else {
-						tempMeld.add(meld);
-					}
-					if(!tempMeld.validMeld()) {
-						ui.message("*Error Invalid meld addition");
-						addMeldToHand(meld);
-						continue;
-					}else {
-						modMelds.add(meld);
-						tempTable.getAt(meldIndex).add(meld);
-					}
-				}else {
-					if(tempTable.indexOf(meld) == -1) {
-						ui.message("*Error Tile not on Table");
-						continue;
-					}
-
-					tempTable.remove(meld);
-					tempMeld = new Meld(tempTable.getAt(meldIndex));
-					if(tempMeld.checkFrontAdd(meld)) {
-						tempMeld.addFront(meld);
-					}else {
-						tempMeld.add(meld);
-					}
-					if(!tempMeld.validMeld()) {
-						ui.message("*Error Invalid meld addition");
-						continue;
-					}else {
-						modMelds.add(meld);
-						tempTable.getAt(meldIndex).add(meld);
-					}
-				}
-				
-		continue;
-			}else if(choice == 's') {
-				ui.message(tempTable.toString());
-				meldStr = ui.responseStr("Enter Table Meld (e.g \"R1 B1 G1\") or nothing to end: ");
-				if(meldStr == null) {
-					continue;
-				}
-
-				meld = assembleMeld(meldStr);
-				if(meld == null) {
-					continue;
-				}
-				
-				meldIndex = table.indexOf(meld);
-				if(meldIndex == -1) {
-					ui.message("*Error Meld not on table");
-					continue;
-				}
-				
-				meldStr = ui.responseStr("Enter Tile where split should end (e.g \"R1\"): ");
-				tempTile = stringToTile(meldStr);
-				if(tempTile == null) {
-					ui.message("*Error Invalid Tile");
-					continue;
-				}
-				
-				if(meld.indexOf(tempTile) == -1) {
-					ui.message("*Error Tile not a member of meld");
-					continue;
-				}
-				
-				tempTable.remove(meldIndex);
-				tempTable.add(new Meld(new ArrayList<Tile>(meld.getMeld().subList(0, meld.indexOf(tempTile) + 1))));
-				modMelds.add(tempTable.getAt(tempTable.size()));
-				tempTable.add(new Meld(new ArrayList<Tile>(meld.getMeld().subList(meld.indexOf(tempTile) + 1,meld.size()))));
-				modMelds.add(tempTable.getAt(tempTable.size()));
-				
-				continue;
-			}else if(choice == 'e') {
+//		continue;
+		//split
+//			}else if(choice == 2) {
+//				ui.message(tempTable.toString());
+//				meldStr = ui.responseStr("Enter Table Meld (e.g \"R1 B1 G1\") or nothing to end: ");
+//				if(meldStr == null) {
+//					continue;
+//				}
+//
+//				meld = assembleMeld(meldStr);
+//				if(meld == null) {
+//					continue;
+//				}
+//				
+//				meldIndex = table.indexOf(meld);
+//				if(meldIndex == -1) {
+//					ui.message("*Error Meld not on table");
+//					continue;
+//				}
+//				
+//				meldStr = ui.responseStr("Enter Tile where split should end (e.g \"R1\"): ");
+//				tempTile = stringToTile(meldStr);
+//				if(tempTile == null) {
+//					ui.message("*Error Invalid Tile");
+//					continue;
+//				}
+//				
+//				if(meld.indexOf(tempTile) == -1) {
+//					ui.message("*Error Tile not a member of meld");
+//					continue;
+//				}
+//				
+//				tempTable.remove(meldIndex);
+//				tempTable.add(new Meld(new ArrayList<Tile>(meld.getMeld().subList(0, meld.indexOf(tempTile) + 1))));
+//				modMelds.add(tempTable.getAt(tempTable.size()));
+//				tempTable.add(new Meld(new ArrayList<Tile>(meld.getMeld().subList(meld.indexOf(tempTile) + 1,meld.size()))));
+//				modMelds.add(tempTable.getAt(tempTable.size()));
+//				
+//				continue;
+			}else if(choice == 3) {
 				
 				break;
 			}
