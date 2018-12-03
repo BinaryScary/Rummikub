@@ -250,7 +250,7 @@ public class GUI implements UserInterface {
 
 		confirmButton();
 		pause();
-		if(eventResult == "Confirm") return null;
+		if(eventResult == "Return") return null;
 		return eventMeld;
 	}
 	
@@ -271,7 +271,7 @@ public class GUI implements UserInterface {
 		
 		confirmButton();
 		pause();
-		if(eventResult == "Confirm") return null;
+		if(eventResult == "Return") return null;
 
 		return temp;
 	}
@@ -290,7 +290,7 @@ public class GUI implements UserInterface {
 		
 		confirmButton();
 		pause();
-		if(eventResult == "Confirm") return null;
+		if(eventResult == "Return") return null;
 
 		return eventTile;
 	}
@@ -311,7 +311,7 @@ public class GUI implements UserInterface {
 		confirmButton();
 		while(true) {
 			pause();
-			if(eventResult == "Confirm") break;
+			if(eventResult == "Return") break;
 
 			//watch out for unitentional null adds
 			if(res.indexOf(eventTile) == -1) {
@@ -338,7 +338,7 @@ public class GUI implements UserInterface {
 		confirmButton();
 		while(true) {
 			pause();
-			if(eventResult == "Confirm") break;
+			if(eventResult == "Return") break;
 
 			//watch out for unitentional null adds
 			if(res.indexOf(eventTile) == -1) {
@@ -350,21 +350,22 @@ public class GUI implements UserInterface {
 	}
 	
 	public void confirmButton() {
-		
-        	final Button button = new Button("Return");
-        	button.setMinWidth(width * 0.220);
-        	button.setMinHeight(height * 0.100);
-        	button.setLayoutX(width * 0.022);
-        	button.setLayoutY(height * 0.150);
 
-        	button.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent e) {
-					GUI.this.eventResult = button.getText();
-					resume();
-				}
-			});
-			control.getChildren().add(button);
+		control.getChildren().clear();
+		final Button button = new Button("Return");
+		button.setMinWidth(width * 0.220);
+		button.setMinHeight(height * 0.100);
+		button.setLayoutX(width * 0.022);
+		button.setLayoutY(height * 0.150);
+
+		button.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				GUI.this.eventResult = button.getText();
+				resume();
+			}
+		});
+		control.getChildren().add(button);
 	}
 	
 	public int query(String mes, String[] choices) {
@@ -423,25 +424,21 @@ public class GUI implements UserInterface {
 	
 	@Override
 	public char response(String mes) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void playerTurn(char player) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void displayMeld(Meld m) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void outcome(char out) {
-		// TODO Auto-generated method stub
 		
 	}
 

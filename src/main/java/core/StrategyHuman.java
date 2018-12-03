@@ -138,8 +138,8 @@ public class StrategyHuman extends Player {
 			}else 
 			if(choice == 1) {
 //				ui.message(tempTable.toString());
-				//TODO exit option
 				ui.message("Select meld to add to");
+				ui.confirmButton();
 //				meldStr = ui.responseStr("Enter Table Meld (e.g \"R1 B1 G1\") or nothing to end: ");
 				tempMeld = ui.getMeld();
 				System.out.println(tempMeld);
