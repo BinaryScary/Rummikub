@@ -34,6 +34,7 @@ public class GUI implements UserInterface {
 	Pane board;
 	private final Object PAUSE_KEY = new Object();
 	private String bResult;
+	private Tile hTile;
 	
 	public GUI(Pane p){
         pane = p;
@@ -99,12 +100,12 @@ public class GUI implements UserInterface {
         primaryStage.setTitle("Rummikub");
         primaryStage.setScene(new Scene(pane, width, height));
         
+        //Abdous
         nextButton.setOnMousePressed(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				if (stratBox.getSelectionModel().getSelectedItem() != null) {
 					String name = nameField.getText();
 					String strat = stratBox.getSelectionModel().getSelectedItem().toString();
-					// TODO CREATE NEW PLAYER
 					nameField.setEditable(false);
 					nextButton.setDisable(true);
 				}
@@ -169,7 +170,6 @@ public class GUI implements UserInterface {
 	}
 	
 	private Pane tileGraphic(Tile tile) {
-		//TODO possibly add event handler here for card choosing
 		StackPane gTile = new StackPane();
 		Rectangle r = new Rectangle(width * 0.045, height * 0.09);
 		r.setFill(Color.CORNSILK);
@@ -197,18 +197,50 @@ public class GUI implements UserInterface {
 		return gTile;
 	}
 
+	@SuppressWarnings("unused")
 	public Meld getTiles() {
+		Meld res = new Meld();
 		for(Node n: hand.getChildren()) {
 			n.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent arg0) {
 					System.out.println(n.getUserData());
+					hTile = (Tile) n.getUserData();
+					//TODO possibly highlight node
 					resume();
 				}
 			});
 		}
 		
-		pause();
-		return null;
+		confirmButton();
+		while(true) {
+			pause();
+			if(bResult == "Confirm") break;
+
+			//watch out for unitentional null adds
+			if(res.indexOf(hTile) == -1) {
+				res.add(hTile);
+			}
+		}
+		System.out.println(res);
+		return res;
+	}
+	
+	public void confirmButton() {
+		
+        	final Button button = new Button("Confirm");
+        	button.setMinWidth(width * 0.220);
+        	button.setMinHeight(height * 0.100);
+        	button.setLayoutX(width * 0.022);
+        	button.setLayoutY(height * 0.150);
+
+        	button.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent e) {
+					GUI.this.bResult = button.getText();
+					resume();
+				}
+			});
+			control.getChildren().add(button);
 	}
 	
 	public int query(String mes, String[] choices) {

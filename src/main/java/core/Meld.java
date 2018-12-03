@@ -97,8 +97,9 @@ public class Meld {
     @Override
     public String toString(){
 		String str = "{";
+		System.out.println(arr.size());
 		if(arr.size() == 0) {
-			return str;
+			return str + "}";
 		}
 
 		for(Tile t : arr) {

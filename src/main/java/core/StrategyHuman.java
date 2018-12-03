@@ -93,9 +93,10 @@ public class StrategyHuman extends Player {
 
 			//create
 			if(choice == 0) {
+				//TODO removed loop but check if needed
 //				while(true) {
 					ui.message("Click on tiles in hand to create meld");
-					ui.getTiles();
+					meld = ui.getTiles();
 //					meldStr = ui.responseStr("Enter your meld (e.g \"R1 B1 G1\") or nothing to end: ");
 //					if(meldStr == null) {
 //						continue;
@@ -103,30 +104,32 @@ public class StrategyHuman extends Player {
 //					
 //					meld = assembleMeld(meldStr);
 //					if(meld == null) {
-//						continue;
-//					}
+					if(meld.size() == 0) {
+						continue;
+					}
+
 //					if(checkFromHand(meld) == -1) {
 //						continue;
 //					}
 //
-//					//initialMeld check
-//					if(initialMeld == true && meld.totalMeld() < 30) {
-//						ui.message("Meld need to total 30+");
-//						continue;
-//					}else if(initialMeld == true && meld.totalMeld() >= 30) {
-//						removeFromHand(meld);
-//						newMelds.add(meld);
-//						tempTable.add(meld);
-//						table = tempTable;
-//						game.setTable(table);
-//						initialMeld = false;
-//						return 0;
-//					}
+					//initialMeld check
+					if(initialMeld == true && meld.totalMeld() < 30) {
+						ui.message("Meld need to total 30+");
+						continue;
+					}else if(initialMeld == true && meld.totalMeld() >= 30) {
+						removeFromHand(meld);
+						newMelds.add(meld);
+						tempTable.add(meld);
+						table = tempTable;
+						game.setTable(table);
+						initialMeld = false;
+						return 0;
+					}
 //					
-//					removeFromHand(meld);
-//					newMelds.add(meld);
-//					tempTable.add(meld);
-//					continue;
+					removeFromHand(meld);
+					newMelds.add(meld);
+					tempTable.add(meld);
+					continue;
 //				}
 //				//add
 //			}else 
