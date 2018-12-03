@@ -224,17 +224,19 @@ public class StrategyHuman extends Player {
 				
 		continue;
 		//split
-//			}else if(choice == 2) {
+			}else if(choice == 2) {
 //				ui.message(tempTable.toString());
 //				meldStr = ui.responseStr("Enter Table Meld (e.g \"R1 B1 G1\") or nothing to end: ");
+
+//				ui.message("Select Meld to Split");
+//				meld = ui.getMeld();
+
 //				if(meldStr == null) {
 //					continue;
 //				}
 //
 //				meld = assembleMeld(meldStr);
-//				if(meld == null) {
-//					continue;
-//				}
+
 //				
 //				meldIndex = table.indexOf(meld);
 //				if(meldIndex == -1) {
@@ -242,25 +244,37 @@ public class StrategyHuman extends Player {
 //					continue;
 //				}
 //				
+
+				ArrayList<Object> temp = ui.getTableTileMeld();
+				ui.message("Select a Tile where the split should end");
+				meld = (Meld) temp.get(0);
+				tempTile = (Tile) temp.get(1);
 //				meldStr = ui.responseStr("Enter Tile where split should end (e.g \"R1\"): ");
+//				ui.message("Select a Tile where the split should end");
+//				tempTile = ui.getTableTile();
+				System.out.println(tempTile);
+
 //				tempTile = stringToTile(meldStr);
-//				if(tempTile == null) {
+				if(tempTile == null) {
 //					ui.message("*Error Invalid Tile");
-//					continue;
-//				}
+					continue;
+				}
+				if(meld == null) {
+					continue;
+				}
 //				
 //				if(meld.indexOf(tempTile) == -1) {
 //					ui.message("*Error Tile not a member of meld");
 //					continue;
 //				}
 //				
-//				tempTable.remove(meldIndex);
-//				tempTable.add(new Meld(new ArrayList<Tile>(meld.getMeld().subList(0, meld.indexOf(tempTile) + 1))));
-//				modMelds.add(tempTable.getAt(tempTable.size()));
-//				tempTable.add(new Meld(new ArrayList<Tile>(meld.getMeld().subList(meld.indexOf(tempTile) + 1,meld.size()))));
-//				modMelds.add(tempTable.getAt(tempTable.size()));
+				tempTable.remove(meldIndex);
+				tempTable.add(new Meld(new ArrayList<Tile>(meld.getMeld().subList(0, meld.indexOf(tempTile) + 1))));
+				modMelds.add(tempTable.getAt(tempTable.size()));
+				tempTable.add(new Meld(new ArrayList<Tile>(meld.getMeld().subList(meld.indexOf(tempTile) + 1,meld.size()))));
+				modMelds.add(tempTable.getAt(tempTable.size()));
 //				
-//				continue;
+				continue;
 			}else if(choice == 3) {
 				
 				break;

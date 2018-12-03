@@ -254,6 +254,47 @@ public class GUI implements UserInterface {
 		return eventMeld;
 	}
 	
+	public ArrayList<Object> getTableTileMeld() {
+		ArrayList<Object> temp = new ArrayList<Object>();
+		for(Node n: board.getChildren()) {
+			n.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				public void handle(MouseEvent arg0) {
+					System.out.println(n.getUserData());
+					temp.add((Meld) ((ArrayList<Object>) n.getUserData()).get(0));
+					temp.add((Tile) ((ArrayList<Object>) n.getUserData()).get(1));
+
+					//TODO possibly highlight node
+					resume();
+				}
+			});
+		}
+		
+		confirmButton();
+		pause();
+		if(eventResult == "Confirm") return null;
+
+		return temp;
+	}
+
+	public Tile getTableTile() {
+		for(Node n: board.getChildren()) {
+			n.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				public void handle(MouseEvent arg0) {
+					System.out.println(n.getUserData());
+					eventTile = (Tile) ((ArrayList<Object>) n.getUserData()).get(1);
+					//TODO possibly highlight node
+					resume();
+				}
+			});
+		}
+		
+		confirmButton();
+		pause();
+		if(eventResult == "Confirm") return null;
+
+		return eventTile;
+	}
+
 	public Meld getTableTiles() {
 		Meld res = new Meld();
 		for(Node n: board.getChildren()) {
@@ -310,7 +351,7 @@ public class GUI implements UserInterface {
 	
 	public void confirmButton() {
 		
-        	final Button button = new Button("Confirm");
+        	final Button button = new Button("Return");
         	button.setMinWidth(width * 0.220);
         	button.setMinHeight(height * 0.100);
         	button.setLayoutX(width * 0.022);
