@@ -11,7 +11,7 @@ public abstract class Player implements Observer{
 	protected Pile pile;
 	protected Table table; // player can see table itself
 	protected Game game;
-	protected boolean initialMeld = false; //TODO change to true on submit
+	protected boolean initialMeld = true; //TODO change to true on submit
 	protected ArrayList<Meld> newMelds;
 	protected ArrayList<Meld> modMelds;
 	

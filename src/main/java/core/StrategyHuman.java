@@ -37,7 +37,7 @@ public class StrategyHuman extends Player {
 //			ui.message("*ERROR choice invalid");
 //		}
 		
-		choice = ui.query("Play Table or Draw Tile?", new String[] {"Table", "Tile"});
+		choice = ui.query("Play Table or Draw Tile?", new String[] {"Play", "Draw"});
 		
 		if(choice == 1) {
 			temp = draw();
