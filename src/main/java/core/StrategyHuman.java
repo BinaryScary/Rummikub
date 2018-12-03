@@ -270,9 +270,10 @@ public class StrategyHuman extends Player {
 //				
 				tempTable.remove(meldIndex);
 				tempTable.add(new Meld(new ArrayList<Tile>(meld.getMeld().subList(0, meld.indexOf(tempTile) + 1))));
-				modMelds.add(tempTable.getAt(tempTable.size()));
+				modMelds.add(tempTable.getAt(tempTable.size() -1));
 				tempTable.add(new Meld(new ArrayList<Tile>(meld.getMeld().subList(meld.indexOf(tempTile) + 1,meld.size()))));
-				modMelds.add(tempTable.getAt(tempTable.size()));
+				modMelds.add(tempTable.getAt(tempTable.size() -1));
+				//TODO fix split
 //				
 				continue;
 			}else if(choice == 3) {
