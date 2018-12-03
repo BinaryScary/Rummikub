@@ -139,7 +139,7 @@ public class StrategyHuman extends Player {
 			if(choice == 1) {
 //				ui.message(tempTable.toString());
 				//TODO exit option
-				ui.message("Select meld");
+				ui.message("Select meld to add to");
 //				meldStr = ui.responseStr("Enter Table Meld (e.g \"R1 B1 G1\") or nothing to end: ");
 				tempMeld = ui.getMeld();
 				System.out.println(tempMeld);
@@ -158,68 +158,71 @@ public class StrategyHuman extends Player {
 //				}
 //
 //				meldStr = ui.responseStr("Enter Tile('s) to add: ");
-				ui.message("Selected Tiles to add");
-//				Object[] selection = ui.getSelection();
-//				choice = (int) selection[0];
-				//to be implemented
 
-				//ui.getSelection
+//				while(!hasChar(choice = ui.response("Tile From Table or Hand?(h,t): "), new char[]{'h','t'})) { 
+//					ui.message("*ERROR choice invalid");
+//				}
+				choice = ui.query("add tiles from hand or table?", new String[] {"Hand", "Table"});
+
+				ui.message("Selected Tiles to add");
+				if(choice == 0) {
+					meld = ui.getTiles();
+				}else {
+					meld = ui.getTableTiles();
+				}
+
 
 //				meld = assembleMeld(meldStr);
 //				if(meld == null) {
 //					continue;
 //				}
 //
-//				while(!hasChar(choice = ui.response("Tile From Table or Hand?(h,t): "), new char[]{'h','t'})) { 
-//					ui.message("*ERROR choice invalid");
-//				}
 //
-
-//				if(choice == '0') {
+				if(choice == 0) {
 //					if(checkFromHand(meld) == -1) {
 //						continue;
 //					}else {
-//						removeFromHand(meld);
+					removeFromHand(meld);
 //					}
-//
-//					tempMeld = new Meld(tempTable.getAt(meldIndex));
-//					if(tempMeld.checkFrontAdd(meld)) {
-//						tempMeld.addFront(meld);
-//					}else {
-//						tempMeld.add(meld);
-//					}
-//					if(!tempMeld.validMeld()) {
-//						ui.message("*Error Invalid meld addition");
-//						addMeldToHand(meld);
-//						continue;
-//					}else {
-//						modMelds.add(meld);
-//						tempTable.getAt(meldIndex).add(meld);
-//					}
-//				}else {
+
+					tempMeld = new Meld(tempTable.getAt(meldIndex));
+					if(tempMeld.checkFrontAdd(meld)) {
+						tempMeld.addFront(meld);
+					}else {
+						tempMeld.add(meld);
+					}
+					if(!tempMeld.validMeld()) {
+						ui.message("*Error Invalid meld addition");
+						addMeldToHand(meld);
+						continue;
+					}else {
+						modMelds.add(meld);
+						tempTable.getAt(meldIndex).add(meld);
+					}
+				}else {
 //					if(tempTable.indexOf(meld) == -1) {
 //						ui.message("*Error Tile not on Table");
 //						continue;
 //					}
-//
-//					tempTable.remove(meld);
-//					tempMeld = new Meld(tempTable.getAt(meldIndex));
-//					if(tempMeld.checkFrontAdd(meld)) {
-//						tempMeld.addFront(meld);
-//					}else {
-//						tempMeld.add(meld);
-//					}
-//					if(!tempMeld.validMeld()) {
-//						ui.message("*Error Invalid meld addition");
-//						continue;
-//					}else {
-//						modMelds.add(meld);
-//						tempTable.getAt(meldIndex).add(meld);
-//					}
-//				}
+
+					tempTable.remove(meld);
+					tempMeld = new Meld(tempTable.getAt(meldIndex));
+					if(tempMeld.checkFrontAdd(meld)) {
+						tempMeld.addFront(meld);
+					}else {
+						tempMeld.add(meld);
+					}
+					if(!tempMeld.validMeld()) {
+						ui.message("*Error Invalid meld addition");
+						continue;
+					}else {
+						modMelds.add(meld);
+						tempTable.getAt(meldIndex).add(meld);
+					}
+				}
 
 				
-//		continue;
+		continue;
 		//split
 //			}else if(choice == 2) {
 //				ui.message(tempTable.toString());

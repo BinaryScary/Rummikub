@@ -237,10 +237,6 @@ public class GUI implements UserInterface {
 		return gTile;
 	}
 	
-	public Object[] getSelection() {
-		return null;
-	}
-
 	public Meld getMeld() {
 		for(Node n: board.getChildren()) {
 			n.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -256,6 +252,33 @@ public class GUI implements UserInterface {
 		pause();
 		if(eventResult == "Confirm") return null;
 		return eventMeld;
+	}
+	
+	public Meld getTableTiles() {
+		Meld res = new Meld();
+		for(Node n: board.getChildren()) {
+			n.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				public void handle(MouseEvent arg0) {
+					System.out.println(n.getUserData());
+					eventTile = (Tile) ((ArrayList<Object>) n.getUserData()).get(1);
+					//TODO possibly highlight node
+					resume();
+				}
+			});
+		}
+		
+		confirmButton();
+		while(true) {
+			pause();
+			if(eventResult == "Confirm") break;
+
+			//watch out for unitentional null adds
+			if(res.indexOf(eventTile) == -1) {
+				res.add(eventTile);
+			}
+		}
+
+		return res;
 	}
 
 	public Meld getTiles() {
@@ -317,7 +340,7 @@ public class GUI implements UserInterface {
         	button.setMinWidth(width * 0.220);
         	button.setMinHeight(height * 0.100);
         	button.setLayoutX(width * 0.022);
-        	button.setLayoutY(height * 0.150 + (counter * height * 0.100));
+        	button.setLayoutY(height * 0.200 + (counter * height * 0.100));
         	
         	button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
