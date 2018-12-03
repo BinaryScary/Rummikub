@@ -91,6 +91,7 @@ public class GUI implements UserInterface {
         pane.getChildren().add(controlBg);
         pane.getChildren().add(handBg);
         pane.getChildren().add(boardBg);
+        pane.getChildren().add(board);
         pane.getChildren().add(messageBg);
         pane.getChildren().add(message);
         pane.getChildren().add(hand);
@@ -221,7 +222,7 @@ public class GUI implements UserInterface {
 				res.add(hTile);
 			}
 		}
-		System.out.println(res);
+
 		return res;
 	}
 	

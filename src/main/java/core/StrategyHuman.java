@@ -77,7 +77,10 @@ public class StrategyHuman extends Player {
 //			ui.message(displayPlay());
 //			ui.message("Current Hand: ");
 //			ui.message(hand.toString());
-			ui.displayTable(table);
+//			System.out.println(tempTable);
+			ui.displayTable(tempTable);
+			System.out.println(tempTable);
+			ui.displayHand(hand);
 
 //			while(!hasChar(choice = ui.response("Create Meld, Add to Meld, Split Meld, or End?(c,a,s,e): "), new char[]{'c','a','s','e'})) { 
 //				ui.message("*ERROR choice invalid");
@@ -129,6 +132,7 @@ public class StrategyHuman extends Player {
 					removeFromHand(meld);
 					newMelds.add(meld);
 					tempTable.add(meld);
+					
 					continue;
 //				}
 //				//add

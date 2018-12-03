@@ -28,6 +28,7 @@ public class Game extends Observable{
 //		playerArr = new Player[4];
 		playerArr = new Player[3];
 		handArr = new Hand[3];
+
 //		handArr = new Hand[4];
         ui = new GUI(pane);
 
@@ -232,6 +233,8 @@ public class Game extends Observable{
 		deal(handArr[1]);
 		deal(handArr[2]);
 //		deal(handArr[3]);
+		Tile[] tArr = {new Tile(Tile.colour.BLUE, Tile.value.TEN), new Tile(Tile.colour.GREEN, Tile.value.TEN), new Tile(Tile.colour.RED, Tile.value.TEN)};
+		handArr[0] = new Hand(tArr);
 
 //		//testing
 //		Tile[] tArr = {new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.BLUE, Tile.value.TEN),new Tile(Tile.colour.GREEN, Tile.value.TEN),new Tile(Tile.colour.ORANGE, Tile.value.TEN),new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.BLUE, Tile.value.TEN),new Tile(Tile.colour.GREEN, Tile.value.TEN),new Tile(Tile.colour.ORANGE, Tile.value.TEN)};
