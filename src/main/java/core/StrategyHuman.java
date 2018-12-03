@@ -22,30 +22,35 @@ public class StrategyHuman extends Player {
 	protected void play() {
 		newMelds = new ArrayList<Meld>();
 		modMelds = new ArrayList<Meld>();
-		char choice;
+//		char choice;
+		int choice;
 		Tile temp;
 		
 		hand.setSort();
 		System.out.println(hand.toString());
 		ui.displayHand(hand);
 
-		ui.query("test message this is a question", new String[]{"hey", "test button2", "one more"});
+//		System.out.println(ui.query("test message this is a question", new String[]{"hey", "test button2", "one more"}));
 		//TODO skipped
-		if(1==1)return;
 
 //		while(!hasChar(choice = ui.response("Play Table, or Draw Tile?(p,d): "), new char[]{'p','d'})) {
 //			ui.message("*ERROR choice invalid");
 //		}
 		
-		if(choice == 'd') {
+		choice = ui.query("Play Table or Draw Tile?", new String[] {"Table", "Tile"});
+		
+		if(choice == 1) {
 			temp = draw();
 			if(temp != null) {
 				ui.message("You drew a " + temp + ".");
+				hand.setSort();
+				ui.displayHand(hand);
 			}else {
 				ui.message("No more cards in deck!");
 			}
-		}else if(choice == 'p') {
+		}else if(choice == 0) {
 			if(playTable() == -1) {
+				if(1==1)return; //Play logic
 				temp = pile.deal();
 				hand.addTileToHand(temp);
 				ui.message("You drew a " + temp + ".");
@@ -64,6 +69,7 @@ public class StrategyHuman extends Player {
 		Tile tempTile;
 		ArrayList<Tile> removedTiles = new ArrayList<Tile>();
 		int meldIndex = 0;
+
 
 		while(true) {
 			ui.message("Current Table: ");

@@ -30,7 +30,9 @@ public class GUI implements UserInterface {
 	Pane pane;
 	Pane hand;
 	Pane control;
+	Pane board;
 	private final Object PAUSE_KEY = new Object();
+	private String bResult;
 	
 	public GUI(Pane p){
         pane = p;
@@ -62,6 +64,9 @@ public class GUI implements UserInterface {
         
         hand = new Pane();
         hand.setPrefSize(width * 0.73, height * 0.24);
+
+        board = new Pane();
+        board.setPrefSize(width * 0.73, height * 0.65);
 
         control = new Pane();
         control.setPrefSize(width * 0.22, height * 0.65);
@@ -115,12 +120,12 @@ public class GUI implements UserInterface {
 		message.setText(mes);
 	}
 
-	public void displayHand(Hand mes) {
+	public void displayHand(Hand tiles) {
 		int posX = 0;
 		int posY = 0;
 		hand.getChildren().clear();
 		Pane tempPane;
-		for(Tile t : mes.getTiles()) {
+		for(Tile t : tiles.getTiles()) {
 			tempPane = tileGraphic(t);
 			tempPane.setTranslateY(height*0.75 + (posY * height * 0.10));
 			tempPane.setTranslateX((width*0.265) + (posX * width * 0.050));
@@ -132,6 +137,33 @@ public class GUI implements UserInterface {
 				posX = 0;
 				posY = 1;
 			}
+		}
+	}
+	
+	@Override
+	public void displayTable(Table tiles) {
+		int posX = 0;
+		int posY = 0;
+		Double gap = 0.0;
+		board.getChildren().clear();
+		Pane tempPane;
+		for(Meld m : tiles.getTable()) {
+			for(Tile t : m.getMeld()) {
+				tempPane = tileGraphic(t);
+				tempPane.setTranslateY(height*0.10 + (posY * height * 0.10));
+				tempPane.setTranslateX((width*0.265) + (posX * width * 0.050) + gap);
+	//			System.out.println(tempPane.getTranslateX());
+
+//				Rectangle(width * 0.25,height * 0.08,width * 0.73, height * 0.65);
+
+				board.getChildren().add(tempPane);
+				posX++;
+				if(posX == 12) {
+					posX = 0;
+					posY = 1;
+				}
+			}
+			gap += width * 0.025;
 		}
 	}
 	
@@ -164,40 +196,47 @@ public class GUI implements UserInterface {
 	}
 
 	public int query(String mes, String[] choices) {
-		Button button;
-		int location = 0;
+		int counter = 0;
 		control.getChildren().clear();
         Text qStr = new Text(width * 0.022, height * 0.100, mes);
         qStr.setFont(new Font(width * height * 0.00002));
         qStr.setWrappingWidth(width * 0.215);
         control.getChildren().add(qStr);
-        //do we need a query string?
         
         for(String str: choices) {
-        	button = new Button(str);
+        	final Button button = new Button(str);
         	button.setWrapText(true);
         	button.setMinWidth(width * 0.220);
         	button.setMinHeight(height * 0.100);
         	button.setLayoutX(width * 0.022);
-        	button.setLayoutY(height * 0.150 + (location * height * 0.100));
+        	button.setLayoutY(height * 0.150 + (counter * height * 0.100));
         	
         	button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
-					System.out.println("test");
+					GUI.this.bResult = button.getText();
 					resume();
 				}
 			});
         	
         	
 			control.getChildren().add(button);
-			location++;
+			counter++;
         }
         pause();
+        control.getChildren().clear();
 
 	
 //        Rectangle controlBg = new Rectangle(width * 0.02,height * 0.08,width * 0.22, height * 0.65);
 //        controlBg.setFill(Color.TAN);
+        
+        counter = 0;
+        for(String str: choices) {
+        	if(str == bResult) {
+        		return counter;
+        	}
+        	counter++;
+        }
 
 		return 0;
 	}
@@ -224,12 +263,6 @@ public class GUI implements UserInterface {
 
 	@Override
 	public void displayMeld(Meld m) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void displayTable(Table t) {
 		// TODO Auto-generated method stub
 		
 	}
