@@ -19,6 +19,7 @@ public class Game extends Observable{
 	private Player playerArr[];
 	private int playerCount;
 	private int uiNum = 0;
+	private int turn;
 	//TODO score
 	
 	private Pane pane;
@@ -59,6 +60,13 @@ public class Game extends Observable{
 					break;
         	}
         }
+
+        String[] startInt = new String[playerCount + 1]; 
+        for(int i = 0; i<playerCount; i++) {
+        	startInt[i] = Integer.toString(i+1);
+        }
+        startInt[playerCount] = "Random";
+        turn = ui.query("What player starts? ", startInt);
         
         //player count
 //		playerArr[0] = new StrategyHuman(ui);
@@ -274,10 +282,10 @@ public class Game extends Observable{
 
 	private Player turnLoop() {
 		//player count
-		for(int i = 0; i<playerCount; i++) {
-			ui.message("Player " + (i+1) + "'s turn.");
+		for(;turn<playerCount; turn++) {
+			ui.message("Player " + (turn+1) + "'s turn.");
 
-			playerArr[i].play();
+			playerArr[turn].play();
 
 			broadcast();
 
@@ -286,11 +294,11 @@ public class Game extends Observable{
 //			ui.message("Table: ");
 //			ui.message(playerArr[i].displayPlay());
 
-			if(handArr[i].isEmpty()) {
-				return playerArr[i];
+			if(handArr[turn].isEmpty()) {
+				return playerArr[turn];
 			}
 			//player count -1
-			if(i== playerCount -1) i=-1;
+			if(turn== playerCount -1) turn=-1;
 		}
 
 		return null;
