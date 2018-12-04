@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
+
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -67,6 +68,9 @@ public class Game extends Observable{
         }
         startInt[playerCount] = "Random";
         turn = ui.query("What player starts? ", startInt);
+        if(turn == playerCount) {
+			turn = (int)(Math.random() * ((playerCount-1) + 1));
+        }
         
         //player count
 //		playerArr[0] = new StrategyHuman(ui);
@@ -281,13 +285,24 @@ public class Game extends Observable{
 	}
 
 	private Player turnLoop() {
+		int recent = -1;
 		//player count
 		for(;turn<playerCount; turn++) {
+			
+			if(!table.getRecent().isEmpty() && recent < 0) {
+				recent = playerCount;
+			}
+			if(recent == 0) {
+				table.clearRecent();
+				recent--;
+				System.out.println(table.getRecent());
+			}
 			ui.message("Player " + (turn+1) + "'s turn.");
 
 			playerArr[turn].play();
 
 			broadcast();
+			if(recent > 0)recent--;
 
 //			ui.message("Player " + playerArr[i].toString() + "'s hand.");
 //			ui.message(handArr[i].toString());

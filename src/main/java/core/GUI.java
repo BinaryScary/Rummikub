@@ -1,20 +1,19 @@
 package core;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -37,9 +36,19 @@ public class GUI implements UserInterface {
 	private String eventResult;
 	private Tile eventTile;
 	private Meld eventMeld;
+	private ArrayList<Pane> rPane = new ArrayList<Pane>();
 	
 	public GUI(Pane p){
         pane = p;
+	}
+	
+	public void highlight(Pane pane) {
+		pane.setBorder(new Border(new BorderStroke(Color.YELLOW, 
+            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
+	}
+		
+	public void unHighlight(Pane pane) {
+		pane.setBorder(null);
 	}
 
 	public void boardInit(Stage primaryStage) {
@@ -153,25 +162,39 @@ public class GUI implements UserInterface {
 		Double gap = 0.0;
 		board.getChildren().clear();
 		Pane tempPane;
+		boolean recent = false;
+		
+		for(Pane p : rPane) {
+			unHighlight(p);
+		}
+		rPane.clear();
+
 		for(Meld m : tiles.getTable()) {
+			if(tiles.getRecent().contains(m)) {
+				recent = true;
+			}else {
+				recent = false;
+			}
 			for(Tile t : m.getMeld()) {
 				tempPane = meldGraphic(t,m);
 				tempPane.setTranslateY(height*0.10 + (posY * height * 0.10));
 				tempPane.setTranslateX((width*0.265) + (posX * width * 0.050) + gap);
 	//			System.out.println(tempPane.getTranslateX());
+				if(recent == true) {
+					highlight(tempPane);
+					rPane.add(tempPane);
+				}
 
 //				Rectangle(width * 0.25,height * 0.08,width * 0.73, height * 0.65);
 
-				tempPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
-					public void handle(MouseEvent arg0) {
-						System.out.println("test");
-					}
-				});
 				board.getChildren().add(tempPane);
+				System.out.println(posX + " " + posY);
 				posX++;
-				if(posX == 12) {
+				if(posX % 12 == 0 && posX != 0) {
+				System.out.println("true");
+					posY++;
 					posX = 0;
-					posY = 1;
+					gap = 0.0;
 				}
 			}
 			gap += width * 0.025;

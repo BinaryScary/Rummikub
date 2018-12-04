@@ -6,20 +6,25 @@ import java.util.Arrays;
 public class Table {
 
 	private ArrayList<Meld> arr;
+	private ArrayList<Meld> recent;
 
 	public Table(){
 		arr = new ArrayList<Meld>();
+		recent = new ArrayList<Meld>();
 	}
 	
 	public Table(Meld[] arr){
 		this.arr = new ArrayList<Meld>(Arrays.asList(arr));
+		recent = new ArrayList<Meld>(Arrays.asList(arr));
 	}
 
 	public Table(ArrayList<Meld> arr){
 		this.arr = new ArrayList<Meld>();
+		recent = new ArrayList<Meld>();
 
 		for(Meld m: arr) {
 			this.arr.add(m);
+			this.recent.add(m);
 		}
 	}
 	
@@ -38,6 +43,10 @@ public class Table {
 		return buf;
 	}
 	
+	public ArrayList<Meld> getRecent(){
+		return recent;
+	}
+
 	public ArrayList<Meld> getTable(){
 		return arr;
 	}
@@ -59,6 +68,11 @@ public class Table {
 	
 	public void add(Meld t) {
 		arr.add(t);
+		recent.add(t);
+	}
+	
+	public void clearRecent() {
+		recent = new ArrayList<Meld>();
 	}
 	
     @Override
