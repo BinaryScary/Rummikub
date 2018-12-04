@@ -20,10 +20,10 @@ public class Strategy3 extends Player {
 		name = "A3";
 	}
 
-	@Override
-	protected void updateHand(Game update) {
-		hand = update.getH2();
-	}
+//	@Override
+//	protected void updateHand(Game update) {
+//		hand = update.getH2();
+//	}
 
 	@Override
 	protected void play() {

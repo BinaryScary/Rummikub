@@ -415,10 +415,10 @@ public class StrategyHuman extends Player {
 		return t;
 	}
 
-	@Override
-	protected void updateHand(Game update) {
-		hand = update.getH0();
-	}
+//	@Override
+//	protected void updateHand(Game update) {
+//		hand = update.getH0();
+//	}
 
 	private boolean hasChar(char c, char[] chars) {
 		if(new String(chars).indexOf(c) == -1) {

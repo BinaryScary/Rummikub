@@ -44,9 +44,9 @@ public class GUI implements UserInterface {
 
 	public void boardInit(Stage primaryStage) {
         pane = new Pane();
-        Button nextButton = new Button("Done");
-        ObservableList<String> options = FXCollections.observableArrayList("StrategyHuman", "Strategy1", "Strategy2");
-        ComboBox stratBox = new ComboBox(options);
+//        Button nextButton = new Button("Done");
+//        ObservableList<String> options = FXCollections.observableArrayList("StrategyHuman", "Strategy1", "Strategy2");
+//        ComboBox stratBox = new ComboBox(options);
         pane.setStyle("-fx-background-color: grey;");
         Rectangle boardBg = new Rectangle(width * 0.25,height * 0.08,width * 0.73, height * 0.65);
         boardBg.setFill(Color.SADDLEBROWN);
@@ -75,18 +75,18 @@ public class GUI implements UserInterface {
         control = new Pane();
 //        control.setPrefSize(width * 0.22, height * 0.65);
         
-        TextField nameField = new TextField();
-		Label enterName = new Label("ENTER NAME:");
-		enterName.relocate(400, 10);
-		enterName.setPrefSize(150, 25);
-
-		nameField.relocate(500, 10);
-		nameField.setPrefSize(150, 25);
-		nameField.setText("Player #");
+//        TextField nameField = new TextField();
+//		Label enterName = new Label("ENTER NAME:");
+//		enterName.relocate(400, 10);
+//		enterName.setPrefSize(150, 25);
+//
+//		nameField.relocate(500, 10);
+//		nameField.setPrefSize(150, 25);
+//		nameField.setText("Player #");
 		
-		stratBox.setPromptText("Choose Player's Strategy:");
-		stratBox.relocate(260, 10);
-		stratBox.setPrefSize(200, 25);
+//		stratBox.setPromptText("Choose Player's Strategy:");
+//		stratBox.relocate(260, 10);
+//		stratBox.setPrefSize(200, 25);
         
 		//CRITICAL BE VERY CAREFUL the order of adds affects z scale
         pane.getChildren().add(title);
@@ -99,23 +99,23 @@ public class GUI implements UserInterface {
         pane.getChildren().add(hand);
         pane.getChildren().add(control);
         pane.getChildren().add(board);
-        pane.getChildren().add(enterName);
-        pane.getChildren().add(nameField);
+//        pane.getChildren().add(enterName);
+//        pane.getChildren().add(nameField);
         primaryStage.setTitle("Rummikub");
         primaryStage.setScene(new Scene(pane, width, height));
         
         //Abdous
-        nextButton.setOnMousePressed(new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent me) {
-				if (stratBox.getSelectionModel().getSelectedItem() != null) {
-					String name = nameField.getText();
-					String strat = stratBox.getSelectionModel().getSelectedItem().toString();
-					nameField.setEditable(false);
-					nextButton.setDisable(true);
-				}
-
-			}
-		});
+//        nextButton.setOnMousePressed(new EventHandler<MouseEvent>() {
+//			public void handle(MouseEvent me) {
+//				if (stratBox.getSelectionModel().getSelectedItem() != null) {
+//					String name = nameField.getText();
+//					String strat = stratBox.getSelectionModel().getSelectedItem().toString();
+//					nameField.setEditable(false);
+//					nextButton.setDisable(true);
+//				}
+//
+//			}
+//		});
         
 	}
 	
@@ -382,7 +382,7 @@ public class GUI implements UserInterface {
         	button.setMinWidth(width * 0.220);
         	button.setMinHeight(height * 0.100);
         	button.setLayoutX(width * 0.022);
-        	button.setLayoutY(height * 0.200 + (counter * height * 0.100));
+        	button.setLayoutY(height * 0.180 + (counter * height * 0.100));
         	
         	button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override

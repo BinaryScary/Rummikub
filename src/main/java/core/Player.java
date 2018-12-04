@@ -10,6 +10,7 @@ public abstract class Player implements Observer{
 	protected Hand hand; 
 	protected Pile pile;
 	protected Table table; // player can see table itself
+	protected int handNum;
 	protected Game game;
 	protected boolean initialMeld = true; //TODO change to true on submit
 	protected ArrayList<Meld> newMelds;
@@ -18,6 +19,10 @@ public abstract class Player implements Observer{
 	
 	public boolean isInitialMeld() {
 		return initialMeld;
+	}
+	
+	public void setHand(int h) {
+		handNum = h;
 	}
 
 	public void setInitialMeld(boolean initialMeld) {
@@ -29,7 +34,7 @@ public abstract class Player implements Observer{
 		modMelds = new ArrayList<Meld>();
 		hand = new Hand(); 
     	table = new Table();
-
+    	handNum = 0;
 	}
 	
 	public Player(Hand h) {
@@ -37,6 +42,7 @@ public abstract class Player implements Observer{
 		modMelds = new ArrayList<Meld>();
 		hand = h;
 		table = new Table();
+    	handNum = 0;
 	}
 	
 	public Hand getHand() {
@@ -55,7 +61,10 @@ public abstract class Player implements Observer{
 		updateHand(update);
 	}
 	
-	protected abstract void updateHand(Game update);
+//	protected abstract void updateHand(Game update);
+	protected void updateHand(Game update) {
+		hand = update.getHand(handNum);
+	}
 	
 	protected abstract void play();
 	

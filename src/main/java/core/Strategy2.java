@@ -21,10 +21,10 @@ public class Strategy2 extends Player {
 			name = "A2";
 		}
 		
-		@Override
-		protected void updateHand(Game update) {
-			hand = update.getH2();
-		}
+//		@Override
+//		protected void updateHand(Game update) {
+//			hand = update.getH2();
+//		}
 		
 		@Override
 		protected void play() {
