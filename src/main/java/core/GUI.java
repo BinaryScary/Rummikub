@@ -50,6 +50,47 @@ public class GUI implements UserInterface {
 	public void unHighlight(Pane pane) {
 		pane.setBorder(null);
 	}
+	
+	public ArrayList<Tile> tileQuery(){
+		ArrayList<Tile> buf = new ArrayList<Tile>();
+		displayTiles();
+		for(Node n: board.getChildren()) {
+			n.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				public void handle(MouseEvent arg0) {
+					System.out.println(n.getUserData());
+					eventTile = (Tile) n.getUserData();
+					buf.add(eventTile);
+				}
+			});
+		}
+		
+		confirmButton();
+		pause();
+		return buf;
+	}
+	
+	public void displayTiles() {
+		int posX = 0;
+		int posY = 0;
+		Pane tempPane;
+		
+		for(int c = 0; c < 4; c++) {
+			for(int v = 0; v < 13; v++) {
+				Tile tile = new Tile(Tile.colour.values()[c], Tile.value.values()[v]);
+				tempPane = tileGraphic(tile);
+				tempPane.setTranslateY(height*0.10 + (posY * height * 0.10));
+				tempPane.setTranslateX((width*0.265) + (posX * width * 0.050));
+
+				board.getChildren().add(tempPane);
+				posX++;
+				if(posX % 14 == 0 && posX != 0) {
+					posY++;
+					posX = 0;
+				}
+			}
+		}
+
+	}
 
 	public void boardInit(Stage primaryStage) {
         pane = new Pane();
@@ -106,8 +147,8 @@ public class GUI implements UserInterface {
         pane.getChildren().add(messageBg);
         pane.getChildren().add(message);
         pane.getChildren().add(hand);
-        pane.getChildren().add(control);
         pane.getChildren().add(board);
+        pane.getChildren().add(control);
 //        pane.getChildren().add(enterName);
 //        pane.getChildren().add(nameField);
         primaryStage.setTitle("Rummikub");
@@ -179,7 +220,6 @@ public class GUI implements UserInterface {
 				tempPane = meldGraphic(t,m);
 				tempPane.setTranslateY(height*0.10 + (posY * height * 0.10));
 				tempPane.setTranslateX((width*0.265) + (posX * width * 0.050) + gap);
-	//			System.out.println(tempPane.getTranslateX());
 				if(recent == true) {
 					highlight(tempPane);
 					rPane.add(tempPane);
@@ -188,10 +228,8 @@ public class GUI implements UserInterface {
 //				Rectangle(width * 0.25,height * 0.08,width * 0.73, height * 0.65);
 
 				board.getChildren().add(tempPane);
-				System.out.println(posX + " " + posY);
 				posX++;
 				if(posX % 12 == 0 && posX != 0) {
-				System.out.println("true");
 					posY++;
 					posX = 0;
 					gap = 0.0;

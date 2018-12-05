@@ -28,6 +28,7 @@ public class Game extends Observable{
 	
 	public void init(Stage primaryStage) {
 		pile = new Pile();
+		pile.scramble();
 		table = new Table();
 //		Tile[] tArr1 = {new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.BLUE, Tile.value.TEN),new Tile(Tile.colour.ORANGE, Tile.value.TEN)};
 //		Tile[] tArr2 = {new Tile(Tile.colour.RED, Tile.value.NINE),new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.RED, Tile.value.ELEVEN)};
@@ -45,10 +46,46 @@ public class Game extends Observable{
         ui.boardInit(primaryStage);
         primaryStage.show();
         
+        int set = ui.query("Setup?", new String[] {"Yes","No"});
+        
+        if(set == 0) {
+        	setup();
+        }else {
+			turn = (int)(Math.random() * ((playerCount-1) + 1));
+			playerCount = 4;
+			playerArr = new Player[4];
+			handArr = new Hand[4];
+			playerArr[0] = new StrategyHuman(ui);
+			playerArr[1] = new Strategy1();
+			playerArr[2] = new Strategy3();
+			playerArr[3] = new Strategy1();
+			for(int i = 0; i<playerCount; i++) {
+				handArr[i] = new Hand();
+				playerArr[i].setHand(i);
+			}
+			for(int i = 0; i < playerCount; i++) {
+				deal(handArr[i]);
+			}
+        }
+        
+        //player count
+//		playerArr[0] = new StrategyHuman(ui);
+//		playerArr[1] = new Strategy1();
+//		playerArr[2] = new Strategy3();
+//		playerArr[3] = new Strategy1();
+
+		//player count
+
+		for(int i = 0; i<playerCount; i++) {
+			this.addObserver(playerArr[i]);
+		}
+	}
+	
+	public void setup() {
         playerCount = ui.query("How many players?", new String[] {"2","3","4"}) + 2;
 		playerArr = new Player[playerCount];
 		handArr = new Hand[playerCount];
-        
+		
         for(int i = 0; i < playerCount; i++) {
         	uiNum = ui.query("What Strategy is used for Player " + (i+1), new String[] {"Human","Strategy 1","Strategy 3"});
         	
@@ -62,6 +99,10 @@ public class Game extends Observable{
         	}
         }
 
+		for(int i = 0; i<playerCount; i++) {
+			playerArr[i].setHand(i);
+		}
+
         String[] startInt = new String[playerCount + 1]; 
         for(int i = 0; i<playerCount; i++) {
         	startInt[i] = Integer.toString(i+1);
@@ -72,20 +113,19 @@ public class Game extends Observable{
 			turn = (int)(Math.random() * ((playerCount-1) + 1));
         }
         
-        //player count
-//		playerArr[0] = new StrategyHuman(ui);
-//		playerArr[1] = new Strategy1();
-//		playerArr[2] = new Strategy3();
-//		playerArr[3] = new Strategy1();
-		pile.scramble();
-
-		//player count
-		for(int i = 0; i<playerCount; i++) {
-			handArr[i] = new Hand();
-			playerArr[i].setHand(i);
-			this.addObserver(playerArr[i]);
-		}
-
+        int set = ui.query("Setup hands?", new String[] {"Yes","No"});
+        if(set == 0) {
+        	for(int i = 0; i < playerCount; i++) {
+        		ui.message("Hand for Player " + (i+1));
+        		handArr[i] = new Hand(ui.tileQuery());
+        		if(handArr[i].isEmpty()) {
+					handArr[i] = new Hand();
+					deal(handArr[i]);
+        		}
+        	}
+        }
+        
+        
 	}
 	
 	
@@ -266,9 +306,6 @@ public class Game extends Observable{
 	public void start() {
 		ui.message("Welcome To Rummikub!");
 		//Each Player is assigned a hand 0 for human and so on
-		for(int i = 0; i < playerCount; i++) {
-			deal(handArr[i]);
-		}
 //		Tile[] tArr = {new Tile(Tile.colour.BLUE, Tile.value.TEN), new Tile(Tile.colour.GREEN, Tile.value.TEN), new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.ORANGE, Tile.value.TEN)};
 //		handArr[0] = new Hand(tArr);
 
@@ -280,7 +317,7 @@ public class Game extends Observable{
 
 		broadcast();
 
-		turnLoop();
+		ui.message(turnLoop().name + " won!");
 		
 	}
 
@@ -308,7 +345,8 @@ public class Game extends Observable{
 //			ui.message(handArr[i].toString());
 //			ui.message("Table: ");
 //			ui.message(playerArr[i].displayPlay());
-
+			
+			System.out.println(handArr[turn]);
 			if(handArr[turn].isEmpty()) {
 				return playerArr[turn];
 			}

@@ -9,7 +9,7 @@ public class StrategyHuman extends Player {
 
 	public StrategyHuman() {
 		super();
-		name = "human";
+		name = "human " + handNum;
 	}
 
 	public StrategyHuman(GUI ui) {

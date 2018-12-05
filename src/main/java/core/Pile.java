@@ -41,6 +41,10 @@ public class Pile {
 	
 	public int numTiles() { return pile.size(); }
 	
+	public ArrayList<Tile> getPile(){
+		return pile;
+	}
+	
 	public Tile deal() {
 		if(pile.size() > 0) {
 			return pile.remove(0);

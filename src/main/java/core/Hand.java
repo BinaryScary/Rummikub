@@ -18,6 +18,10 @@ public class Hand {
 			this.hand = new ArrayList<Tile>(Arrays.asList(arr));
 		}
 
+		public Hand(ArrayList<Tile> arr){
+			this.hand = new ArrayList<Tile>(arr);
+		}
+
 		public class ValueSort implements Comparator<Tile> {
 			public int compare(Tile x, Tile y) {
 				return x.getValue().getVal() - y.getValue().getVal();
