@@ -13,8 +13,11 @@ public class GameStart extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		//to showcase a certian ability in gui enter the file
-		File file = new File("src/test/resources/testInit");
+		File file = new File("src/test/resources/test5.gui");
+//		File file = new File("src/test/resources/test4c.gui");
+//		File file = new File("src/test/resources/test4b2.gui");
+//		File file = new File("src/test/resources/test4b1.gui");
+//		File file = new File("src/test/resources/testInit.gui");
 		Game g = new Game();
 		g.init(primaryStage, file);
 //		g.init(primaryStage);

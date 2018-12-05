@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 public class GameTest extends TestCase {
 	public void testInit() {
 		//pile : table { R1 } : hand0 : hand1 : hand2 : hand3
-		File file = new File("src/test/resources/testInit");
+		File file = new File("src/test/resources/testInit.gui");
 		Game g = new Game();
 		g.init(file);
 	}

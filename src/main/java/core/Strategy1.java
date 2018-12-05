@@ -28,8 +28,10 @@ public class Strategy1 extends Player {
 	protected void play() {
 		newMelds = new ArrayList<Meld>();
 		modMelds = new ArrayList<Meld>();
-		ArrayList<Meld> arrMeld = playableRuns();
 		Tile tempTile;
+		ArrayList<Meld> arrMeld;
+
+		arrMeld = playableRuns();
 		for(Meld m: arrMeld) {
 			playMeld(m);
 		}

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Objects;
 
 public class Hand {
 
@@ -99,8 +100,8 @@ public class Hand {
 			ArrayList<Tile> handB = new ArrayList<Tile>();
 			ArrayList<Tile> handG = new ArrayList<Tile>();
 			ArrayList<Tile> handO = new ArrayList<Tile>();
+			hand.removeIf(Objects::isNull);
 			handDuplicate = hand;
-
 			for(Tile t : handDuplicate) {
 				if (t.getColour().getCol() == 'R') {
 					handR.add(t);

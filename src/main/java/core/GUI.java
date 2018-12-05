@@ -53,7 +53,7 @@ public class GUI implements UserInterface {
 		pane.setBorder(new Border(new BorderStroke(Color.YELLOW, 
             BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
 	}
-		
+
 	public void unHighlight(Pane pane) {
 		pane.setBorder(null);
 	}
@@ -407,12 +407,15 @@ public class GUI implements UserInterface {
 
 	public Meld getTiles() {
 		Meld res = new Meld();
+		ArrayList<Node> cache = new ArrayList<Node>();
 		for(Node n: hand.getChildren()) {
 			n.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				public void handle(MouseEvent arg0) {
 					System.out.println(n.getUserData());
 					eventTile = (Tile) n.getUserData();
 					//TODO possibly highlight node
+					cache.add(n);
+					n.setStyle("-fx-border-style: dashed");
 					resume();
 				}
 			});
@@ -423,12 +426,13 @@ public class GUI implements UserInterface {
 			pause();
 			if(eventResult == "Return") break;
 
-			//watch out for unitentional null adds
 			if(res.indexOf(eventTile) == -1) {
 				res.add(eventTile);
 			}
 		}
-
+		for(Node n: cache) {
+			n.setStyle("-fx-border-style: none");
+		}
 		return res;
 	}
 	

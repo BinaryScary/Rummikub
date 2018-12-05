@@ -70,9 +70,10 @@ public abstract class Player implements Observer{
 	
 	@Override
 	public String toString(){
-		return name;
+		return "" + handNum;
 	}
 	public Tile draw() {
+//		return hand.addTileToHand(pile.deal());
 		Tile temp;
 		if(!pile.isEmpty()) {
 			temp = pile.deal();

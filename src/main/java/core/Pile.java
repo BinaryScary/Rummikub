@@ -50,7 +50,6 @@ public class Pile {
 		if(pile.size() > 0) {
 			return pile.remove(0);
 		} else {
-			dryDraws++;
 			return null;
 		}
 	}
