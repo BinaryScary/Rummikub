@@ -33,6 +33,7 @@ public class GUI implements UserInterface {
 	Pane hand;
 	Pane control;
 	Pane board;
+	Pane score;
 	private final Object PAUSE_KEY = new Object();
 	private String eventResult;
 	private Tile eventTile;
@@ -131,6 +132,7 @@ public class GUI implements UserInterface {
         control = new Pane();
 //        control.setPrefSize(width * 0.22, height * 0.65);
         
+        score = new Pane();
 //        TextField nameField = new TextField();
 //		Label enterName = new Label("ENTER NAME:");
 //		enterName.relocate(400, 10);
@@ -151,6 +153,7 @@ public class GUI implements UserInterface {
         pane.getChildren().add(handBg);
         pane.getChildren().add(boardBg);
         pane.getChildren().add(messageBg);
+        pane.getChildren().add(score);
         pane.getChildren().add(message);
         pane.getChildren().add(hand);
         pane.getChildren().add(board);
@@ -245,6 +248,18 @@ public class GUI implements UserInterface {
 		}
 	}
 	
+	public void displayScore(ArrayList<Hand> arr) {
+		score.getChildren().clear();
+		int i = 1;
+		for(Hand h : arr) {
+			Text t = new Text(width * 0.03, height * 0.75 + i * height * 0.05, "Player "+ i + " Tiles: " + h.getTiles().size());
+			t.setFont(new Font(width * height * 0.0000225));
+			score.getChildren().add(t);
+			i++;
+		}
+//		(width * 0.02,height * 0.74, width * 0.22, height * 0.24);
+	}
+	
 	private Pane meldGraphic(Tile tile, Meld m) {
 		StackPane gTile = new StackPane();
 		Rectangle r = new Rectangle(width * 0.045, height * 0.09);
@@ -307,6 +322,7 @@ public class GUI implements UserInterface {
 	public Meld getMeld() {
 		for(Node n: board.getChildren()) {
 			n.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				@SuppressWarnings("unchecked")
 				public void handle(MouseEvent arg0) {
 					eventMeld = (Meld) ((ArrayList<Object>) n.getUserData()).get(0);
 					//TODO possibly highlight node

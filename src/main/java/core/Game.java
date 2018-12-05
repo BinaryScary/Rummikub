@@ -21,14 +21,43 @@ public class Game extends Observable{
 	private int playerCount;
 	private int uiNum = 0;
 	private int turn;
-	private boolean isFile;
+	private boolean test = false;
 	//TODO score
 	
 	private Pane pane;
 	private GUI ui;
 	
-	public void init(Stage primaryStage, File file) {
+	public void init(File file) {
+		test = true;
+		pile = new Pile();
+		pile.scramble();
+		table = new Table();
+
+		turn = (int)(Math.random() * ((playerCount-1) + 1));
+		playerCount = 4;
+		playerArr = new Player[4];
+		handArr = new Hand[4];
+		playerArr[0] = new Strategy1();
+		playerArr[1] = new Strategy1();
+		playerArr[2] = new Strategy3();
+		playerArr[3] = new Strategy1();
+		for(int i = 0; i<playerCount; i++) {
+			handArr[i] = new Hand();
+			playerArr[i].setHand(i);
+		}
+
+		for(int i = 0; i<playerCount; i++) {
+			this.addObserver(playerArr[i]);
+		}
 		fileSetup(file);
+
+        for(int i = 0; i< playerCount; i++) {
+			if(handArr[i].isEmpty()) {
+				deal(handArr[i]);
+			}
+        }
+	}
+	public void init(Stage primaryStage, File file) {
 
 		pile = new Pile();
 		pile.scramble();
@@ -40,7 +69,6 @@ public class Game extends Observable{
         primaryStage.show();
         
 		turn = (int)(Math.random() * ((playerCount-1) + 1));
-		isFile = true;
 		playerCount = 4;
 		playerArr = new Player[4];
 		handArr = new Hand[4];
@@ -52,13 +80,17 @@ public class Game extends Observable{
 			handArr[i] = new Hand();
 			playerArr[i].setHand(i);
 		}
-		for(int i = 0; i < playerCount; i++) {
-			deal(handArr[i]);
-		}
 
 		for(int i = 0; i<playerCount; i++) {
 			this.addObserver(playerArr[i]);
 		}
+		fileSetup(file);
+
+        for(int i = 0; i< playerCount; i++) {
+			if(handArr[i].isEmpty()) {
+				deal(handArr[i]);
+			}
+        }
 	}
 
 	public void init(Stage primaryStage) {
@@ -248,6 +280,7 @@ public class Game extends Observable{
 				System.out.println(handArr[0]);
 				System.out.println(handArr[1]);
 				System.out.println(handArr[2]);
+				System.out.println(handArr[3]);
 				return;
 			default:
 				System.out.println(pile);
@@ -255,6 +288,7 @@ public class Game extends Observable{
 				System.out.println(handArr[0]);
 				System.out.println(handArr[1]);
 				System.out.println(handArr[2]);
+				System.out.println(handArr[3]);
 				return;
 				
 			}
@@ -314,7 +348,10 @@ public class Game extends Observable{
 	}
 
 	public void start() {
-		ui.message("Welcome To Rummikub!");
+		Player winner = null;
+		if(test == false) {
+			ui.message("Welcome To Rummikub!");
+		}			
 		//Each Player is assigned a hand 0 for human and so on
 //		Tile[] tArr = {new Tile(Tile.colour.BLUE, Tile.value.TEN), new Tile(Tile.colour.GREEN, Tile.value.TEN), new Tile(Tile.colour.RED, Tile.value.TEN),new Tile(Tile.colour.ORANGE, Tile.value.TEN)};
 //		handArr[0] = new Hand(tArr);
@@ -327,7 +364,21 @@ public class Game extends Observable{
 
 		broadcast();
 
-		ui.message(turnLoop().name + " won!");
+		if(test == false) {
+			winner = turnLoop();
+			if(winner == null) {
+				ui.message("Tie");
+			}else{
+				ui.message(winner.name + " won!");
+			}
+		}else {
+			winner = turnLoop();
+			if(winner == null) {
+				System.out.println("Tie!");
+			}else{
+				System.out.println(turnLoop().name);
+			}
+		}
 	}
 
 	private Player turnLoop() {
@@ -341,9 +392,8 @@ public class Game extends Observable{
 			if(recent == 0) {
 				table.clearRecent();
 				recent--;
-				System.out.println(table.getRecent());
 			}
-			ui.message("Player " + (turn+1) + "'s turn.");
+			if(test == false)ui.message("Player " + (turn+1) + "'s turn.");
 
 			playerArr[turn].play();
 
@@ -355,9 +405,12 @@ public class Game extends Observable{
 //			ui.message("Table: ");
 //			ui.message(playerArr[i].displayPlay());
 			
-			System.out.println(handArr[turn]);
 			if(handArr[turn].isEmpty()) {
 				return playerArr[turn];
+			}
+
+			if(pile.dryDraws >= 5) {
+				return null;
 			}
 			//player count -1
 			if(turn== playerCount -1) turn=-1;

@@ -78,6 +78,7 @@ public abstract class Player implements Observer{
 			temp = pile.deal();
 			hand.addTileToHand(temp);
 		}else{
+			pile.dryDraws++;
 			return null;
 		}
 		return temp;

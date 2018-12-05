@@ -7,6 +7,7 @@ import java.util.Comparator;
 public class Pile {
 	
 	private ArrayList<Tile> pile;
+	public int dryDraws = 0;
 	
 	public Pile() {
 		pile = new ArrayList<Tile>();
@@ -49,6 +50,7 @@ public class Pile {
 		if(pile.size() > 0) {
 			return pile.remove(0);
 		} else {
+			dryDraws++;
 			return null;
 		}
 	}

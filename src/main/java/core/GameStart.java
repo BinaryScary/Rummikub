@@ -1,5 +1,7 @@
 package core;
 
+import java.io.File;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -11,12 +13,13 @@ public class GameStart extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-//		File file = new File("src/test/resources/testInit");
+		//to showcase a certian ability in gui enter the file
+		File file = new File("src/test/resources/testInit");
 		Game g = new Game();
-//		g.init(file);
+//		g.init(primaryStage, file);
 		g.init(primaryStage);
+//		g.init(file);
 		g.start();
-		System.out.println("done");	
 	}
 
 }

@@ -29,6 +29,7 @@ public class StrategyHuman extends Player {
 		hand.setSort();
 		ui.displayHand(hand);
 		ui.displayTable(table);
+		ui.displayScore(game.gethands());
 
 //		System.out.println(ui.query("test message this is a question", new String[]{"hey", "test button2", "one more"}));
 		//TODO skipped
@@ -61,7 +62,7 @@ public class StrategyHuman extends Player {
 	
 	private int playTable() {
 		int choice;
-		String meldStr;
+//		String meldStr;
 		Meld meld;
 		ArrayList<Meld> invalidMelds;
 		//does this need a deep copy?
