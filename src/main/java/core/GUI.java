@@ -1,5 +1,6 @@
 package core;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javafx.application.Platform;
@@ -42,6 +43,11 @@ public class GUI implements UserInterface {
         pane = p;
 	}
 	
+	public File getFile() {
+		//TODO getFile
+		return null;
+	}
+
 	public void highlight(Pane pane) {
 		pane.setBorder(new Border(new BorderStroke(Color.YELLOW, 
             BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));

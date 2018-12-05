@@ -21,11 +21,46 @@ public class Game extends Observable{
 	private int playerCount;
 	private int uiNum = 0;
 	private int turn;
+	private boolean isFile;
 	//TODO score
 	
 	private Pane pane;
 	private GUI ui;
 	
+	public void init(Stage primaryStage, File file) {
+		fileSetup(file);
+
+		pile = new Pile();
+		pile.scramble();
+		table = new Table();
+
+        ui = new GUI(pane);
+
+        ui.boardInit(primaryStage);
+        primaryStage.show();
+        
+		turn = (int)(Math.random() * ((playerCount-1) + 1));
+		isFile = true;
+		playerCount = 4;
+		playerArr = new Player[4];
+		handArr = new Hand[4];
+		playerArr[0] = new StrategyHuman(ui);
+		playerArr[1] = new Strategy1();
+		playerArr[2] = new Strategy3();
+		playerArr[3] = new Strategy1();
+		for(int i = 0; i<playerCount; i++) {
+			handArr[i] = new Hand();
+			playerArr[i].setHand(i);
+		}
+		for(int i = 0; i < playerCount; i++) {
+			deal(handArr[i]);
+		}
+
+		for(int i = 0; i<playerCount; i++) {
+			this.addObserver(playerArr[i]);
+		}
+	}
+
 	public void init(Stage primaryStage) {
 		pile = new Pile();
 		pile.scramble();
@@ -113,7 +148,7 @@ public class Game extends Observable{
 			turn = (int)(Math.random() * ((playerCount-1) + 1));
         }
         
-        int set = ui.query("Setup hands?", new String[] {"Yes","No"});
+        int set = ui.query("Setup Hands, File, or none?", new String[] {"Hands","File","None"});
         if(set == 0) {
         	for(int i = 0; i < playerCount; i++) {
         		ui.message("Hand for Player " + (i+1));
@@ -123,40 +158,14 @@ public class Game extends Observable{
 					deal(handArr[i]);
         		}
         	}
+        }else if(set == 1) {
+        	fileSetup(ui.getFile());
         }
         
         
 	}
 	
-	
-	public void init(File file) {
-		//TODO update init(File) for gui
-
-		//pile;table;hand0;hand1;hand2;hand3
-		pile = new Pile(false);
-		table = new Table();
-
-//		ui = new CLI();
-//		playerArr = new Player[4];
-		playerArr = new Player[3];
-		handArr = new Hand[3];
-//		handArr = new Hand[4];
-
-		for(int i = 0; i<3; i++) {
-			handArr[i] = new Hand();
-		}
-
-		playerArr[0] = new StrategyHuman();
-		playerArr[1] = new Strategy1();
-		playerArr[2] = new Strategy3();
-//		playerArr[3] = new StrategyHuman();
-
-
-		this.addObserver(playerArr[0]);
-		this.addObserver(playerArr[1]);
-		this.addObserver(playerArr[2]);
-//		this.addObserver(playerArr[3]);
-		
+	public void fileSetup(File file) {
 		String str;
 		BufferedReader br;
 		String[] tileStr;
@@ -258,7 +267,8 @@ public class Game extends Observable{
 		System.out.println(handArr[2]);
 
 	}
-
+	
+	
 	private Tile stringToTile(String tile) {
 		Tile t = new Tile();
 		int tempVal = 0;
@@ -318,7 +328,6 @@ public class Game extends Observable{
 		broadcast();
 
 		ui.message(turnLoop().name + " won!");
-		
 	}
 
 	private Player turnLoop() {
