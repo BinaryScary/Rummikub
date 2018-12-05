@@ -16,8 +16,8 @@ public class GameStart extends Application {
 		//to showcase a certian ability in gui enter the file
 		File file = new File("src/test/resources/testInit");
 		Game g = new Game();
-//		g.init(primaryStage, file);
-		g.init(primaryStage);
+		g.init(primaryStage, file);
+//		g.init(primaryStage);
 //		g.init(file);
 		g.start();
 	}

@@ -71,6 +71,7 @@ public class StrategyHuman extends Player {
 		Tile tempTile;
 		ArrayList<Tile> removedTiles = new ArrayList<Tile>();
 		int meldIndex = 0;
+		ArrayList<Meld> created = new ArrayList<Meld>();
 
 
 		while(true) {
@@ -116,18 +117,22 @@ public class StrategyHuman extends Player {
 //					}
 //
 					//initialMeld check
-					if(initialMeld == true && meld.totalMeld() < 30) {
-						ui.message("Meld need to total 30+");
-						continue;
-					}else if(initialMeld == true && meld.totalMeld() >= 30) {
-						removeFromHand(meld);
-						newMelds.add(meld);
-						tempTable.add(meld);
-						table = tempTable;
-						game.setTable(table);
-						initialMeld = false;
-						return 0;
+					if(initialMeld == true) {
+						created.add(meld);
 					}
+
+//					if(initialMeld == true && meld.totalMeld() < 30) {
+//						ui.message("Meld need to total 30+");
+//						continue;
+//					}else if(initialMeld == true && meld.totalMeld() >= 30) {
+//						removeFromHand(meld);
+//						newMelds.add(meld);
+//						tempTable.add(meld);
+//						table = tempTable;
+//						game.setTable(table);
+//						initialMeld = false;
+//						return 0;
+//					}
 //					
 					removeFromHand(meld);
 					newMelds.add(meld);
@@ -239,7 +244,6 @@ public class StrategyHuman extends Player {
 //				meld = assembleMeld(meldStr);
 
 //				
-//				meldIndex = table.indexOf(meld);
 //				if(meldIndex == -1) {
 //					ui.message("*Error Meld not on table");
 //					continue;
@@ -261,6 +265,11 @@ public class StrategyHuman extends Player {
 					continue;
 				}
 				if(meld == null) {
+					continue;
+				}
+				meldIndex = tempTable.indexOf(meld);
+				if(meldIndex == -1) {
+					ui.message("*Error Meld not on table");
 					continue;
 				}
 //				
@@ -286,8 +295,21 @@ public class StrategyHuman extends Player {
 
 		//check for invalid melds in players modified table
 		invalidMelds = validTable(tempTable);
-		if(invalidMelds == null) {
 
+		if(initialMeld) {
+			int totalMelds = 0;
+			for(Meld m: created) {
+				totalMelds += m.totalMeld();
+				for(Tile t: m.getMeld()) {
+					removedTiles.add(t);
+				}
+			}
+			if(totalMelds >= 30 && invalidMelds == null) {
+				initialMeld = false;
+			}
+		}
+
+		if(invalidMelds == null && !initialMeld) {
 			//make changes permanent to table
 			removedTiles = null;
 			table = tempTable;
